@@ -57,6 +57,12 @@
     <Compile Include="Database\DataObjectWriterProcessBase.cs" />
     <Compile Include="Database\HashSetReaderProcessBase.cs" />
     <Compile Include="Database\IDataObject.cs" />
+    <Compile Include="Database\Odbc\OdbcDatabaseClient.cs" />
+    <Compile Include="Database\Odbc\OdbcDataObjectDictionaryReaderProcessBase.cs" />
+    <Compile Include="Database\Odbc\OdbcDataObjectListReaderProcessBase.cs" />
+    <Compile Include="Database\Odbc\OdbcDataObjectReaderProcessBase.cs" />
+    <Compile Include="Database\Odbc\OdbcDataObjectWriterProcessBase.cs" />
+    <Compile Include="Database\Odbc\OdbcHashSetReaderProcessBase.cs" />
     <Compile Include="Data\DataObjectBase.cs" />
     <Compile Include="Data\DataObjectDictionary.cs" />
     <Compile Include="Data\DataObjectList.cs" />
@@ -79,7 +85,6 @@
     <None Include="MyClassLibraryKeyFile.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Database\Odbc\" />
     <Folder Include="Database\SqlServer\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
