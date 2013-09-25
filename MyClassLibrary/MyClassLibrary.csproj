@@ -90,6 +90,11 @@
     <Compile Include="Mail\MailUtilities.cs" />
     <Compile Include="MyDataConverter.cs" />
     <Compile Include="MyTools.cs" />
+    <Compile Include="Process\IProcess.cs" />
+    <Compile Include="Process\IProcessWorker.cs" />
+    <Compile Include="Process\ProcessBase.cs" />
+    <Compile Include="Process\ProcessCompleteEventArgs.cs" />
+    <Compile Include="Process\ProcessWorkerBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertySetToDefaultException.cs" />
     <Compile Include="PropertySetToOutOfRangeValueException.cs" />
