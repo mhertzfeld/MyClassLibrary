@@ -42,6 +42,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +64,13 @@
     <Compile Include="Database\Odbc\OdbcDataObjectReaderProcessBase.cs" />
     <Compile Include="Database\Odbc\OdbcDataObjectWriterProcessBase.cs" />
     <Compile Include="Database\Odbc\OdbcHashSetReaderProcessBase.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDatabaseClient.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDataObjectBulkCopyProcessBase.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDataObjectDictionaryReaderProcessBase.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDataObjectListReaderProcessBase.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDataObjectReaderProcessBase.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDataObjectWriterProcessBase.cs" />
+    <Compile Include="Database\SqlServer\SqlServerHashSetReaderProcessBase.cs" />
     <Compile Include="Data\DataObjectBase.cs" />
     <Compile Include="Data\DataObjectDictionary.cs" />
     <Compile Include="Data\DataObjectList.cs" />
@@ -72,6 +80,7 @@
     <Compile Include="Data\IDataObjectList.cs" />
     <Compile Include="Calendar\DateTimeExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
+    <Compile Include="Imaging\ImageConverter.cs" />
     <Compile Include="MyDataConverter.cs" />
     <Compile Include="MyTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,9 +93,7 @@
   <ItemGroup>
     <None Include="MyClassLibraryKeyFile.pfx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Database\SqlServer\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
