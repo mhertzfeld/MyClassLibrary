@@ -81,6 +81,12 @@
     <Compile Include="Calendar\DateTimeExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
     <Compile Include="Imaging\ImageConverter.cs" />
+    <Compile Include="IO\ChecksumGenerator.cs" />
+    <Compile Include="IO\DataObjectBase.cs" />
+    <Compile Include="IO\DataObjectDictionaryReaderProcessBase.cs" />
+    <Compile Include="IO\DataObjectListReaderProcessBase.cs" />
+    <Compile Include="IO\DataObjectReaderProcessBase.cs" />
+    <Compile Include="IO\IDataObject.cs" />
     <Compile Include="MyDataConverter.cs" />
     <Compile Include="MyTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
