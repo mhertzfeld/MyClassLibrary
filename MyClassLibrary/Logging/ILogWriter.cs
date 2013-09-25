@@ -5,12 +5,9 @@ using System.Diagnostics;
 namespace MyClassLibrary.Logging
 {
     public interface ILogWriter
-        : IDisposable
     {
         void WriteLogEntry(Exception exception);
 
-        void WriteLogEntry(String message);
-
-        void WriteLogEntry(String message, String category, Int32 priority, Int32 eventId, TraceEventType traceEventType, String title);
+        void WriteLogEntry(TraceEventType traceEventType, String title, String message, String category = null, Int32 priority = 0, Int32 eventId = 0);
     }
 }
