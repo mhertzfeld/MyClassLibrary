@@ -47,6 +47,16 @@
   <ItemGroup>
     <Compile Include="Calendar\MyCalendar.cs" />
     <Compile Include="Calendar\StartDateTimeEndDateTimeData.cs" />
+    <Compile Include="Database\DatabaseClient.cs" />
+    <Compile Include="Database\DatabaseTools.cs" />
+    <Compile Include="Database\DataColumnAttribute.cs" />
+    <Compile Include="Database\DataObjectBase.cs" />
+    <Compile Include="Database\DataObjectDictionaryReaderProcessBase.cs" />
+    <Compile Include="Database\DataObjectListReaderProcessBase.cs" />
+    <Compile Include="Database\DataObjectReaderProcessBase.cs" />
+    <Compile Include="Database\DataObjectWriterProcessBase.cs" />
+    <Compile Include="Database\HashSetReaderProcessBase.cs" />
+    <Compile Include="Database\IDataObject.cs" />
     <Compile Include="Data\DataObjectBase.cs" />
     <Compile Include="Data\DataObjectDictionary.cs" />
     <Compile Include="Data\DataObjectList.cs" />
@@ -67,6 +77,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MyClassLibraryKeyFile.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Database\Odbc\" />
+    <Folder Include="Database\SqlServer\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
