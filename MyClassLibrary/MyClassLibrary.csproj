@@ -54,7 +54,7 @@
     <Compile Include="Data\IDataObjectCollection.cs" />
     <Compile Include="Data\IDataObjectDictionary.cs" />
     <Compile Include="Data\IDataObjectList.cs" />
-    <Compile Include="DateTimeExtensions.cs" />
+    <Compile Include="Calendar\DateTimeExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
     <Compile Include="MyDataConverter.cs" />
     <Compile Include="MyTools.cs" />

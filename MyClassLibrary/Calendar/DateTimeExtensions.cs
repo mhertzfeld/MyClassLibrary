@@ -2,7 +2,7 @@
 using System;
 
 
-namespace MyClassLibrary
+namespace MyClassLibrary.Calendar
 {
     public static class DateTimeExtensions
     {
