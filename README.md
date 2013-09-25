@@ -1,0 +1,4 @@
+MyClassLibrary
+==============
+
+MyClassLibrary
