@@ -1,22 +1,21 @@
 ﻿using MyClassLibrary.Logging;
-using MyClassLibrary.Process;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 
 
 namespace MyClassLibrary.Database
 {
-    public abstract class HashSetReaderProcessBase<T_DatabaseClient, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_HashSetType>
-        : ProcessWorkerBase
-        where T_DatabaseClient : DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>, new()
-        where T_DataParameter : IDataParameter
-        where T_DataReader : IDataReader
-        where T_DbCommand : IDbCommand, new()
-        where T_DbConnection : IDbConnection, new()
-        where T_DbDataAdapter : IDbDataAdapter, new()
-        where T_DbTransaction : IDbTransaction
+    public abstract class HashSetReaderProcessBase<T_DatabaseClient, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_HashSetType, T_LogWriter>
+        : Process.ProcessWorkerBase
+        where T_DatabaseClient : Database.DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter>, new()
+        where T_DataParameter : System.Data.IDataParameter
+        where T_DataReader : System.Data.IDataReader
+        where T_DbCommand : System.Data.IDbCommand, new()
+        where T_DbConnection : System.Data.IDbConnection, new()
+        where T_DbDataAdapter : System.Data.IDbDataAdapter, new()
+        where T_DbTransaction : System.Data.IDbTransaction
+        where T_LogWriter : Logging.ILogWriter, new()
     {
         //FIELDS
         protected HashSet<T_HashSetType> hashSet;
@@ -160,7 +159,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                EnterpriseLibraryLogWriter.WriteExceptionLogEntry(exception);
+                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
             }
             finally
             {

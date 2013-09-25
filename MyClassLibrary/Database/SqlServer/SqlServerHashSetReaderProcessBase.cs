@@ -4,8 +4,9 @@ using System.Data.SqlClient;
 
 namespace MyClassLibrary.Database.SqlServer
 {
-    public abstract class SqlServerHashSetReaderProcessBase<T_HashSetType>
-        : HashSetReaderProcessBase<SqlServerDatabaseClient, SqlParameter, SqlDataReader, SqlCommand, SqlConnection, SqlDataAdapter, SqlTransaction, T_HashSetType>
+    public abstract class SqlServerHashSetReaderProcessBase<T_HashSetType, T_LogWriter>
+        : Database.HashSetReaderProcessBase<SqlServerDatabaseClient<T_LogWriter>, SqlParameter, SqlDataReader, SqlCommand, SqlConnection, SqlDataAdapter, SqlTransaction, T_HashSetType, T_LogWriter>
+        where T_LogWriter : Logging.ILogWriter, new()
     {
 
     }

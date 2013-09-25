@@ -6,9 +6,10 @@ using System.IO;
 
 namespace MyClassLibrary.IO
 {
-    public abstract class DataObjectReaderProcessBase<T_DataObject>
+    public abstract class DataObjectReaderProcessBase<T_DataObject, T_LogWriter>
         : MyClassLibrary.Process.ProcessWorkerBase
-        where T_DataObject : IDataObject, new()
+        where T_DataObject : IO.IDataObject, new()
+        where T_LogWriter : Logging.ILogWriter, new()
     {
         //FIELDS
         protected String filePath;
@@ -123,7 +124,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                EnterpriseLibraryLogWriter.WriteExceptionLogEntry(exception);
+                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
 
                 returnState = false;
 

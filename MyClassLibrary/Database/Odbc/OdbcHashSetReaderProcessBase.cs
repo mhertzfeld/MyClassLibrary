@@ -4,8 +4,9 @@ using System.Data.Odbc;
 
 namespace MyClassLibrary.Database.Odbc
 {
-    public abstract class OdbcHashSetReaderProcessBase<T_HashSetType>
-        : HashSetReaderProcessBase<OdbcDatabaseClient, OdbcParameter, OdbcDataReader, OdbcCommand, OdbcConnection, OdbcDataAdapter, OdbcTransaction, T_HashSetType>
+    public abstract class OdbcHashSetReaderProcessBase<T_HashSetType, T_LogWriter>
+        : Database.HashSetReaderProcessBase<OdbcDatabaseClient<T_LogWriter>, OdbcParameter, OdbcDataReader, OdbcCommand, OdbcConnection, OdbcDataAdapter, OdbcTransaction, T_HashSetType, T_LogWriter>
+        where T_LogWriter : Logging.ILogWriter, new()
     {
 
     }

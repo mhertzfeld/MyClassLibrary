@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using MyClassLibrary.Logging;
+using System;
 
 
 namespace MyClassLibrary.Database
 {
-    public abstract class DataObjectListReaderProcessBase<T_Database, T_DataObject, T_DataObjectList, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction> 
-        : DataObjectReaderProcessBase<T_Database, T_DataObject, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>
-        where T_Database : DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>, new()
-        where T_DataObject : IDataObject, new()
+    public abstract class DataObjectListReaderProcessBase<T_Database, T_DataObject, T_DataObjectList, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter> 
+        : Database.DataObjectReaderProcessBase<T_Database, T_DataObject, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter>
+        where T_Database : Database.DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter>, new()
+        where T_DataObject : Database.IDataObject, new()
         where T_DataObjectList : Data.IDataObjectList<T_DataObject>, new()
-        where T_DataParameter : IDataParameter
-        where T_DataReader : IDataReader
-        where T_DbCommand : IDbCommand, new()
-        where T_DbConnection : IDbConnection, new()
-        where T_DbDataAdapter : IDbDataAdapter, new()
-        where T_DbTransaction : IDbTransaction
+        where T_DataParameter : System.Data.IDataParameter
+        where T_DataReader : System.Data.IDataReader
+        where T_DbCommand : System.Data.IDbCommand, new()
+        where T_DbConnection : System.Data.IDbConnection, new()
+        where T_DbDataAdapter : System.Data.IDbDataAdapter, new()
+        where T_DbTransaction : System.Data.IDbTransaction
+        where T_LogWriter : Logging.ILogWriter, new()
     {
         //FIELDS
         protected T_DataObjectList dataObjectList;

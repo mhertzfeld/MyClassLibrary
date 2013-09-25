@@ -9,8 +9,9 @@ using System.Data.SqlClient;
 
 namespace MyClassLibrary.Database.SqlServer
 {
-    public abstract class SqlServerDataObjectBulkCopyProcessBase<T_DataObject>
+    public abstract class SqlServerDataObjectBulkCopyProcessBase<T_DataObject, T_LogWriter>
         : MyClassLibrary.Process.ProcessWorkerBase
+        where T_LogWriter : ILogWriter, new()
     {
         //FIELDS
         protected List<String> columnList;
@@ -140,7 +141,7 @@ namespace MyClassLibrary.Database.SqlServer
         {
             Boolean returnState = false;
 
-            using (SqlServerDatabaseClient sqlServerDatabaseClient = new SqlServerDatabaseClient())
+            using (SqlServerDatabaseClient<T_LogWriter> sqlServerDatabaseClient = new SqlServerDatabaseClient<T_LogWriter>())
             {
                 sqlServerDatabaseClient.ConnectionString = ConnectionString;
 
@@ -156,7 +157,7 @@ namespace MyClassLibrary.Database.SqlServer
                         {
                             Int32 rowsAffected;
 
-                            returnState = SqlServerDatabaseClient.ExecuteNonQueryDbCommand(sqlCommand, out rowsAffected);
+                            returnState = SqlServerDatabaseClient<T_LogWriter>.ExecuteNonQueryDbCommand(sqlCommand, out rowsAffected);
                         }
                     }
 
@@ -196,7 +197,7 @@ namespace MyClassLibrary.Database.SqlServer
                 }
                 catch (Exception exception)
                 {
-                    EnterpriseLibraryLogWriter.WriteExceptionLogEntry(exception);
+                    LoggingTools.WriteLogEntry<T_LogWriter>(exception);
 
                     return false;
                 }

@@ -1,20 +1,18 @@
-﻿using MyClassLibrary.Data;
-using MyClassLibrary.Logging;
+﻿using MyClassLibrary.Logging;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 
 
 namespace MyClassLibrary.Database
 {
-    public class DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction> 
-        : IDisposable
-        where T_DataParameter : IDataParameter
-        where T_DbCommand : IDbCommand, new()
-        where T_DbConnection : IDbConnection, new()
-        where T_DbDataAdapter : IDbDataAdapter, new()
-        where T_DbTransaction : IDbTransaction
+    public class DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter> 
+        : System.IDisposable
+        where T_DataParameter : System.Data.IDataParameter
+        where T_DbCommand : System.Data.IDbCommand, new()
+        where T_DbConnection : System.Data.IDbConnection, new()
+        where T_DbDataAdapter : System.Data.IDbDataAdapter, new()
+        where T_DbTransaction : System.Data.IDbTransaction
+        where T_LogWriter : Logging.ILogWriter, new()
     {
         //CONSTANTS
         protected const Int32 defaultTimeout = 900;
@@ -387,7 +385,7 @@ namespace MyClassLibrary.Database
 
                 dbTransaction = default(T_DbTransaction);
 
-                EnterpriseLibraryLogWriter.WriteExceptionLogEntry(exception);
+                WriteLogEntry(exception);
             }
 
             return returnState;
@@ -417,7 +415,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                EnterpriseLibraryLogWriter.WriteExceptionLogEntry(exception);
+                WriteLogEntry(exception);
             }
 
             return returnState;
@@ -440,7 +438,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                EnterpriseLibraryLogWriter.WriteExceptionLogEntry(exception);
+                WriteLogEntry(exception);
             }
 
             return returnState;
@@ -463,7 +461,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                EnterpriseLibraryLogWriter.WriteExceptionLogEntry(exception);
+                WriteLogEntry(exception);                
             }
 
             return returnState;
@@ -488,7 +486,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                EnterpriseLibraryLogWriter.WriteExceptionLogEntry(exception);
+                WriteLogEntry(exception);
             }
 
             return returnState;
@@ -513,7 +511,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                EnterpriseLibraryLogWriter.WriteExceptionLogEntry(exception);
+                WriteLogEntry(exception);
             }
 
             return returnState;
@@ -540,7 +538,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                EnterpriseLibraryLogWriter.WriteExceptionLogEntry(exception);
+                WriteLogEntry(exception);
             }
 
             return returnState;
@@ -660,7 +658,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                EnterpriseLibraryLogWriter.WriteExceptionLogEntry(exception);
+                WriteLogEntry(exception);
             }
 
             return returnState;
@@ -794,7 +792,7 @@ namespace MyClassLibrary.Database
 
                 dataSet = null;
 
-                EnterpriseLibraryLogWriter.WriteExceptionLogEntry(exception);
+                WriteLogEntry(exception);
             }
 
             return returnState;
@@ -928,7 +926,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                EnterpriseLibraryLogWriter.WriteExceptionLogEntry(exception);
+                WriteLogEntry(exception);
             }
 
             return returnState;
@@ -953,10 +951,17 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                EnterpriseLibraryLogWriter.WriteExceptionLogEntry(exception);
+                WriteLogEntry(exception);
             }
 
             return returnState;
+        }
+
+
+        //STATIC FUNCTION WRITE LOGS
+        public static void WriteLogEntry(Exception exception)
+        {
+            LoggingTools.WriteLogEntry<T_LogWriter>(exception);
         }
     }
 }

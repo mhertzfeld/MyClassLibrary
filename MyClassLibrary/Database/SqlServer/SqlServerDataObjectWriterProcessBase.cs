@@ -4,9 +4,10 @@ using System.Data.SqlClient;
 
 namespace MyClassLibrary.Database.SqlServer
 {
-    public abstract class SqlServerDataObjectWriterProcessBase<T_DataObject>
-        : DataObjectWriterProcessBase<SqlServerDatabaseClient, T_DataObject, SqlParameter, SqlDataReader, SqlCommand, SqlConnection, SqlDataAdapter, SqlTransaction>
-        where T_DataObject : Data.IDataObject
+    public abstract class SqlServerDataObjectWriterProcessBase<T_DataObject, T_LogWriter>
+        : Database.DataObjectWriterProcessBase<SqlServerDatabaseClient<T_LogWriter>, T_DataObject, SqlParameter, SqlDataReader, SqlCommand, SqlConnection, SqlDataAdapter, SqlTransaction, T_LogWriter>
+        where T_DataObject : Database.IDataObject
+        where T_LogWriter : Logging.ILogWriter, new()
     {
 
     }

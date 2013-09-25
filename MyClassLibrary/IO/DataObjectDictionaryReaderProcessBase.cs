@@ -4,10 +4,11 @@ using System;
 
 namespace MyClassLibrary.IO
 {
-    public abstract class DataObjectDictionaryReaderProcessBase<T_DataObject, T_DataObjectDictionary>
-        : DataObjectReaderProcessBase<T_DataObject>
-        where T_DataObject : IDataObject, new()
-        where T_DataObjectDictionary : IDataObjectDictionary<T_DataObject>, new()
+    public abstract class DataObjectDictionaryReaderProcessBase<T_DataObject, T_DataObjectDictionary, T_LogWriter>
+        : IO.DataObjectReaderProcessBase<T_DataObject, T_LogWriter>
+        where T_DataObject : IO.IDataObject, new()
+        where T_DataObjectDictionary : Data.IDataObjectDictionary<T_DataObject>, new()
+        where T_LogWriter : Logging.ILogWriter, new()
     {
         //FIELDS
         protected T_DataObjectDictionary dataObjectDictionary;

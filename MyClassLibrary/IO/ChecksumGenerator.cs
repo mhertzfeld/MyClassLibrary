@@ -8,7 +8,8 @@ namespace MyClassLibrary.IO
 {
     public static class ChecksumGenerator
     {
-        public static Boolean GenerateChecksum(String filePath, out String checksum)
+        public static Boolean GenerateChecksum<T_LogWriter>(String filePath, out String checksum)
+            where T_LogWriter : Logging.ILogWriter, new()
         {
             if (filePath == null)
             {
@@ -33,7 +34,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                EnterpriseLibraryLogWriter.WriteExceptionLogEntry(exception);
+                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
 
                 return false;
             }

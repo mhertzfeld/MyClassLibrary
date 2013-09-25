@@ -1,14 +1,14 @@
-﻿using MyClassLibrary.Data;
-using System;
+﻿using System;
 using System.Data.SqlClient;
 
 
 namespace MyClassLibrary.Database.SqlServer
 {
-    public abstract class SqlServerDataObjectListReaderProcessBase<T_DataObject, T_DataObjectList>
-        : DataObjectListReaderProcessBase<SqlServerDatabaseClient, T_DataObject, T_DataObjectList, SqlParameter, SqlDataReader, SqlCommand, SqlConnection, SqlDataAdapter, SqlTransaction>
-        where T_DataObject : IDataObject, new()
-        where T_DataObjectList : IDataObjectList<T_DataObject>, new()
+    public abstract class SqlServerDataObjectListReaderProcessBase<T_DataObject, T_DataObjectList, T_LogWriter>
+        : Database.DataObjectListReaderProcessBase<SqlServerDatabaseClient<T_LogWriter>, T_DataObject, T_DataObjectList, SqlParameter, SqlDataReader, SqlCommand, SqlConnection, SqlDataAdapter, SqlTransaction, T_LogWriter>
+        where T_DataObject : Database.IDataObject, new()
+        where T_DataObjectList : Data.IDataObjectList<T_DataObject>, new()
+        where T_LogWriter : Logging.ILogWriter, new ()
     {
 
     }
