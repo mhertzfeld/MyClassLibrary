@@ -4,7 +4,7 @@
 namespace MyClassLibrary
 {
     public class ValueOutOfRangeException
-        : Exception
+        : System.Exception
     {
         public ValueOutOfRangeException(String variableName)
             : base("The value for '" + variableName + "' is out of range.")

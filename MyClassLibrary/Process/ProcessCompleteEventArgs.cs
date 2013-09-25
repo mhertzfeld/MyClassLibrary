@@ -4,7 +4,7 @@
 namespace MyClassLibrary.Process
 {
     public class ProcessCompleteEventArgs 
-        : EventArgs
+        : System.EventArgs
     {
         //FIELDS
         protected Boolean error;

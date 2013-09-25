@@ -4,7 +4,7 @@
 namespace MyClassLibrary.Process
 {
     public interface IProcessWorker
-        : IProcess
+        : Process.IProcess
     {
         //METHODS
         Boolean ProcessExecution();

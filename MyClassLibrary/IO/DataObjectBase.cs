@@ -4,7 +4,7 @@
 namespace MyClassLibrary.IO
 {
     public abstract class DataObjectBase
-        : Data.DataObjectBase, IDataObject
+        : Data.DataObjectBase, Data.IDataObject
     {
         //METHODS
         public virtual void SetDataObjectFieldsAndProperties(String[] stringArray)

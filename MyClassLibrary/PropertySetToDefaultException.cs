@@ -4,7 +4,7 @@
 namespace MyClassLibrary
 {
     public class PropertySetToDefaultException
-        : Exception
+        : System.Exception
     {
         public PropertySetToDefaultException(String propertyName)
             : base("'" + propertyName + "' can not be set to its default.")

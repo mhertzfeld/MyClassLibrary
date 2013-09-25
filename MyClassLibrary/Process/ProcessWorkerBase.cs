@@ -6,7 +6,7 @@ using System.ComponentModel;
 namespace MyClassLibrary.Process
 {
     public abstract class ProcessWorkerBase
-        : ProcessBase, IProcessWorker, IDisposable
+        : Process.ProcessBase, Process.IProcessWorker, System.IDisposable
     {
         //FIELDS
         protected BackgroundWorker backgroundWorker;

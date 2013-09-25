@@ -5,7 +5,7 @@ using System.Data;
 namespace MyClassLibrary.Data
 {
     public abstract class DataObjectBase
-        : IDataObject
+        : Data.IDataObject
     {
         //FIELDS
         protected String key;

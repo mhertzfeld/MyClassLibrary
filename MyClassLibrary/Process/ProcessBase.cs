@@ -4,7 +4,7 @@
 namespace MyClassLibrary.Process
 {
     public abstract class ProcessBase
-        : IProcess
+        : Process.IProcess
     {
         //EVENT HANDLERS
         public event EventHandler<ProcessCompleteEventArgs> InitializationComplete;

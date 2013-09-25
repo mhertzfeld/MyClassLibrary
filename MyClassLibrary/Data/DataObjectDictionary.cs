@@ -6,8 +6,8 @@ using System.Data;
 namespace MyClassLibrary.Data
 {
     public class DataObjectDictionary<T_DataObject> 
-        : Dictionary<String, T_DataObject>, IDataObjectDictionary<T_DataObject>
-        where T_DataObject : IDataObject
+        : System.Collections.Generic.Dictionary<String, T_DataObject>, IDataObjectDictionary<T_DataObject>
+        where T_DataObject : Data.IDataObject
     {
         //FIELDS
         protected String key;

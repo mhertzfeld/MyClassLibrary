@@ -4,7 +4,7 @@
 namespace MyClassLibrary
 {
     public class RequiredPropertySetToDefaultException
-        : Exception
+        : System.Exception
     {
         public RequiredPropertySetToDefaultException()
             : base("At least one required property is set to its default value.")
