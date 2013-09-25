@@ -78,7 +78,7 @@
     <Compile Include="Data\IDataObjectCollection.cs" />
     <Compile Include="Data\IDataObjectDictionary.cs" />
     <Compile Include="Data\IDataObjectList.cs" />
-    <Compile Include="Calendar\DateTimeExtensions.cs" />
+    <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
     <Compile Include="Imaging\ImageConverter.cs" />
     <Compile Include="IO\ChecksumGenerator.cs" />
@@ -105,7 +105,9 @@
   <ItemGroup>
     <None Include="MyClassLibraryKeyFile.pfx" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Logging\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
