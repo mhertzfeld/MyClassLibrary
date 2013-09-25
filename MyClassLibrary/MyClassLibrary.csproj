@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calendar\MyCalendar.cs" />
+    <Compile Include="Calendar\StartDateTimeEndDateTimeData.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
     <Compile Include="MyDataConverter.cs" />
