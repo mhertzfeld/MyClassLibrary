@@ -11,7 +11,8 @@ namespace MyClassLibrary.Database.SqlServer
 {
     public abstract class SqlServerDataObjectBulkCopyProcessBase<T_DataObject, T_LogWriter>
         : MyClassLibrary.Process.ProcessWorkerBase
-        where T_LogWriter : ILogWriter, new()
+        where T_DataObject : Data.IDataObject
+        where T_LogWriter :  Logging.ILogWriter, new()
     {
         //FIELDS
         protected List<String> columnList;
