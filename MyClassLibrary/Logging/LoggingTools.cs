@@ -9,7 +9,7 @@ namespace MyClassLibrary.Logging
             where T_LogWriter : Logging.ILogWriter, new()
         {
             T_LogWriter logWriter = new T_LogWriter();
-            logWriter.WriteLogEntry(exception);
+            logWriter.WriteToLog(exception);
         }
     }
 }
