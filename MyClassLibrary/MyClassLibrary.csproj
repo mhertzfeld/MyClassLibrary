@@ -43,11 +43,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calendar\MyCalendar.cs" />
     <Compile Include="Calendar\StartDateTimeEndDateTimeData.cs" />
+    <Compile Include="Calendar\WeekYearData.cs" />
     <Compile Include="Database\DatabaseClient.cs" />
     <Compile Include="Database\DatabaseTools.cs" />
     <Compile Include="Database\DataColumnAttribute.cs" />
