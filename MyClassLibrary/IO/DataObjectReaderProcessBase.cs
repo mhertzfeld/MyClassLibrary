@@ -60,7 +60,7 @@ namespace MyClassLibrary.IO
         {
             if (FilePath == default(String))
             {
-                throw new RequiredPropertySetToDefaultException();
+                throw new ValueOutOfRangeException("FilePath");
             }
 
             Boolean returnState = false;
