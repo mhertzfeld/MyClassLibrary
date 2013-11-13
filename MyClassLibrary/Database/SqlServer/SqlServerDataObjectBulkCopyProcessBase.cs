@@ -122,6 +122,11 @@ namespace MyClassLibrary.Database.SqlServer
             {
                 DataColumnAttribute dataColumnAttribute = DataColumnAttribute.GetColumnNameFromProperty<T_DataObject>(ColumnList[counter]);
 
+                if (dataColumnAttribute == null)
+                {
+                    throw new Exception("DataColumnAttribute for " + ColumnList[counter] + " does not exist.");
+                }
+
                 dataTable.Columns.Add(dataColumnAttribute.ColumnName, dataColumnAttribute.ColumnType);
             }
 
@@ -131,7 +136,7 @@ namespace MyClassLibrary.Database.SqlServer
 
                 for (Int32 counter = 0; counter <= ColumnList.Count - 1; counter++)
                 {
-                    dataRow[counter] = typeof(T_DataObject).GetProperty(ColumnList[counter]).GetValue(dataObject, null);
+                    dataRow[counter] = (typeof(T_DataObject).GetProperty(ColumnList[counter]).GetValue(dataObject, null) ?? DBNull.Value);
                 }
 
                 dataTable.Rows.Add(dataRow);
