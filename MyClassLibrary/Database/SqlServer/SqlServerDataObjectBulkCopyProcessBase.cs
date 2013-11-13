@@ -112,12 +112,8 @@ namespace MyClassLibrary.Database.SqlServer
 
 
         //FUNCTIONS
-        protected abstract void BuildColumnList();
-
-        protected virtual void BuildDataTable()
+        public void AddColumnsToDataTable()
         {
-            dataTable = new DataTable(DestinationTableName);
-
             for (Int32 counter = 0; counter <= ColumnList.Count - 1; counter++)
             {
                 DataColumnAttribute dataColumnAttribute = DataColumnAttribute.GetColumnNameFromProperty<T_DataObject>(ColumnList[counter]);
@@ -129,7 +125,10 @@ namespace MyClassLibrary.Database.SqlServer
 
                 dataTable.Columns.Add(dataColumnAttribute.ColumnName, dataColumnAttribute.ColumnType);
             }
+        }
 
+        public void AddRowsToDataTable()
+        {
             foreach (T_DataObject dataObject in DataObjectEnumerable)
             {
                 DataRow dataRow = dataTable.NewRow();
@@ -141,6 +140,17 @@ namespace MyClassLibrary.Database.SqlServer
 
                 dataTable.Rows.Add(dataRow);
             }
+        }
+
+        protected abstract void BuildColumnList();
+
+        protected virtual void BuildDataTable()
+        {
+            dataTable = new DataTable(DestinationTableName);
+
+            AddColumnsToDataTable();
+
+            AddRowsToDataTable();
         }
 
         protected virtual Boolean CleanupRecords()
