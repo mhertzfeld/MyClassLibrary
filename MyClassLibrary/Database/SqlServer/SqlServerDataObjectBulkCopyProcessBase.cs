@@ -89,9 +89,9 @@ namespace MyClassLibrary.Database.SqlServer
                 throw new PropertySetToDefaultException("DataObjectEnumerable");
             }
 
-            CreateColumnList();
+            BuildColumnList();
 
-            CreateDataTable();
+            BuildDataTable();
 
             if (CleanupRecords())
             {
@@ -112,6 +112,32 @@ namespace MyClassLibrary.Database.SqlServer
 
 
         //FUNCTIONS
+        protected abstract void BuildColumnList();
+
+        protected virtual void BuildDataTable()
+        {
+            dataTable = new DataTable(DestinationTableName);
+
+            for (Int32 counter = 0; counter <= ColumnList.Count - 1; counter++)
+            {
+                DataColumnAttribute dataColumnAttribute = DataColumnAttribute.GetColumnNameFromProperty<T_DataObject>(ColumnList[counter]);
+
+                dataTable.Columns.Add(dataColumnAttribute.ColumnName, dataColumnAttribute.ColumnType);
+            }
+
+            foreach (T_DataObject dataObject in DataObjectEnumerable)
+            {
+                DataRow dataRow = dataTable.NewRow();
+
+                for (Int32 counter = 0; counter <= ColumnList.Count - 1; counter++)
+                {
+                    dataRow[counter] = typeof(T_DataObject).GetProperty(ColumnList[counter]).GetValue(dataObject, null);
+                }
+
+                dataTable.Rows.Add(dataRow);
+            }
+        }
+
         protected virtual Boolean CleanupRecords()
         {
             Boolean returnState = false;
@@ -147,32 +173,6 @@ namespace MyClassLibrary.Database.SqlServer
         }
 
         protected abstract SqlCommand CreateCleanupSqlCommand(SqlConnection sqlConnection);
-
-        protected abstract void CreateColumnList();
-
-        protected virtual void CreateDataTable()
-        {
-            dataTable = new DataTable(DestinationTableName);
-
-            for (Int32 counter = 0; counter <= ColumnList.Count - 1; counter++)
-            {
-                DataColumnAttribute dataColumnAttribute = DataColumnAttribute.GetColumnNameFromProperty<T_DataObject>(ColumnList[counter]);
-
-                dataTable.Columns.Add(dataColumnAttribute.ColumnName, dataColumnAttribute.ColumnType);
-            }
-
-            foreach (T_DataObject dataObject in DataObjectEnumerable)
-            {
-                DataRow dataRow = dataTable.NewRow();
-
-                for (Int32 counter = 0; counter <= ColumnList.Count - 1; counter++)
-                {
-                    dataRow[counter] = typeof(T_DataObject).GetProperty(ColumnList[counter]).GetValue(dataObject, null);
-                }
-
-                dataTable.Rows.Add(dataRow);
-            }
-        }
 
         protected virtual SqlBulkCopy CreateSqlBulkCopy()
         {
