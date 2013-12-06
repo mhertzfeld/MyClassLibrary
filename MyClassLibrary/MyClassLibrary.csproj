@@ -87,6 +87,7 @@
     <Compile Include="IO\DataObjectDictionaryReaderProcessBase.cs" />
     <Compile Include="IO\DataObjectListReaderProcessBase.cs" />
     <Compile Include="IO\DataObjectReaderProcessBase.cs" />
+    <Compile Include="IO\FileSystemUtilities.cs" />
     <Compile Include="IO\IDataObject.cs" />
     <Compile Include="Logging\ILogWriter.cs" />
     <Compile Include="Logging\LoggingTools.cs" />
