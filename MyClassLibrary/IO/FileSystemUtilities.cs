@@ -7,13 +7,29 @@ namespace MyClassLibrary.IO
 {
     public static class FileSystemUtilities
     {
+        public static Boolean DeleteFile<T_LogWriter>(String path)
+            where T_LogWriter : Logging.ILogWriter, new()
+        {
+            try
+            {
+                File.Delete(path);
+            }
+            catch (Exception exception)
+            {
+                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+
+                return false;
+            }
+
+            return true;
+        }
+
         public static Boolean GetDirectoryInfo<T_LogWriter>(String path, out DirectoryInfo directoryInfo)
             where T_LogWriter : Logging.ILogWriter, new()
         {
             try
             {
                 directoryInfo = new DirectoryInfo(path);
-                //return directoryInfo.Exists;
             }
             catch (Exception exception)
             {
