@@ -17,42 +17,110 @@ namespace MyClassLibrary.Database
         where T_DbTransaction : System.Data.IDbTransaction
         where T_LogWriter : Logging.ILogWriter, new()
     {
-        //PROTECTED PROPERTIES
-        protected abstract Int32 CommandTimeout
+        //FIELDS
+        protected Int32 commandTimeout;
+
+        protected String connectionString;
+
+        protected CommandType databaseCommandType;
+
+        protected T_DataParameter[] dataParameterArray;
+
+        protected IsolationLevel isolationLevel;
+
+        protected String sqlCommandText;
+
+
+        //PROPERTIES
+        public virtual Int32 CommandTimeout
         {
-            get;
+            get { return commandTimeout; }
+
+            set
+            {
+                if (value < 0)
+                {
+                    throw new PropertySetToOutOfRangeValueException("CommandTimeout");
+                }
+
+                commandTimeout = value;
+            }
         }
 
-        protected abstract String ConnectionString
+        public virtual String ConnectionString
         {
-            get;
+            get { return connectionString; }
+
+            set
+            {
+                if (value == default(String))
+                {
+                    throw new PropertySetToDefaultException("ConnectionString");
+                }
+
+                connectionString = value;
+            }
         }
 
-        protected virtual CommandType DatabaseCommandType
+        public virtual CommandType DatabaseCommandType
         {
-            get { return CommandType.Text; }
+            get { return databaseCommandType; }
+
+            set { databaseCommandType = value; }
         }
 
-        protected virtual T_DataParameter[] DataParameterArray
+        public virtual T_DataParameter[] DataParameterArray
         {
-            get { return null; }
+            get { return dataParameterArray; }
+
+            set
+            {
+                if (value == default(T_DataParameter[]))
+                {
+                    throw new PropertySetToDefaultException("DataParameterArray");
+                }
+
+                dataParameterArray = value;
+            }
         }
 
-        protected virtual IsolationLevel IsolationLevel
+        public virtual IsolationLevel IsolationLevel
         {
-            get { return IsolationLevel.ReadUncommitted; }
+            get { return isolationLevel; }
+
+            set { isolationLevel = value; }
         }
 
-        protected abstract String SqlCommandText
+        public virtual String SqlCommandText
         {
-            get;
+            get { return sqlCommandText; }
+
+            set
+            {
+                if (value == default(String))
+                {
+                    throw new PropertySetToDefaultException("SqlCommandText");
+                }
+
+                sqlCommandText = value;
+            }
         }
 
 
         //INITIALIZE
         public DataObjectReaderProcessBase()
         {
-            
+            CommandTimeout = 30;
+
+            connectionString = null;
+
+            DatabaseCommandType = CommandType.Text;
+
+            dataParameterArray = null;
+
+            IsolationLevel = IsolationLevel.ReadCommitted;
+
+            sqlCommandText = null;
         }
 
 
