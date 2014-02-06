@@ -95,6 +95,15 @@ namespace MyClassLibrary.XML
             return ProcessExecution();
         }
 
+        public virtual void RunWorker(T_XmlObject XmlObject, String FilePath)
+        {
+            this.FilePath = FilePath;
+
+            this.XmlObject = XmlObject;
+
+            RunWorker();
+        }
+
 
         //FUNCTIONS
         protected override void ResetProcess()
