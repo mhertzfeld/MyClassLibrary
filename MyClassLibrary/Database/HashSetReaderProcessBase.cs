@@ -159,7 +159,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
             }
             finally
             {

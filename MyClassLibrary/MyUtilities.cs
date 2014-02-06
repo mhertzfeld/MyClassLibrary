@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MyClassLibrary
 {
-    public static class MyTools
+    public static class MyUtilities
     {
         public static T Clone<T>(T obj)
         {

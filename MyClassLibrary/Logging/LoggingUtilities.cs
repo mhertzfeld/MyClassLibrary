@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace MyClassLibrary.Logging
 {
-    public static class LoggingTools
+    public static class LoggingUtilities
     {
         public static void WriteLogEntry<T_LogWriter>(Exception exception)
             where T_LogWriter : Logging.ILogWriter, new()

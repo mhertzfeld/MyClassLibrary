@@ -50,7 +50,7 @@
     <Compile Include="Calendar\StartDateTimeEndDateTimeData.cs" />
     <Compile Include="Calendar\WeekYearData.cs" />
     <Compile Include="Database\DatabaseClient.cs" />
-    <Compile Include="Database\DatabaseTools.cs" />
+    <Compile Include="Database\DatabaseUtilities.cs" />
     <Compile Include="Database\DataColumnAttribute.cs" />
     <Compile Include="Database\DataObjectBase.cs" />
     <Compile Include="Database\DataObjectDictionaryReaderProcessBase.cs" />
@@ -90,10 +90,10 @@
     <Compile Include="IO\FileSystemUtilities.cs" />
     <Compile Include="IO\IDataObject.cs" />
     <Compile Include="Logging\ILogWriter.cs" />
-    <Compile Include="Logging\LoggingTools.cs" />
+    <Compile Include="Logging\LoggingUtilities.cs" />
     <Compile Include="Mail\MailUtilities.cs" />
     <Compile Include="MyDataConverter.cs" />
-    <Compile Include="MyTools.cs" />
+    <Compile Include="MyUtilities.cs" />
     <Compile Include="Process\IProcess.cs" />
     <Compile Include="Process\IProcessWorker.cs" />
     <Compile Include="Process\ProcessBase.cs" />

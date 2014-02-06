@@ -37,7 +37,7 @@ namespace MyClassLibrary.XML
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 xmlString = null;
 

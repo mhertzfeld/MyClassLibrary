@@ -213,7 +213,7 @@ namespace MyClassLibrary.Database.SqlServer
                 }
                 catch (Exception exception)
                 {
-                    LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                    LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                     return false;
                 }

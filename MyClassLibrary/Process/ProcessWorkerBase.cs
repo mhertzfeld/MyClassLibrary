@@ -36,7 +36,7 @@ namespace MyClassLibrary.Process
         {
             if (!disposed)
             {
-                MyTools.DisposeObject(backgroundWorker);
+                MyUtilities.DisposeObject(backgroundWorker);
 
                 if (disposeManagedResources)
                 {
@@ -64,7 +64,7 @@ namespace MyClassLibrary.Process
 
         protected virtual void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MyTools.DisposeObject(backgroundWorker);
+            MyUtilities.DisposeObject(backgroundWorker);
             backgroundWorker = null;
             
             OnProcessComplete(new ProcessCompleteEventArgs(Error));

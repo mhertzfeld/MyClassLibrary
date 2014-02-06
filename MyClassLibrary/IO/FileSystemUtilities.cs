@@ -18,7 +18,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 fileLocked = false;
 
@@ -37,7 +37,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 fileLocked = false;
 
@@ -56,7 +56,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 directoryInfo = null;
 
@@ -75,7 +75,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 return false;
             }
@@ -92,7 +92,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 return false;
             }
@@ -109,7 +109,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 directoryInfo = null;
 
@@ -128,7 +128,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 directoryInfoArray = null;
 
@@ -147,7 +147,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 directoryPathArray = null;
 
@@ -166,7 +166,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 fileInfo = null;
 
@@ -185,7 +185,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 fileInfoArray = null;
 
@@ -204,7 +204,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 return false;
             }
@@ -221,7 +221,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 return false;
             }
@@ -249,7 +249,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 stringArray = null;
 
@@ -270,7 +270,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 stringArray = null;
 
@@ -294,7 +294,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 return false;
             }
@@ -311,7 +311,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
 
                 return false;
             }

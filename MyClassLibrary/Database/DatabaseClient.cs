@@ -125,9 +125,9 @@ namespace MyClassLibrary.Database
                     CloseConnection();
                 }
 
-                MyTools.DisposeObject(dbConnection);
+                MyUtilities.DisposeObject(dbConnection);
 
-                MyTools.DisposeObject(dbTransaction);                
+                MyUtilities.DisposeObject(dbTransaction);                
 
                 if (disposeManagedResources)
                 {
@@ -324,7 +324,7 @@ namespace MyClassLibrary.Database
                     returnState = false;
                 }
 
-                MyTools.DisposeObject(dataSet);
+                MyUtilities.DisposeObject(dataSet);
             }
 
             return returnState;
@@ -358,7 +358,7 @@ namespace MyClassLibrary.Database
         {
             Boolean returnState = RollbackTransaction(dbTransaction);
 
-            MyTools.DisposeObject(dbTransaction);
+            MyUtilities.DisposeObject(dbTransaction);
             dbTransaction = default(T_DbTransaction);
 
             return returnState;
@@ -884,7 +884,7 @@ namespace MyClassLibrary.Database
                         returnState = false;
                     }
 
-                    MyTools.DisposeObject(dataSet);
+                    MyUtilities.DisposeObject(dataSet);
                 }
                 else
                 {
@@ -899,7 +899,7 @@ namespace MyClassLibrary.Database
                 }
             }
 
-            MyTools.DisposeObject(dbConnection);
+            MyUtilities.DisposeObject(dbConnection);
 
             return returnState;
         }
@@ -961,7 +961,7 @@ namespace MyClassLibrary.Database
         //STATIC FUNCTION WRITE LOGS
         public static void WriteLogEntry(Exception exception)
         {
-            LoggingTools.WriteLogEntry<T_LogWriter>(exception);
+            LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
         }
     }
 }
