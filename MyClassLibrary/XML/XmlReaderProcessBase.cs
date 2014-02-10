@@ -59,11 +59,17 @@ namespace MyClassLibrary.XML
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(T_XmlObject));
 
+                XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
+                
                 using (XmlReader xmlReader = XmlReader.Create(fileInfo.OpenRead()))
                 {
                     if (xmlSerializer.CanDeserialize(xmlReader))
                     {
-                        T_XmlObject customerOrderDownloadXml = (T_XmlObject)xmlSerializer.Deserialize(xmlReader);
+                        XmlObject = (T_XmlObject)xmlSerializer.Deserialize(xmlReader);
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
             }

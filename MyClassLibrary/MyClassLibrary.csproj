@@ -106,6 +106,7 @@
     <Compile Include="ValueOutOfRangeException.cs" />
     <Compile Include="XML\XmlReaderProcessBase.cs" />
     <Compile Include="XML\XmlUtilities.cs" />
+    <Compile Include="XML\XmlValidationProcess.cs" />
     <Compile Include="XML\XmlWriterProcessBase.cs" />
   </ItemGroup>
   <ItemGroup>
