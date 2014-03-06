@@ -15,17 +15,33 @@ namespace MyClassLibrary.Database.SqlServer
         where T_LogWriter :  Logging.ILogWriter, new()
     {
         //FIELDS
+        protected Int32 bulkCopyTimeout;
+
         protected List<String> columnList;
+
+        protected String connectionString;
 
         protected DataTable dataTable;
 
         protected IEnumerable<T_DataObject> dataObjectEnumerable;
 
+        protected String destinationTableName;
 
-        //PROTECTED PROPERTIES
-        protected abstract Int32 BulkCopyTimeout { get; }
 
-        protected virtual List<String> ColumnList
+        //PROPERTIES
+        public virtual Int32 BulkCopyTimeout
+        {
+            get { return bulkCopyTimeout; }
+
+            set
+            {
+                if (value < 0) { throw new PropertySetToOutOfRangeValueException("BulkCopyTimeout"); }
+
+                bulkCopyTimeout = value;
+            }
+        }
+
+        public virtual List<String> ColumnList
         {
             get { return columnList; }
 
@@ -40,21 +56,24 @@ namespace MyClassLibrary.Database.SqlServer
             }
         }
 
-        protected abstract String ConnectionString { get; }
+        public virtual String ConnectionString
+        {
+            get { return connectionString; }
 
-        protected virtual DataTable DataTable
+            set
+            {
+                if (value == default(String)) { throw new PropertySetToDefaultException("ConnectionString"); }
+
+                connectionString = value;
+            }
+        }
+
+        public virtual DataTable DataTable
         {
             get { return dataTable; }
         }
 
-        protected abstract String DestinationTableName
-        {
-            get;
-        }
-
-
-        //PUBLIC PROPERTIES
-        public IEnumerable<T_DataObject> DataObjectEnumerable
+        public virtual IEnumerable<T_DataObject> DataObjectEnumerable
         {
             get { return dataObjectEnumerable; }
 
@@ -69,15 +88,33 @@ namespace MyClassLibrary.Database.SqlServer
             }
         }
 
+        public virtual String DestinationTableName
+        {
+            get { return destinationTableName; }
+
+            set
+            {
+                if (value == default(String)) { throw new PropertySetToDefaultException("DestinationTableName"); }
+
+                destinationTableName = value;
+            }
+        }
+
 
         //INITIALIZE
         public SqlServerDataObjectBulkCopyProcessBase()
         {
+            bulkCopyTimeout = 0;
+
             columnList = null;
+
+            connectionString = null;
 
             dataObjectEnumerable = null;
 
             dataTable = null;
+
+            destinationTableName = null;
         }
 
 
@@ -112,7 +149,7 @@ namespace MyClassLibrary.Database.SqlServer
 
 
         //FUNCTIONS
-        public void AddColumnsToDataTable()
+        protected virtual void AddColumnsToDataTable()
         {
             for (Int32 counter = 0; counter <= ColumnList.Count - 1; counter++)
             {
@@ -127,7 +164,7 @@ namespace MyClassLibrary.Database.SqlServer
             }
         }
 
-        public void AddRowsToDataTable()
+        protected virtual void AddRowsToDataTable()
         {
             foreach (T_DataObject dataObject in DataObjectEnumerable)
             {

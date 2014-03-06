@@ -15,7 +15,7 @@ namespace MyClassLibrary.Database
         where T_LogWriter : Logging.ILogWriter, new()
     {
         //CONSTANTS
-        protected const Int32 defaultTimeout = 900;
+        protected const Int32 defaultCommandTimeout = 90;
 
 
         //FIELDS
@@ -36,6 +36,13 @@ namespace MyClassLibrary.Database
         public virtual Int32 CommandTimeout
         {
             get { return commandTimeout; }
+
+            set
+            {
+                if (value < 0) { throw new PropertySetToOutOfRangeValueException("CommandTimeout"); }
+
+                commandTimeout = value;
+            }
         }
 
         public virtual ConnectionState ConnectionState
@@ -91,7 +98,7 @@ namespace MyClassLibrary.Database
         {
             disposed = false;
 
-            commandTimeout = defaultTimeout;
+            commandTimeout = 90;
 
             connectionString = null;
 
@@ -194,7 +201,7 @@ namespace MyClassLibrary.Database
             T_DbCommand dbCommand = new T_DbCommand();
             dbCommand.CommandText = sqlCommandText;
             dbCommand.Connection = dbConnection;
-            dbCommand.CommandTimeout = defaultTimeout;
+            dbCommand.CommandTimeout = CommandTimeout;
 
             return dbCommand;
         }
@@ -577,7 +584,7 @@ namespace MyClassLibrary.Database
 
             T_DbCommand dbCommand = new T_DbCommand();
             dbCommand.CommandText = sqlCommandText;
-            dbCommand.CommandTimeout = defaultTimeout;
+            dbCommand.CommandTimeout = defaultCommandTimeout;
 
             if (dataParameterArray != null)
             {
@@ -693,7 +700,7 @@ namespace MyClassLibrary.Database
 
             T_DbCommand dbCommand = new T_DbCommand();
             dbCommand.CommandText = sqlCommandText;
-            dbCommand.CommandTimeout = defaultTimeout;
+            dbCommand.CommandTimeout = defaultCommandTimeout;
 
             if (dataParameterArray != null)
             {
@@ -827,7 +834,7 @@ namespace MyClassLibrary.Database
 
             T_DbCommand dbCommand = new T_DbCommand();
             dbCommand.CommandText = sqlCommandText;
-            dbCommand.CommandTimeout = defaultTimeout;
+            dbCommand.CommandTimeout = defaultCommandTimeout;
 
             if (dataParameterArray != null)
             {

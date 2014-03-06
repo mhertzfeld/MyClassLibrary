@@ -1,5 +1,6 @@
 ﻿using MyClassLibrary.Logging;
 using System;
+using System.Collections.Generic;
 using System.Data;
 
 
@@ -24,7 +25,7 @@ namespace MyClassLibrary.Database
 
         protected CommandType databaseCommandType;
 
-        protected T_DataParameter[] dataParameterArray;
+        protected List<T_DataParameter> dataParameterList;
 
         protected IsolationLevel isolationLevel;
 
@@ -69,18 +70,15 @@ namespace MyClassLibrary.Database
             set { databaseCommandType = value; }
         }
 
-        public virtual T_DataParameter[] DataParameterArray
+        public virtual List<T_DataParameter> DataParameterList
         {
-            get { return dataParameterArray; }
+            get { return dataParameterList; }
 
             set
             {
-                if (value == default(T_DataParameter[]))
-                {
-                    throw new PropertySetToDefaultException("DataParameterArray");
-                }
+                if (value == default(List<T_DataParameter>)) { throw new PropertySetToDefaultException("DataParameterArray"); }
 
-                dataParameterArray = value;
+                dataParameterList = value;
             }
         }
 
@@ -110,13 +108,13 @@ namespace MyClassLibrary.Database
         //INITIALIZE
         public DataObjectReaderProcessBase()
         {
-            CommandTimeout = 30;
+            CommandTimeout = 90;
 
             connectionString = null;
 
             DatabaseCommandType = CommandType.Text;
 
-            dataParameterArray = null;
+            dataParameterList = null;
 
             IsolationLevel = IsolationLevel.ReadCommitted;
 
@@ -182,11 +180,15 @@ namespace MyClassLibrary.Database
 
         protected virtual T_DbCommand CreateDbCommand(T_DatabaseClient databaseClient)
         {
-            T_DbCommand dbCommand = databaseClient.CreateDatabaseCommand(SqlCommandText, DataParameterArray);
+            T_DbCommand dbCommand = new T_DbCommand();
+            dbCommand.CommandText = SqlCommandText;
             dbCommand.CommandTimeout = CommandTimeout;
             dbCommand.CommandType = DatabaseCommandType;
-            dbCommand.Connection = databaseClient.DatabaseConnetion;
-            dbCommand.Transaction = databaseClient.DbTransaction;
+            dbCommand.Connection = databaseClient.DatabaseConnetion;            
+            
+            if (!databaseClient.DbTransaction.Equals(default(T_DbTransaction))) { dbCommand.Transaction = databaseClient.DbTransaction; }
+
+            if (DataParameterList != null) { DataParameterList.ForEach(element => dbCommand.Parameters.Add(element)); }
 
             return dbCommand;
         }

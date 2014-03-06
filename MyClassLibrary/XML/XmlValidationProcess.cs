@@ -108,24 +108,15 @@ namespace MyClassLibrary.XML
 
             if (XmlFileInfo == default(FileInfo)) { throw new NullReferenceException("XmlFileInfo"); }
 
-            if (!BuildXmlSchema())
-            {
-                return false;
-            }
+            if (!BuildXmlSchema()) { return false; }
 
             BuildXmlReaderSettings();
 
             XmlReader xmlReader;
 
-            if (!CreateXmlReader(out xmlReader))
-            {
-                return false;
-            }
+            if (!CreateXmlReader(out xmlReader)) { return false; }
 
-            if (!ValidateXml(xmlReader))
-            {
-                return false;
-            }
+            if (!ValidateXml(xmlReader)) { return false; }
 
             return (XmlSeverityType == null);
         }
@@ -153,7 +144,7 @@ namespace MyClassLibrary.XML
         protected virtual void BuildXmlReaderSettings()
         {
             xmlReaderSettings = new XmlReaderSettings();
-            xmlReaderSettings.Schemas.Add(XmlSchema.Read(SchemaFileInfo.OpenRead(), new ValidationEventHandler(ValidationEventHandler)));
+            xmlReaderSettings.Schemas.Add(xmlSchema);
             xmlReaderSettings.ValidationType = ValidationType.Schema;
         }
 

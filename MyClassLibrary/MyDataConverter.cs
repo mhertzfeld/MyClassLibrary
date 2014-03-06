@@ -59,60 +59,75 @@ namespace MyClassLibrary
         public static Boolean? ToBooleanNullable(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return null;
-            }
+            { return null; }
             else
             {
-                return ToBoolean(obj);
+                Byte output;
+
+                if (Byte.TryParse(obj.ToString(), out output))
+                { return ToBoolean(output); }
+                else
+                { return null; }
             }
         }
 
         public static Byte ToByte(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return 0;
-            }
+            { return 0; }
             else
             {
-                return Convert.ToByte(obj);
+                Byte output;
+
+                if (Byte.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return 0; }
             }
         }
 
         public static Byte? ToByteNullable(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return null;
-            }
+            { return null; }
             else
             {
-                return Convert.ToByte(obj);
+                Byte output;
+
+                if (Byte.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return null; }
             }
         }
 
         public static DateTime ToDateTime(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return default(DateTime);
-            }
+            { return default(DateTime); }
             else
             {
-                return Convert.ToDateTime(obj);
+                DateTime output;
+
+                if (DateTime.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return default(DateTime); }
             }
         }
 
         public static DateTime? ToDateTimeNullable(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return null;
-            }
+            { return null; }
             else
             {
-                return Convert.ToDateTime(obj);
+                DateTime output;
+
+                if (DateTime.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return null; }
             }
         }
 
@@ -143,231 +158,255 @@ namespace MyClassLibrary
         public static Decimal ToDecimal(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return 0;
-            }
+            { return 0; }
             else
             {
-                return Convert.ToDecimal(obj);
+                Decimal output;
+
+                if (Decimal.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return 0; }
             }
         }
 
         public static Decimal? ToDecimalNullable(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return null;
-            }
+            { return null; }
             else
             {
-                return Convert.ToDecimal(obj);
+                Decimal output;
+
+                if (Decimal.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return null; }
             }
         }
 
         public static Int16 ToInt16(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return 0;
-            }
+            { return 0; }
             else
             {
-                return Convert.ToInt16(obj);
+                Int16 output;
+
+                if (Int16.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return 0; }
             }
         }
 
         public static Int16? ToInt16Nullable(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return null;
-            }
+            { return null; }
             else
             {
-                return Convert.ToInt16(obj);
+                Int16 output;
+
+                if (Int16.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return null; }
             }
         }
 
         public static Int32 ToInt32(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return 0;
-            }
+            { return 0; }
             else
             {
-                return Convert.ToInt32(obj);
+                Int32 output;
+
+                if (Int32.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return 0; }
             }
         }
 
         public static Int32? ToInt32Nullable(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return null;
-            }
+            { return null; }
             else
             {
-                return Convert.ToInt32(obj);
+                Int32 output;
+
+                if (Int32.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return null; }
             }
         }
 
         public static Int64 ToInt64(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return 0;
-            }
+            { return 0; }
             else
             {
-                return Convert.ToInt64(obj);
+                Int64 output;
+
+                if (Int64.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return 0; }
             }
         }
 
         public static Int64? ToInt64Nullable(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return null;
-            }
+            { return null; }
             else
             {
-                return Convert.ToInt64(obj);
+                Int64 output;
+
+                if (Int64.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return null; }
             }
         }
 
         public static String ToString(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return null;
-            }
+            { return null; }
             else
             {
                 String objString = obj.ToString().Trim();
 
                 if (objString.Length > 0)
-                {
-                    return objString;
-                }
+                { return objString; }
                 else
-                {
-                    return null;
-                }
+                { return null; }
             }
         }
 
         public static TimeSpan ToTimeSpan(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return default(TimeSpan);
-            }
+            { return default(TimeSpan); }
             else
             {
                 TimeSpan timeSpan;
 
                 if (TimeSpan.TryParse(obj.ToString(), out timeSpan))
-                {
-                    return timeSpan;
-                }
+                { return timeSpan; }
                 else
-                {
-                    return default(TimeSpan);
-                }
+                { return default(TimeSpan); }
             }
         }
 
         public static TimeSpan? ToTimeSpanNullable(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return null;
-            }
+            { return null; }
             else
             {
                 TimeSpan timeSpan;
 
                 if (TimeSpan.TryParse(obj.ToString(), out timeSpan))
-                {
-                    return timeSpan;
-                }
+                { return timeSpan; }
                 else
-                {
-                    return null;
-                }
+                { return null; }
             }
         }
 
         public static UInt16 ToUInt16(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return 0;
-            }
+            { return 0; }
             else
             {
-                return Convert.ToUInt16(obj);
+                UInt16 output;
+
+                if (UInt16.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return 0; }
             }
         }
 
         public static UInt16? ToUInt16Nullable(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return null;
-            }
+            { return null; }
             else
             {
-                return Convert.ToUInt16(obj);
+                UInt16 output;
+
+                if (UInt16.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return null; }
             }
         }
 
         public static UInt32 ToUInt32(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return 0;
-            }
+            { return 0; }
             else
             {
-                return Convert.ToUInt32(obj);
+                UInt32 output;
+
+                if (UInt32.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return 0; }
             }
         }
 
         public static UInt32? ToUInt32Nullable(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return null;
-            }
+            { return null; }
             else
             {
-                return Convert.ToUInt32(obj);
+                UInt32 output;
+
+                if (UInt32.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return null; }
             }
         }
 
         public static UInt64 ToUInt64(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return 0;
-            }
+            { return 0; }
             else
             {
-                return Convert.ToUInt64(obj);
+                UInt64 output;
+
+                if (UInt64.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return 0; }
             }
         }
 
         public static UInt64? ToUInt64Nullable(Object obj)
         {
             if (CheckForNull(obj))
-            {
-                return null;
-            }
+            { return null; }
             else
             {
-                return Convert.ToUInt64(obj);
+                UInt64 output;
+
+                if (UInt64.TryParse(obj.ToString(), out output))
+                { return output; }
+                else
+                { return null; }
             }
         }
     }

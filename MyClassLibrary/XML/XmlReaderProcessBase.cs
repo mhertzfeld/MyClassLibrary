@@ -58,19 +58,11 @@ namespace MyClassLibrary.XML
             try
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(T_XmlObject));
+                //Throws and catches File Not Found exception.  This is expected.  http://stackoverflow.com/questions/1127431/xmlserializer-giving-filenotfoundexception-at-constructor
 
-                XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
-                
                 using (XmlReader xmlReader = XmlReader.Create(fileInfo.OpenRead()))
                 {
-                    if (xmlSerializer.CanDeserialize(xmlReader))
-                    {
-                        XmlObject = (T_XmlObject)xmlSerializer.Deserialize(xmlReader);
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    XmlObject = (T_XmlObject)xmlSerializer.Deserialize(xmlReader);
                 }
             }
             catch (Exception exception)
