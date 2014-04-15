@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 
 
@@ -331,16 +332,12 @@ namespace MyClassLibrary.IO
             }
             catch (IOException ioException)
             {
-                uint exceptionCode = (uint)System.Runtime.InteropServices.Marshal.GetHRForException(ioException);
+                Int32 errorCode = (Int32)Marshal.GetHRForException(ioException) & ((1 << 16) - 1);
 
-                if ((exceptionCode == 0x80070020) || (exceptionCode == 0x80070021))
-                {
-                    return true;
-                }
+                if ((errorCode == 32) || (errorCode == 33))
+                { return true; }
                 else
-                {
-                    throw ioException;
-                }
+                { throw ioException; }
             }
         }
 
@@ -354,16 +351,12 @@ namespace MyClassLibrary.IO
             }
             catch (IOException ioException)
             {
-                uint exceptionCode = (uint)System.Runtime.InteropServices.Marshal.GetHRForException(ioException);
+                Int32 errorCode = (Int32)Marshal.GetHRForException(ioException) & ((1 << 16) - 1);
 
-                if ((exceptionCode == 0x80070020) || (exceptionCode == 0x80070021))
-                {
-                    return true;
-                }
+                if ((errorCode == 32) || (errorCode == 33))
+                { return true; }
                 else
-                {
-                    throw ioException;
-                }
+                { throw ioException; }
             }
         }
     }

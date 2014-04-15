@@ -53,16 +53,19 @@ namespace MyClassLibrary.XML
         //METHODS
         public override bool ProcessExecution()
         {
-            if (FileInfo == default(FileInfo)) { throw new NullReferenceException("FileInfo"); }
+            if (FileInfo == default(FileInfo)) 
+            { throw new NullReferenceException("FileInfo"); }
 
             try
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T_XmlObject));
-                //Throws and catches File Not Found exception.  This is expected.  http://stackoverflow.com/questions/1127431/xmlserializer-giving-filenotfoundexception-at-constructor
-
-                using (XmlReader xmlReader = XmlReader.Create(fileInfo.OpenRead()))
+                using (XmlReader xmlReader = XmlReader.Create(fileInfo.OpenRead(), CreateXmlReaderSettings()))
                 {
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(T_XmlObject));
+                    //Throws and catches File Not Found exception.  This is expected.  http://stackoverflow.com/questions/1127431/xmlserializer-giving-filenotfoundexception-at-constructor
+
                     XmlObject = (T_XmlObject)xmlSerializer.Deserialize(xmlReader);
+                   
+                    xmlReader.Close();
                 }
             }
             catch (Exception exception)
@@ -89,6 +92,14 @@ namespace MyClassLibrary.XML
 
 
         //FUNCTIONS
+        protected virtual XmlReaderSettings CreateXmlReaderSettings()
+        {
+            XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
+            xmlReaderSettings.CloseInput = true;
+
+            return xmlReaderSettings;
+        }
+
         protected override void ResetProcess()
         {
             base.ResetProcess();

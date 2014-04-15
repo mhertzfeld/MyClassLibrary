@@ -186,7 +186,7 @@ namespace MyClassLibrary.Database
             dbCommand.CommandType = DatabaseCommandType;
             dbCommand.Connection = databaseClient.DatabaseConnetion;            
             
-            if (!databaseClient.DbTransaction.Equals(default(T_DbTransaction))) { dbCommand.Transaction = databaseClient.DbTransaction; }
+            if (databaseClient.DbTransaction != null) { dbCommand.Transaction = databaseClient.DbTransaction; }
 
             if (DataParameterList != null) { DataParameterList.ForEach(element => dbCommand.Parameters.Add(element)); }
 

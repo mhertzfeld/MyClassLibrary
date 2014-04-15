@@ -12,24 +12,32 @@ namespace MyClassLibrary.IO
         where T_LogWriter : Logging.ILogWriter, new()
     {
         //FIELDS
+        protected String deliminter;
+
         protected String filePath;
 
         protected String[] fileDataStringArray;
 
 
-        //PROTECTED PROPERTIES
-        protected String[] FileDataStringArray
+        //PROPERTIES
+        public virtual String Deliminter
+        {
+            get { return deliminter; }
+
+            set
+            {
+                if (value == default(String))
+                { throw new PropertySetToDefaultException("Deliminter"); }
+
+                deliminter = value;
+            }
+        }
+
+        public virtual String[] FileDataStringArray
         {
             get { return fileDataStringArray; }
         }
 
-        protected abstract String Deliminter
-        {
-            get;
-        }
-
-
-        //PUBLIC PROPERTIES
         public virtual String FilePath
         {
             get { return filePath; }
@@ -49,9 +57,11 @@ namespace MyClassLibrary.IO
         //INITIALIZE
         public DataObjectReaderProcessBase()
         {
-            filePath = null;
+            deliminter = null;
 
             fileDataStringArray = null;
+
+            filePath = null;
         }
 
 

@@ -17,8 +17,6 @@ namespace MyClassLibrary.XML
 
         protected FileInfo xmlFileInfo;
 
-        protected XmlReaderSettings xmlReaderSettings;
-
         protected XmlSchema xmlSchema;
 
         protected XmlSeverityType? xmlSeverityType;
@@ -55,13 +53,6 @@ namespace MyClassLibrary.XML
             }
         }
 
-        public virtual XmlReaderSettings XmlReaderSettings
-        {
-            get { return xmlReaderSettings; }
-
-            protected set { xmlReaderSettings = value; }
-        }
-
         public virtual XmlSchema XmlSchema
         {
             get { return XmlSchema; }
@@ -84,8 +75,6 @@ namespace MyClassLibrary.XML
             
             xmlFileInfo = null;
 
-            xmlReaderSettings = null;
-
             xmlSchema = null;
 
             xmlSeverityType = null;
@@ -104,19 +93,24 @@ namespace MyClassLibrary.XML
         //METHODS
         public override bool ProcessExecution()
         {
-            if (SchemaFileInfo == default(FileInfo)) { throw new NullReferenceException("SchemaFileInfo"); }
+            if (SchemaFileInfo == default(FileInfo)) 
+            { throw new NullReferenceException("SchemaFileInfo"); }
 
-            if (XmlFileInfo == default(FileInfo)) { throw new NullReferenceException("XmlFileInfo"); }
+            if (XmlFileInfo == default(FileInfo)) 
+            { throw new NullReferenceException("XmlFileInfo"); }
 
-            if (!BuildXmlSchema()) { return false; }
-
-            BuildXmlReaderSettings();
+            if (!LoadXmlSchema()) 
+            { return false; }
 
             XmlReader xmlReader;
 
-            if (!CreateXmlReader(out xmlReader)) { return false; }
+            if (!BuildXmlReader(out xmlReader)) 
+            { return false; }
 
-            if (!ValidateXml(xmlReader)) { return false; }
+            if (!ValidateXml(xmlReader)) 
+            { return false; }
+
+            MyUtilities.DisposeObject(xmlReader);
 
             return (XmlSeverityType == null);
         }
@@ -141,14 +135,35 @@ namespace MyClassLibrary.XML
         
 
         //FUNCTIONS
-        protected virtual void BuildXmlReaderSettings()
+        protected virtual Boolean BuildXmlReader(out XmlReader xmlReader)
         {
-            xmlReaderSettings = new XmlReaderSettings();
-            xmlReaderSettings.Schemas.Add(xmlSchema);
-            xmlReaderSettings.ValidationType = ValidationType.Schema;
+            try
+            {
+                xmlReader = XmlReader.Create(XmlFileInfo.OpenRead(), CreateXmlReaderSettings());
+            }
+            catch (Exception exception)
+            {
+                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+
+                xmlReader = null;
+
+                return false;
+            }
+
+            return true;
         }
 
-        protected virtual Boolean BuildXmlSchema()
+        protected virtual XmlReaderSettings CreateXmlReaderSettings()
+        {
+            XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
+            xmlReaderSettings.CloseInput = true;
+            xmlReaderSettings.Schemas.Add(xmlSchema);
+            xmlReaderSettings.ValidationType = ValidationType.Schema;
+
+            return xmlReaderSettings;
+        }
+
+        protected virtual Boolean LoadXmlSchema()
         {
             try
             {
@@ -166,29 +181,9 @@ namespace MyClassLibrary.XML
             return true;
         }
 
-        protected virtual Boolean CreateXmlReader(out XmlReader xmlReader)
-        {
-            try
-            {
-                xmlReader = XmlReader.Create(XmlFileInfo.OpenRead(), xmlReaderSettings);
-            }
-            catch (Exception exception)
-            {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
-
-                xmlReader = null;
-
-                return false;
-            }
-
-            return true;
-        }
-
         protected override void ResetProcess()
         {
             base.ResetProcess();
-
-            xmlReaderSettings = null;
 
             xmlSchema = null;
 
