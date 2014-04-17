@@ -1,14 +1,13 @@
-﻿using MyClassLibrary.Logging;
-using System;
+﻿using System;
 
 
 namespace MyClassLibrary.Database
 {
-    public abstract class DataObjectDictionaryReaderProcessBase<T_Database, T_DataObject, T_DataObjectDictionary, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter> 
-        : Database.DataObjectReaderProcessBase<T_Database, T_DataObject, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter>
+    public abstract class DataObjectDictionaryReaderProcessBase<T_Database, T_DataObject, T_DataObjectDictionary, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter, T_Key> 
+        : Database.ReaderProcessBase<T_Database, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter>
         where T_Database : Database.DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter>, new()
-        where T_DataObject : Database.IDataObject, new()
-        where T_DataObjectDictionary : Data.IDataObjectDictionary<T_DataObject>, new()
+        where T_DataObject : new()
+        where T_DataObjectDictionary : System.Collections.Generic.IDictionary<T_Key, T_DataObject>, new()
         where T_DataParameter : System.Data.IDataParameter
         where T_DataReader : System.Data.IDataReader
         where T_DbCommand : System.Data.IDbCommand, new()
@@ -16,15 +15,18 @@ namespace MyClassLibrary.Database
         where T_DbDataAdapter : System.Data.IDbDataAdapter, new()
         where T_DbTransaction : System.Data.IDbTransaction
         where T_LogWriter : Logging.ILogWriter, new()
+        where T_Key : new ()
     {
         //FIELDS
         protected T_DataObjectDictionary dataObjectDictionary;
 
 
-        //PUBLIC PROPERTIES
+        //PROPERTIES
         public virtual T_DataObjectDictionary DataObjectDictionary
         {
             get { return dataObjectDictionary; }
+
+            protected set { dataObjectDictionary = value; }
         }
 
 
@@ -35,40 +37,35 @@ namespace MyClassLibrary.Database
         }
 
 
-        //FINALIZE
-        protected override void Dispose(Boolean disposeManagedResources)
-        {
-            if (!disposed)
-            {
-                if (disposeManagedResources)
-                {
-                    dataObjectDictionary = default(T_DataObjectDictionary);
-                }
-            }
-
-            base.Dispose(disposeManagedResources);
-        }
-
-
-        //METHODS
-        public override bool ProcessExecution()
-        {
-            return base.ProcessExecution();
-        }
-
-
         //FUNCTIONS
-        protected override void AddDataObject(T_DataObject dataObject)
+        protected abstract void AddDataObjectToDataObjectDictionary(T_DataObject dataObject);
+
+        protected abstract T_DataObject CreateDataObject(T_DataReader dataReader);
+
+        protected override bool ExecuteDataReaderCommand(T_DbCommand dbCommand)
         {
-            dataObjectDictionary.Add(dataObject);
+            DataObjectDictionary = new T_DataObjectDictionary();
+
+            if (base.ExecuteDataReaderCommand(dbCommand))
+            { return true; }
+            else
+            {
+                DataObjectDictionary = default(T_DataObjectDictionary);
+
+                return false;
+            }
+        }
+
+        protected override void ProcessRecord(T_DataReader dataReader)
+        {
+            AddDataObjectToDataObjectDictionary(CreateDataObject(dataReader));
         }
 
         protected override void ResetProcess()
         {
             base.ResetProcess();
 
-            dataObjectDictionary = default(T_DataObjectDictionary);
-            dataObjectDictionary = new T_DataObjectDictionary();
+            DataObjectDictionary = default(T_DataObjectDictionary);
         }
     }
 }

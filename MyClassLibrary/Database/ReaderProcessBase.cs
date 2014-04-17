@@ -6,8 +6,8 @@ using System.Data;
 
 namespace MyClassLibrary.Database
 {
-    public abstract class HashSetReaderProcessBase<T_DatabaseClient, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_HashSetType, T_LogWriter>
-        : Process.ProcessWorkerBase
+    public abstract class ReaderProcessBase<T_DatabaseClient, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter> 
+        : MyClassLibrary.Process.ProcessWorkerBase
         where T_DatabaseClient : Database.DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter>, new()
         where T_DataParameter : System.Data.IDataParameter
         where T_DataReader : System.Data.IDataReader
@@ -18,62 +18,106 @@ namespace MyClassLibrary.Database
         where T_LogWriter : Logging.ILogWriter, new()
     {
         //FIELDS
-        protected HashSet<T_HashSetType> hashSet;
+        protected Int32 commandTimeout;
+
+        protected String connectionString;
+
+        protected CommandType databaseCommandType;
+
+        protected List<T_DataParameter> dataParameterList;
+
+        protected IsolationLevel isolationLevel;
+
+        protected String sqlCommandText;
 
 
-        //PROTECTED PROPERTIES
-        protected abstract Int32 CommandTimeout
+        //PROPERTIES
+        public virtual Int32 CommandTimeout
         {
-            get;
+            get { return commandTimeout; }
+
+            set
+            {
+                if (value < 0)
+                {
+                    throw new PropertySetToOutOfRangeValueException("CommandTimeout");
+                }
+
+                commandTimeout = value;
+            }
         }
 
-        protected abstract String ConnectionString
+        public virtual String ConnectionString
         {
-            get;
+            get { return connectionString; }
+
+            set
+            {
+                if (value == default(String))
+                {
+                    throw new PropertySetToDefaultException("ConnectionString");
+                }
+
+                connectionString = value;
+            }
         }
 
-        protected virtual CommandType DatabaseCommandType
+        public virtual CommandType DatabaseCommandType
         {
-            get { return CommandType.Text; }
+            get { return databaseCommandType; }
+
+            set { databaseCommandType = value; }
         }
 
-        protected virtual T_DataParameter[] DataParameterArray
+        public virtual List<T_DataParameter> DataParameterList
         {
-            get { return null; }
+            get { return dataParameterList; }
+
+            set
+            {
+                if (value == default(List<T_DataParameter>)) { throw new PropertySetToDefaultException("DataParameterArray"); }
+
+                dataParameterList = value;
+            }
         }
 
-        protected abstract String SqlCommandText
+        public virtual IsolationLevel IsolationLevel
         {
-            get;
+            get { return isolationLevel; }
+
+            set { isolationLevel = value; }
         }
 
-
-        //PUBLIC PROPERTIES
-        public virtual HashSet<T_HashSetType> HashSet
+        public virtual String SqlCommandText
         {
-            get { return hashSet; }
+            get { return sqlCommandText; }
+
+            set
+            {
+                if (value == default(String))
+                {
+                    throw new PropertySetToDefaultException("SqlCommandText");
+                }
+
+                sqlCommandText = value;
+            }
         }
 
 
         //INITIALIZE
-        public HashSetReaderProcessBase()
+        public ReaderProcessBase()
         {
-            hashSet = null;
-        }
+            CommandTimeout = 90;
 
+            connectionString = null;
 
-        //FINALIZE
-        protected override void Dispose(bool disposeManagedResources)
-        {
-            if (!disposed)
-            {
-                if (disposeManagedResources)
-                {
-                    hashSet = null;
-                }
-            }
+            DatabaseCommandType = CommandType.Text;
 
-            base.Dispose(disposeManagedResources);
+            dataParameterList = null;
+
+            IsolationLevel = IsolationLevel.ReadCommitted;
+
+            sqlCommandText = null;
         }
 
 
@@ -82,11 +126,12 @@ namespace MyClassLibrary.Database
         {
             Boolean returnState = false;
 
-            hashSet = new HashSet<T_HashSetType>();
+            ResetProcess();
 
             using (T_DatabaseClient databaseClient = new T_DatabaseClient())
             {
                 databaseClient.ConnectionString = ConnectionString;
+                databaseClient.IsolationLevel = IsolationLevel;
 
                 if (databaseClient.OpenConnection())
                 {
@@ -111,7 +156,7 @@ namespace MyClassLibrary.Database
             }
 
             error = !returnState;
-            
+
             completed = true;
 
             return returnState;
@@ -119,18 +164,17 @@ namespace MyClassLibrary.Database
 
 
         //FUNCTIONS
-        protected virtual void AddToHashSet(T_DataReader dataReader)
-        {
-            throw new NotImplementedException();
-        }
-
         protected virtual T_DbCommand CreateDbCommand(T_DatabaseClient databaseClient)
         {
-            T_DbCommand dbCommand = databaseClient.CreateDatabaseCommand(SqlCommandText, DataParameterArray);
+            T_DbCommand dbCommand = new T_DbCommand();
+            dbCommand.CommandText = SqlCommandText;
             dbCommand.CommandTimeout = CommandTimeout;
             dbCommand.CommandType = DatabaseCommandType;
-            dbCommand.Connection = databaseClient.DatabaseConnetion;
-            dbCommand.Transaction = databaseClient.DbTransaction;
+            dbCommand.Connection = databaseClient.DatabaseConnetion;            
+            
+            if (databaseClient.DbTransaction != null) { dbCommand.Transaction = databaseClient.DbTransaction; }
+
+            if (DataParameterList != null) { DataParameterList.ForEach(element => dbCommand.Parameters.Add(element)); }
 
             return dbCommand;
         }
@@ -139,7 +183,7 @@ namespace MyClassLibrary.Database
         {
             while (dataReader.Read())
             {
-                AddToHashSet(dataReader);
+                ProcessRecord(dataReader);
             }
         }
 
@@ -183,12 +227,7 @@ namespace MyClassLibrary.Database
             return databaseClient.BeginTransaction();
         }
 
-        protected override void ResetProcess()
-        {
-            hashSet = null;
-
-            base.ResetProcess();
-        }
+        protected abstract void ProcessRecord(T_DataReader dataReader);
     }
 }
 
