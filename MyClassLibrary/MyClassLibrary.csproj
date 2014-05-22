@@ -63,7 +63,7 @@
     <Compile Include="Database\DataObjectWriterProcessBase.cs" />
     <Compile Include="Database\Odbc\OdbcDatabaseClient.cs" />
     <Compile Include="Database\Odbc\OdbcDataObjectDictionaryReaderProcessBase.cs" />
-    <Compile Include="Database\Odbc\OdbcDataObjectListReaderProcessBase.cs" />
+    <Compile Include="Database\Odbc\OdbcDataObjectCollectionReaderProcessBase.cs" />
     <Compile Include="Database\Odbc\OdbcDataObjectReaderProcessBase.cs" />
     <Compile Include="Database\Odbc\OdbcDataObjectWriterProcessBase.cs" />
     <Compile Include="Database\SqlServer\SqlReaderProcessBase.cs" />
