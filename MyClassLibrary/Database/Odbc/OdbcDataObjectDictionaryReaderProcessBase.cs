@@ -9,7 +9,6 @@ namespace MyClassLibrary.Database.Odbc
         where T_DataObject : new()
         where T_DataObjectDictionary : System.Collections.Generic.IDictionary<T_Key, T_DataObject>, new()
         where T_LogWriter : Logging.ILogWriter, new()
-        where T_Key : new()
 
     {
 

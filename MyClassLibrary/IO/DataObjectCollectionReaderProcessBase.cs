@@ -1,44 +1,46 @@
-﻿using System;
+﻿using MyClassLibrary.Data;
+using System;
 
 
 namespace MyClassLibrary.IO
 {
-    public abstract class DataObjectDictionaryReaderProcessBase<T_DataObject, T_DataObjectDictionary, T_LogWriter, T_Key>
+    public abstract class DataObjectCollectionReaderProcessBase<T_DataObject, T_DataObjectCollection, T_LogWriter>
         : IO.ReaderProcessBase<T_LogWriter>
         where T_DataObject : new()
-        where T_DataObjectDictionary : System.Collections.Generic.IDictionary<T_Key, T_DataObject>, new()
+        where T_DataObjectCollection : System.Collections.Generic.ICollection<T_DataObject>, new()
         where T_LogWriter : Logging.ILogWriter, new()
     {
         //FIELDS
-        protected T_DataObjectDictionary dataObjectDictionary;
+        protected T_DataObjectCollection dataObjectCollection;
 
 
         //PROPERTIES
-        public virtual T_DataObjectDictionary DataObjectDictionary
+        public virtual T_DataObjectCollection DataObjectCollection
         {
-            get { return dataObjectDictionary; }
+            get { return dataObjectCollection; }
 
-            protected set { dataObjectDictionary = value; }
+            protected set { dataObjectCollection = value; }
         }
 
 
         //INITIALIZE
-        public DataObjectDictionaryReaderProcessBase()
+        public DataObjectCollectionReaderProcessBase()
         {
-            dataObjectDictionary = default(T_DataObjectDictionary);
+            dataObjectCollection = default(T_DataObjectCollection);
         }
-        
+
 
         //FUNCTIONS
-        protected abstract void AddDataObjectToDataObjectDictionary(T_DataObject dataObject);
-
-        protected abstract T_DataObject CreateDataObject(String line);
+        protected virtual void AddDataObject(T_DataObject dataObject)
+        {
+            dataObjectCollection.Add(dataObject);
+        }
 
         protected override bool ReadFile(out string[] fileData)
         {
             if (base.ReadFile(out fileData))
             {
-                DataObjectDictionary = new T_DataObjectDictionary();
+                DataObjectCollection = new T_DataObjectCollection();
 
                 return true;
             }
@@ -46,16 +48,11 @@ namespace MyClassLibrary.IO
             { return false; }
         }
 
-        protected override void ProcessLine(string line)
-        {
-            AddDataObjectToDataObjectDictionary(CreateDataObject(line));
-        }
-
         protected override void ResetProcess()
         {
             base.ResetProcess();
 
-            DataObjectDictionary = default(T_DataObjectDictionary);
+            DataObjectCollection = default(T_DataObjectCollection);
         }
     }
 }

@@ -113,7 +113,7 @@ namespace MyClassLibrary.Database
 
             DatabaseCommandType = CommandType.Text;
 
-            dataParameterList = null;
+            dataParameterList = new List<T_DataParameter>();
 
             IsolationLevel = IsolationLevel.ReadCommitted;
 
@@ -174,7 +174,7 @@ namespace MyClassLibrary.Database
             
             if (databaseClient.DbTransaction != null) { dbCommand.Transaction = databaseClient.DbTransaction; }
 
-            if (DataParameterList != null) { DataParameterList.ForEach(element => dbCommand.Parameters.Add(element)); }
+            if (DataParameterList.Count > 0) { DataParameterList.ForEach(element => dbCommand.Parameters.Add(element)); }
 
             return dbCommand;
         }

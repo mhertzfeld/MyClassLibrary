@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Text;
 
 
 namespace MyClassLibrary
@@ -15,6 +17,14 @@ namespace MyClassLibrary
             {
                 return (obj == DBNull.Value);
             }
+        }
+
+        private static string ToAscii128(String toConevertString)
+        {
+            if (toConevertString == null)
+            { return null; }
+            else
+            { return toConevertString.Normalize(NormalizationForm.FormKD).Where(x => x < 128).ToArray().ToString(); }
         }
 
         public static Boolean ToBoolean(Object obj)

@@ -35,9 +35,23 @@ namespace MyClassLibrary.Database
         }
 
 
+        //METHODS
+        public override bool ProcessExecution()
+        {
+            if (base.ProcessExecution())
+            { return true; }
+            else
+            {
+                DataObject = default(T_DataObject);
+
+                return false;
+            }
+        }
+
+
         //FUNCTIONS
         protected abstract T_DataObject CreateDataObject(T_DataReader dataReader);
-
+        
         protected override void ProcessRecord(T_DataReader dataReader)
         {
             DataObject = CreateDataObject(dataReader);

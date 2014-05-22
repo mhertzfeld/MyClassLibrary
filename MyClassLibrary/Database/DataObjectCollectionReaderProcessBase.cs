@@ -48,14 +48,7 @@ namespace MyClassLibrary.Database
         {
             DataObjectCollection = new T_DataObjectCollection();
 
-            if (base.ExecuteDataReaderCommand(dbCommand))
-            { return true; }
-            else
-            {
-                DataObjectCollection = default(T_DataObjectCollection);
-
-                return false;
-            }
+            return base.ExecuteDataReaderCommand(dbCommand);
         }
 
         protected override void ProcessRecord(T_DataReader dataReader)

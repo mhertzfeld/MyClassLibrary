@@ -15,7 +15,6 @@ namespace MyClassLibrary.Database
         where T_DbDataAdapter : System.Data.IDbDataAdapter, new()
         where T_DbTransaction : System.Data.IDbTransaction
         where T_LogWriter : Logging.ILogWriter, new()
-        where T_Key : new ()
     {
         //FIELDS
         protected T_DataObjectDictionary dataObjectDictionary;
@@ -46,14 +45,7 @@ namespace MyClassLibrary.Database
         {
             DataObjectDictionary = new T_DataObjectDictionary();
 
-            if (base.ExecuteDataReaderCommand(dbCommand))
-            { return true; }
-            else
-            {
-                DataObjectDictionary = default(T_DataObjectDictionary);
-
-                return false;
-            }
+            return base.ExecuteDataReaderCommand(dbCommand);
         }
 
         protected override void ProcessRecord(T_DataReader dataReader)
