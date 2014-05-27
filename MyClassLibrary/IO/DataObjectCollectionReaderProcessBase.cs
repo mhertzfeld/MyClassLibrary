@@ -6,7 +6,6 @@ namespace MyClassLibrary.IO
 {
     public abstract class DataObjectCollectionReaderProcessBase<T_DataObject, T_DataObjectCollection, T_LogWriter>
         : IO.ReaderProcessBase<T_LogWriter>
-        //where T_DataObject : new()
         where T_DataObjectCollection : System.Collections.Generic.ICollection<T_DataObject>, new()
         where T_LogWriter : Logging.ILogWriter, new()
     {
@@ -34,6 +33,15 @@ namespace MyClassLibrary.IO
         protected virtual void AddDataObject(T_DataObject dataObject)
         {
             dataObjectCollection.Add(dataObject);
+        }
+
+        protected abstract T_DataObject CreateDataObject(String[] stringArray);
+
+        protected override void ProcessLine(string line)
+        {
+            T_DataObject dataObject = CreateDataObject(line.Split(Deliminter.ToCharArray()));
+
+            AddDataObject(dataObject);
         }
 
         protected override bool ReadFile(out string[] fileData)

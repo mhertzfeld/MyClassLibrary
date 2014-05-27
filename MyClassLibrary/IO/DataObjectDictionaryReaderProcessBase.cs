@@ -5,7 +5,6 @@ namespace MyClassLibrary.IO
 {
     public abstract class DataObjectDictionaryReaderProcessBase<T_DataObject, T_DataObjectDictionary, T_LogWriter, T_Key>
         : IO.ReaderProcessBase<T_LogWriter>
-        //where T_DataObject : new()
         where T_DataObjectDictionary : System.Collections.Generic.IDictionary<T_Key, T_DataObject>, new()
         where T_LogWriter : Logging.ILogWriter, new()
     {
@@ -32,7 +31,7 @@ namespace MyClassLibrary.IO
         //FUNCTIONS
         protected abstract void AddDataObjectToDataObjectDictionary(T_DataObject dataObject);
 
-        protected abstract T_DataObject CreateDataObject(String line);
+        protected abstract T_DataObject CreateDataObject(String[] stringArray);
 
         protected override bool ReadFile(out string[] fileData)
         {
@@ -48,7 +47,9 @@ namespace MyClassLibrary.IO
 
         protected override void ProcessLine(string line)
         {
-            AddDataObjectToDataObjectDictionary(CreateDataObject(line));
+            T_DataObject dataObject = CreateDataObject(line.Split(Deliminter.ToCharArray()));
+
+            AddDataObjectToDataObjectDictionary(dataObject);
         }
 
         protected override void ResetProcess()

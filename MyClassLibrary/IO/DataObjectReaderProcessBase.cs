@@ -5,7 +5,6 @@ namespace MyClassLibrary.IO
 {
     public abstract class DataObjectReaderProcessBase<T_DataObject, T_LogWriter>
         : ReaderProcessBase<T_LogWriter>
-        //where T_DataObject : new()
         where T_LogWriter : Logging.ILogWriter, new()
     {
         //FIELDS
@@ -29,11 +28,11 @@ namespace MyClassLibrary.IO
 
 
         //FUNCTIONS
-        protected abstract T_DataObject CreateDataObject(String lineFileDataString);
+        protected abstract T_DataObject CreateDataObject(String[] stringArray);
 
         protected override void ProcessLine(string line)
         {
-            DataObject = CreateDataObject(line);
+            DataObject = CreateDataObject(line.Split(Deliminter.ToCharArray()));
         }
 
         protected override void ResetProcess()
