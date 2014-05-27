@@ -6,7 +6,7 @@ namespace MyClassLibrary.IO
 {
     public abstract class DataObjectCollectionReaderProcessBase<T_DataObject, T_DataObjectCollection, T_LogWriter>
         : IO.ReaderProcessBase<T_LogWriter>
-        where T_DataObject : new()
+        //where T_DataObject : new()
         where T_DataObjectCollection : System.Collections.Generic.ICollection<T_DataObject>, new()
         where T_LogWriter : Logging.ILogWriter, new()
     {
