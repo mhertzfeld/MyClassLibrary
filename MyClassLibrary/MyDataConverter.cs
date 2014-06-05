@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -10,13 +12,9 @@ namespace MyClassLibrary
         public static Boolean CheckForNull(Object obj)
         {
             if (obj == null)
-            {
-                return true;
-            }
+            { return true; }
             else
-            {
-                return (obj == DBNull.Value);
-            }
+            { return (obj == DBNull.Value); }
         }
 
         private static string ToAscii128(String toConevertString)
@@ -66,358 +64,500 @@ namespace MyClassLibrary
             return result;
         }
 
-        public static Boolean? ToBooleanNullable(Object obj)
+        public static Boolean? ToBooleanNullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            Boolean? output;
+
             if (CheckForNull(obj))
             { return null; }
             else
             {
-                Byte output;
+                Byte? temp = ToByteNullable(obj, numberStyles);
 
-                if (Byte.TryParse(obj.ToString(), out output))
-                { return ToBoolean(output); }
+                if (temp == null)
+                { output = null; }
                 else
-                { return null; }
+                { output = ToBoolean(temp); }
             }
+
+            return output;
         }
 
-        public static Byte ToByte(Object obj)
+        public static Byte ToByte(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            Byte output;
+
             if (CheckForNull(obj))
-            { return 0; }
+            { output = 0; }
             else
             {
-                Byte output;
+                try
+                {
+                    output = Byte.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (Byte.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return 0; }
+                    output = 0;
+                }
             }
+
+            return output;
         }
 
-        public static Byte? ToByteNullable(Object obj)
+        public static Byte? ToByteNullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            Byte? output;
+
             if (CheckForNull(obj))
-            { return null; }
+            { output = null; }
             else
             {
-                Byte output;
+                try
+                {
+                    output = Byte.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (Byte.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return null; }
+                    output = null;
+                }
             }
+
+            return output;
         }
 
         public static DateTime ToDateTime(Object obj)
         {
+            DateTime output;
+
             if (CheckForNull(obj))
-            { return default(DateTime); }
+            { output = default(DateTime); }
             else
             {
-                DateTime output;
+                try
+                {
+                    output = DateTime.Parse(obj.ToString());
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (DateTime.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return default(DateTime); }
+                    output = default(DateTime);
+                }
             }
+
+            return output;
         }
 
         public static DateTime? ToDateTimeNullable(Object obj)
         {
-            if (CheckForNull(obj))
-            { return null; }
+            DateTime? output;
+
+            if (MyDataConverter.CheckForNull(obj))
+            { output = null; }
             else
             {
-                DateTime output;
+                try
+                {
+                    output = DateTime.Parse(obj.ToString());
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (DateTime.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return null; }
+                    output = null;
+                }
             }
+
+            return output;
         }
 
-        public static DateTime ToDateTimeFromOADate(Object obj)
+        public static Decimal ToDecimal(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            Decimal output;
+
             if (CheckForNull(obj))
-            {
-                return default(DateTime);
-            }
+            { output = 0; }
             else
             {
-                return DateTime.FromOADate(Convert.ToDouble(obj));
+                try
+                {
+                    output = Decimal.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
+
+                    output = 0;
+                }
             }
+
+            return output;
         }
 
-        public static DateTime? ToDateTimeNullableFromOADate(Object obj)
+        public static Decimal? ToDecimalNullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            Decimal? output;
+
             if (CheckForNull(obj))
-            {
-                return null;
-            }
+            { output = null; }
             else
             {
-                return DateTime.FromOADate(Convert.ToDouble(obj));
+                try
+                {
+                    output = Decimal.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
+
+                    output = null;
+                }
             }
+
+            return output;
         }
 
-        public static Decimal ToDecimal(Object obj)
+        public static Int16 ToInt16(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            Int16 output;
+
             if (CheckForNull(obj))
-            { return 0; }
+            { output = 0; }
             else
             {
-                Decimal output;
+                try
+                {
+                    output = Int16.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (Decimal.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return 0; }
+                    output = 0;
+                }
             }
+
+            return output;
         }
 
-        public static Decimal? ToDecimalNullable(Object obj)
+        public static Int16? ToInt16Nullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            Int16? output;
+
             if (CheckForNull(obj))
-            { return null; }
+            { output = null; }
             else
             {
-                Decimal output;
+                try
+                {
+                    output = Int16.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (Decimal.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return null; }
+                    output = null;
+                }
             }
+
+            return output;
         }
 
-        public static Int16 ToInt16(Object obj)
+        public static Int32 ToInt32(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            Int32 output;
+
             if (CheckForNull(obj))
-            { return 0; }
+            { output = 0; }
             else
             {
-                Int16 output;
+                try
+                {
+                    output = Int32.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (Int16.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return 0; }
+                    output = 0;
+                }
             }
+
+            return output;
         }
 
-        public static Int16? ToInt16Nullable(Object obj)
+        public static Int32? ToInt32Nullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            Int32? output;
+
             if (CheckForNull(obj))
-            { return null; }
+            { output = null; }
             else
             {
-                Int16 output;
+                try
+                {
+                    output = Int32.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (Int16.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return null; }
+                    output = null;
+                }
             }
+
+            return output;
         }
 
-        public static Int32 ToInt32(Object obj)
+        public static Int64 ToInt64(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            Int64 output;
+
             if (CheckForNull(obj))
-            { return 0; }
+            { output = 0; }
             else
             {
-                Int32 output;
+                try
+                {
+                    output = Int64.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (Int32.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return 0; }
+                    output = 0;
+                }
             }
+
+            return output;
         }
 
-        public static Int32? ToInt32Nullable(Object obj)
+        public static Int64? ToInt64Nullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            Int64? output;
+
             if (CheckForNull(obj))
-            { return null; }
+            { output = null; }
             else
             {
-                Int32 output;
+                try
+                {
+                    output = Int64.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (Int32.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return null; }
+                    output = null;
+                }
             }
+
+            return output;
         }
 
-        public static Int64 ToInt64(Object obj)
+        public static String ToString(Object obj, Boolean trim = true)
         {
+            String output;
+
             if (CheckForNull(obj))
-            { return 0; }
+            { output = null; }
             else
             {
-                Int64 output;
+                output = (trim ? obj.ToString().Trim() : obj.ToString());
 
-                if (Int64.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return 0; }
+                if (output.Length == 0)
+                { output = null; }                
             }
+
+            return output;
         }
 
-        public static Int64? ToInt64Nullable(Object obj)
+        public static TimeSpan ToTimeSpan(Object obj, String format = null)
         {
+            TimeSpan output;
+
             if (CheckForNull(obj))
-            { return null; }
+            { output = default(TimeSpan); }
             else
             {
-                Int64 output;
+                try
+                {
+                    output = TimeSpan.Parse(obj.ToString());
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (Int64.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return null; }
+                    output = default(TimeSpan);
+                }
             }
-        }
 
-        public static String ToString(Object obj)
-        {
-            if (CheckForNull(obj))
-            { return null; }
-            else
-            {
-                String objString = obj.ToString().Trim();
-
-                if (objString.Length > 0)
-                { return objString; }
-                else
-                { return null; }
-            }
-        }
-
-        public static TimeSpan ToTimeSpan(Object obj)
-        {
-            if (CheckForNull(obj))
-            { return default(TimeSpan); }
-            else
-            {
-                TimeSpan timeSpan;
-
-                if (TimeSpan.TryParse(obj.ToString(), out timeSpan))
-                { return timeSpan; }
-                else
-                { return default(TimeSpan); }
-            }
+            return output;
         }
 
         public static TimeSpan? ToTimeSpanNullable(Object obj)
         {
+            TimeSpan? output;
+
             if (CheckForNull(obj))
-            { return null; }
+            { output = null; }
             else
             {
-                TimeSpan timeSpan;
+                try
+                {
+                    output = TimeSpan.Parse(obj.ToString());
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (TimeSpan.TryParse(obj.ToString(), out timeSpan))
-                { return timeSpan; }
-                else
-                { return null; }
+                    output = null;
+                }
             }
+
+            return output;
         }
 
-        public static UInt16 ToUInt16(Object obj)
+        public static UInt16 ToUInt16(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            UInt16 output;
+
             if (CheckForNull(obj))
-            { return 0; }
+            { output = 0; }
             else
             {
-                UInt16 output;
+                try
+                {
+                    output = UInt16.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (UInt16.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return 0; }
+                    output = 0;
+                }
             }
+
+            return output;
         }
 
-        public static UInt16? ToUInt16Nullable(Object obj)
+        public static UInt16? ToUInt16Nullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            UInt16? output;
+
             if (CheckForNull(obj))
-            { return null; }
+            { output = null; }
             else
             {
-                UInt16 output;
+                try
+                {
+                    output = UInt16.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (UInt16.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return null; }
+                    output = null;
+                }
             }
+
+            return output;
         }
 
-        public static UInt32 ToUInt32(Object obj)
+        public static UInt32 ToUInt32(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            UInt32 output;
+
             if (CheckForNull(obj))
-            { return 0; }
+            { output = 0; }
             else
             {
-                UInt32 output;
+                try
+                {
+                    output = UInt32.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (UInt32.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return 0; }
+                    output = 0;
+                }
             }
+
+            return output;
         }
 
-        public static UInt32? ToUInt32Nullable(Object obj)
+        public static UInt32? ToUInt32Nullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            UInt32? output;
+
             if (CheckForNull(obj))
-            { return null; }
+            { output = null; }
             else
             {
-                UInt32 output;
+                try
+                {
+                    output = UInt32.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (UInt32.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return null; }
+                    output = null;
+                }
             }
+
+            return output;
         }
 
-        public static UInt64 ToUInt64(Object obj)
+        public static UInt64 ToUInt64(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            UInt64 output;
+
             if (CheckForNull(obj))
-            { return 0; }
+            { output = 0; }
             else
             {
-                UInt64 output;
+                try
+                {
+                    output = UInt64.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (UInt64.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return 0; }
+                    output = 0;
+                }
             }
+
+            return output;
         }
 
-        public static UInt64? ToUInt64Nullable(Object obj)
+        public static UInt64? ToUInt64Nullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
+            UInt64? output;
+
             if (CheckForNull(obj))
-            { return null; }
+            { output = null; }
             else
             {
-                UInt64 output;
+                try
+                {
+                    output = UInt64.Parse(obj.ToString(), numberStyles);
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception.ToString());
 
-                if (UInt64.TryParse(obj.ToString(), out output))
-                { return output; }
-                else
-                { return null; }
+                    output = null;
+                }
             }
+
+            return output;
         }
     }
 }
