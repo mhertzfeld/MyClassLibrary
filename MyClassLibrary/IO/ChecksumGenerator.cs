@@ -1,4 +1,4 @@
-﻿sing MyClassLibrary.Logging;
+﻿using MyClassLibrary.Logging;
 using System;
 using System.IO;
 using System.Security.Cryptography;
