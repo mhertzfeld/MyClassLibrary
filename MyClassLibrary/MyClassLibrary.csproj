@@ -66,6 +66,8 @@
     <Compile Include="Database\Odbc\OdbcDataObjectCollectionReaderProcessBase.cs" />
     <Compile Include="Database\Odbc\OdbcDataObjectReaderProcessBase.cs" />
     <Compile Include="Database\Odbc\OdbcDataObjectWriterProcessBase.cs" />
+    <Compile Include="Database\SqlServer\ByAttributeSqlServerDataObjectBulkCopyProcessBase.cs" />
+    <Compile Include="Database\PropertyLinkedColumnData.cs" />
     <Compile Include="Database\SqlServer\SqlReaderProcessBase.cs" />
     <Compile Include="Database\SqlServer\SqlServerDatabaseClient.cs" />
     <Compile Include="Database\SqlServer\SqlServerDataObjectBulkCopyProcessBase.cs" />
@@ -112,7 +114,9 @@
   <ItemGroup>
     <None Include="MyClassLibraryKeyFile.pfx" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Documents\MyClassLibrary License.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

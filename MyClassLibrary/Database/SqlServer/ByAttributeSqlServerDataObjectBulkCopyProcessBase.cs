@@ -9,68 +9,25 @@ using System.Data.SqlClient;
 
 namespace MyClassLibrary.Database.SqlServer
 {
-    public abstract class SqlServerDataObjectBulkCopyProcessBase<T_DataObject, T_LogWriter>
+    public abstract class ByAttributeSqlServerDataObjectBulkCopyProcessBase<T_DataObject, T_LogWriter>
         : MyClassLibrary.Process.ProcessWorkerBase
         where T_LogWriter :  Logging.ILogWriter, new()
     {
         //FIELDS
-        protected Int32 batchSize;
-
-        protected DataTable bulkCopyDataTable;
-
         protected Int32 bulkCopyTimeout;
 
+        protected List<String> columnList;
+
         protected String connectionString;
-        
+
+        protected DataTable dataTable;
+
         protected IEnumerable<T_DataObject> dataObjectEnumerable;
 
         protected String destinationTableName;
 
-        protected List<PropertyLinkedColumnData> propertyLinkedColumnDataList;
 
-
-        //PROTECTED PROPERTIES
-        public virtual List<PropertyLinkedColumnData> PropertyLinkedColumnDataList
-        {
-            get { return propertyLinkedColumnDataList; }
-
-            set
-            {
-                if (value == default(List<PropertyLinkedColumnData>))
-                { throw new PropertySetToDefaultException("PropertyLinkedColumnDataList"); }
-
-                propertyLinkedColumnDataList = value;
-            }
-        }
-
-        public virtual DataTable BulkCopyDataTable
-        {
-            get { return bulkCopyDataTable; }
-
-            protected set
-            {
-                if (value == default(DataTable))
-                { throw new PropertySetToDefaultException("BulkCopyDataTable"); }
-
-                bulkCopyDataTable = value;
-            }
-        }
-
-
-        //PUBLIC PROPERTIES
-        public virtual Int32 BatchSize
-        {
-            get { return batchSize; }
-
-            set
-            {
-                if (value < 1)
-                { throw new ValueOutOfRangeException("BatchSize"); }
-
-                batchSize = value;
-            }
-        }
-
+        //PROPERTIES
         public virtual Int32 BulkCopyTimeout
         {
             get { return bulkCopyTimeout; }
@@ -82,7 +39,22 @@ namespace MyClassLibrary.Database.SqlServer
                 bulkCopyTimeout = value;
             }
         }
-        
+
+        public virtual List<String> ColumnList
+        {
+            get { return columnList; }
+
+            set 
+            {
+                if (value == default(List<String>))
+                {
+                    throw new PropertySetToDefaultException("ColumnList");
+                }
+
+                columnList = value; 
+            }
+        }
+
         public virtual String ConnectionString
         {
             get { return connectionString; }
@@ -93,6 +65,11 @@ namespace MyClassLibrary.Database.SqlServer
 
                 connectionString = value;
             }
+        }
+
+        public virtual DataTable DataTable
+        {
+            get { return dataTable; }
         }
 
         public virtual IEnumerable<T_DataObject> DataObjectEnumerable
@@ -121,24 +98,22 @@ namespace MyClassLibrary.Database.SqlServer
                 destinationTableName = value;
             }
         }
-        
+
 
         //INITIALIZE
-        public SqlServerDataObjectBulkCopyProcessBase()
+        public ByAttributeSqlServerDataObjectBulkCopyProcessBase()
         {
-            batchSize = 2048;
-
-            bulkCopyDataTable = null;
-
             bulkCopyTimeout = 0;
+
+            columnList = null;
 
             connectionString = null;
 
             dataObjectEnumerable = null;
 
-            destinationTableName = null;
+            dataTable = null;
 
-            propertyLinkedColumnDataList = null;
+            destinationTableName = null;
         }
 
 
@@ -150,11 +125,9 @@ namespace MyClassLibrary.Database.SqlServer
                 throw new PropertySetToDefaultException("DataObjectEnumerable");
             }
 
-            PropertyLinkedColumnDataList = CreatePropertyLinkedColumnData();
-            
-            BulkCopyDataTable = CreateBulkCopyDataTable();
+            BuildColumnList();
 
-            AddRowsToDataTable();
+            BuildDataTable();
 
             if (CleanupRecords())
             {
@@ -175,28 +148,45 @@ namespace MyClassLibrary.Database.SqlServer
 
 
         //FUNCTIONS
+        protected virtual void AddColumnsToDataTable()
+        {
+            for (Int32 counter = 0; counter <= ColumnList.Count - 1; counter++)
+            {
+                DataColumnAttribute dataColumnAttribute = DataColumnAttribute.GetColumnNameFromProperty<T_DataObject>(ColumnList[counter]);
+
+                if (dataColumnAttribute == null)
+                {
+                    throw new Exception("DataColumnAttribute for " + ColumnList[counter] + " does not exist.");
+                }
+
+                dataTable.Columns.Add(dataColumnAttribute.ColumnName, dataColumnAttribute.ColumnType);
+            }
+        }
+
         protected virtual void AddRowsToDataTable()
         {
             foreach (T_DataObject dataObject in DataObjectEnumerable)
             {
-                DataRow dataRow = bulkCopyDataTable.NewRow();
+                DataRow dataRow = dataTable.NewRow();
 
-                for (Int32 counter = 0; counter <= PropertyLinkedColumnDataList.Count - 1; counter++)
+                for (Int32 counter = 0; counter <= ColumnList.Count - 1; counter++)
                 {
-                    dataRow[counter] = (typeof(T_DataObject).GetProperty(PropertyLinkedColumnDataList[counter].PropertyName).GetValue(dataObject, null) ?? DBNull.Value);
+                    dataRow[counter] = (typeof(T_DataObject).GetProperty(ColumnList[counter]).GetValue(dataObject, null) ?? DBNull.Value);
                 }
 
-                bulkCopyDataTable.Rows.Add(dataRow);
+                dataTable.Rows.Add(dataRow);
             }
         }
 
-        protected virtual DataTable CreateBulkCopyDataTable()
+        protected abstract void BuildColumnList();
+
+        protected virtual void BuildDataTable()
         {
-            DataTable dataTable = new DataTable(DestinationTableName);
+            dataTable = new DataTable(DestinationTableName);
 
-            PropertyLinkedColumnDataList.ForEach(element => dataTable.Columns.Add(element.DataColumn));
+            AddColumnsToDataTable();
 
-            return dataTable;
+            AddRowsToDataTable();
         }
 
         protected virtual Boolean CleanupRecords()
@@ -235,14 +225,12 @@ namespace MyClassLibrary.Database.SqlServer
 
         protected abstract SqlCommand CreateCleanupSqlCommand(SqlConnection sqlConnection);
 
-        protected abstract List<PropertyLinkedColumnData> CreatePropertyLinkedColumnData();
-
         protected virtual SqlBulkCopy CreateSqlBulkCopy()
         {
             SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(ConnectionString, SqlBulkCopyOptions.TableLock);
-            sqlBulkCopy.BatchSize = BatchSize;
+            sqlBulkCopy.BatchSize = 2048;
             sqlBulkCopy.BulkCopyTimeout = BulkCopyTimeout;
-            for (Int32 counter = 0; counter <= PropertyLinkedColumnDataList.Count - 1; counter++)
+            for (Int32 counter = 0; counter <= ColumnList.Count - 1; counter++)
             {
                 sqlBulkCopy.ColumnMappings.Add(counter, counter);
             }
@@ -257,7 +245,7 @@ namespace MyClassLibrary.Database.SqlServer
             {
                 try
                 {
-                    sqlBulkCopy.WriteToServer(bulkCopyDataTable);
+                    sqlBulkCopy.WriteToServer(dataTable);
                 }
                 catch (Exception exception)
                 {
