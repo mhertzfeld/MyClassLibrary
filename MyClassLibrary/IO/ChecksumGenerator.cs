@@ -1,5 +1,5 @@
-﻿using MyClassLibrary.Logging;
-using System;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 
@@ -8,8 +8,7 @@ namespace MyClassLibrary.IO
 {
     public static class ChecksumGenerator
     {
-        public static Boolean GenerateChecksum<T_LogWriter>(String filePath, out String checksum)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean GenerateChecksum(String filePath, out String checksum)
         {
             if (filePath == null)
             {
@@ -34,7 +33,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 return false;
             }

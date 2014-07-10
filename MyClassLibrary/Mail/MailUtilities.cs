@@ -1,5 +1,4 @@
-﻿using MyClassLibrary.Logging;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Net.Mail;
 
@@ -8,8 +7,7 @@ namespace MyClassLibrary.Mail
 {
     public static class MailUtilities
     {
-        public static Boolean SendMailMessage<T_LogWriter>(MailMessage mailMessage, String smtpHost)
-            where T_LogWriter : Logging.ILogWriter, new ()
+        public static Boolean SendMailMessage(MailMessage mailMessage, String smtpHost)
         {
             Boolean returnState = true;
 
@@ -25,7 +23,7 @@ namespace MyClassLibrary.Mail
             {
                 returnState = false;
 
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
             }
 
             smtpClient = null;

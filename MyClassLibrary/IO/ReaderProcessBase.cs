@@ -1,14 +1,13 @@
 ﻿using MyClassLibrary.Data;
-using MyClassLibrary.Logging;
 using System;
+using System.Diagnostics;
 using System.IO;
 
 
 namespace MyClassLibrary.IO
 {
-    public abstract class ReaderProcessBase<T_LogWriter>
+    public abstract class ReaderProcessBase
         : MyClassLibrary.Process.ProcessWorkerBase
-        where T_LogWriter : Logging.ILogWriter, new()
     {
         //FIELDS
         protected String deliminter;
@@ -120,7 +119,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 returnState = false;
 

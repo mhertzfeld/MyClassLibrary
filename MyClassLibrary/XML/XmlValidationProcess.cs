@@ -1,6 +1,6 @@
 ﻿using MyClassLibrary;
-using MyClassLibrary.Logging;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Xml;
 using System.Xml.Schema;
@@ -8,9 +8,8 @@ using System.Xml.Schema;
 
 namespace MyClassLibrary.XML
 {
-    public class XmlValidationProcess<T_LogWriter>
+    public class XmlValidationProcess
         : MyClassLibrary.Process.ProcessWorkerBase
-        where T_LogWriter : Logging.ILogWriter, new()
     {
         //FIELDS
         protected FileInfo schemaFileInfo;
@@ -84,7 +83,7 @@ namespace MyClassLibrary.XML
         //EVENTS HANDLERS
         protected void ValidationEventHandler(object sender, ValidationEventArgs e)
         {
-            LoggingUtilities.WriteLogEntry<T_LogWriter>(e.Exception);
+            Trace.WriteLine(e);
 
             xmlSeverityType = e.Severity;
         }
@@ -143,7 +142,7 @@ namespace MyClassLibrary.XML
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 xmlReader = null;
 
@@ -171,7 +170,7 @@ namespace MyClassLibrary.XML
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 xmlSchema = null;
 
@@ -201,7 +200,7 @@ namespace MyClassLibrary.XML
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 return false;
             }

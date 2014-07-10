@@ -1,5 +1,5 @@
-﻿using MyClassLibrary.Logging;
-using System;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -7,9 +7,8 @@ using System.Xml.Serialization;
 
 namespace MyClassLibrary.XML
 {
-    public class XmlReaderProcessBase<T_XmlObject, T_LogWriter>
+    public class XmlReaderProcessBase<T_XmlObject>
         : MyClassLibrary.Process.ProcessWorkerBase
-        where T_LogWriter : Logging.ILogWriter, new()
     {
         //FIELDS
         protected FileInfo fileInfo;
@@ -70,7 +69,7 @@ namespace MyClassLibrary.XML
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 return false;
             }

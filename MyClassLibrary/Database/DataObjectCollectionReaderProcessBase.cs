@@ -3,10 +3,9 @@
 
 namespace MyClassLibrary.Database
 {
-    public abstract class DataObjectCollectionReaderProcessBase<T_DatabaseClient, T_DataObject, T_DataObjectCollection, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter>
-        : ReaderProcessBase<T_DatabaseClient, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter>
-        where T_DatabaseClient : Database.DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter>, new()
-        //where T_DataObject : new()
+    public abstract class DataObjectCollectionReaderProcessBase<T_DataObject, T_DatabaseClient, T_DataObjectCollection, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>
+        : ReaderProcessBase<T_DatabaseClient, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>
+        where T_DatabaseClient : Database.DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>, new()
         where T_DataObjectCollection : System.Collections.Generic.ICollection<T_DataObject>, new()
         where T_DataParameter : System.Data.IDataParameter
         where T_DataReader : System.Data.IDataReader
@@ -14,7 +13,6 @@ namespace MyClassLibrary.Database
         where T_DbConnection : System.Data.IDbConnection, new()
         where T_DbDataAdapter : System.Data.IDbDataAdapter, new()
         where T_DbTransaction : System.Data.IDbTransaction
-        where T_LogWriter : Logging.ILogWriter, new()
     {
         //FIELDS
         protected T_DataObjectCollection dataObjectCollection;

@@ -97,7 +97,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = 0;
                 }
@@ -120,7 +120,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = null;
                 }
@@ -129,7 +129,7 @@ namespace MyClassLibrary
             return output;
         }
 
-        public static DateTime ToDateTime(Object obj)
+        public static DateTime ToDateTime(Object obj, String format = null)
         {
             DateTime output;
 
@@ -139,11 +139,18 @@ namespace MyClassLibrary
             {
                 try
                 {
-                    output = DateTime.Parse(obj.ToString());
+                    if (format == null)
+                    {
+                        output = DateTime.Parse(obj.ToString());
+                    }
+                    else
+                    {
+                        output = DateTime.ParseExact(obj.ToString(), format, CultureInfo.InvariantCulture);
+                    }
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = default(DateTime);
                 }
@@ -152,7 +159,7 @@ namespace MyClassLibrary
             return output;
         }
 
-        public static DateTime? ToDateTimeNullable(Object obj)
+        public static DateTime? ToDateTimeNullable(Object obj, String format = null)
         {
             DateTime? output;
 
@@ -162,11 +169,18 @@ namespace MyClassLibrary
             {
                 try
                 {
-                    output = DateTime.Parse(obj.ToString());
+                    if (format == null)
+                    {
+                        output = DateTime.Parse(obj.ToString());
+                    }
+                    else
+                    {
+                        output = DateTime.ParseExact(obj.ToString(), format, CultureInfo.InvariantCulture);
+                    }
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = null;
                 }
@@ -189,7 +203,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = 0;
                 }
@@ -212,7 +226,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = null;
                 }
@@ -235,7 +249,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = 0;
                 }
@@ -258,7 +272,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = null;
                 }
@@ -281,7 +295,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = 0;
                 }
@@ -304,7 +318,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = null;
                 }
@@ -327,7 +341,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = 0;
                 }
@@ -350,7 +364,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = null;
                 }
@@ -390,7 +404,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = default(TimeSpan);
                 }
@@ -413,7 +427,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = null;
                 }
@@ -436,7 +450,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = 0;
                 }
@@ -459,7 +473,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = null;
                 }
@@ -482,7 +496,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = 0;
                 }
@@ -505,7 +519,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = null;
                 }
@@ -528,7 +542,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = 0;
                 }
@@ -551,7 +565,7 @@ namespace MyClassLibrary
                 }
                 catch (Exception exception)
                 {
-                    Debug.WriteLine(exception.ToString());
+                    Trace.WriteLine(exception.ToString());
 
                     output = null;
                 }

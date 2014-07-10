@@ -1,18 +1,17 @@
-﻿using MyClassLibrary.Logging;
-using System;
+﻿using System;
 using System.Data;
+using System.Diagnostics;
 
 
 namespace MyClassLibrary.Database
 {
-    public class DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter> 
+    public class DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>
         : System.IDisposable
         where T_DataParameter : System.Data.IDataParameter
         where T_DbCommand : System.Data.IDbCommand, new()
         where T_DbConnection : System.Data.IDbConnection, new()
         where T_DbDataAdapter : System.Data.IDbDataAdapter, new()
         where T_DbTransaction : System.Data.IDbTransaction
-        where T_LogWriter : Logging.ILogWriter, new()
     {
         //CONSTANTS
         protected const Int32 defaultCommandTimeout = 90;
@@ -392,7 +391,8 @@ namespace MyClassLibrary.Database
 
                 dbTransaction = default(T_DbTransaction);
 
-                WriteLogEntry(exception);
+                Trace.WriteLine(exception);
+                
             }
 
             return returnState;
@@ -422,7 +422,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                WriteLogEntry(exception);
+                Trace.WriteLine(exception);
             }
 
             return returnState;
@@ -445,7 +445,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                WriteLogEntry(exception);
+                Trace.WriteLine(exception);
             }
 
             return returnState;
@@ -468,7 +468,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                WriteLogEntry(exception);                
+                Trace.WriteLine(exception);                
             }
 
             return returnState;
@@ -493,7 +493,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                WriteLogEntry(exception);
+                Trace.WriteLine(exception);
             }
 
             return returnState;
@@ -518,7 +518,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                WriteLogEntry(exception);
+                Trace.WriteLine(exception);
             }
 
             return returnState;
@@ -545,7 +545,8 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                WriteLogEntry(exception);
+                Trace.WriteLine(exception);
+                Trace.WriteLine(exception);
             }
 
             return returnState;
@@ -665,7 +666,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                WriteLogEntry(exception);
+                Trace.WriteLine(exception);
             }
 
             return returnState;
@@ -799,7 +800,7 @@ namespace MyClassLibrary.Database
 
                 dataSet = null;
 
-                WriteLogEntry(exception);
+                Trace.WriteLine(exception);
             }
 
             return returnState;
@@ -933,7 +934,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                WriteLogEntry(exception);
+                Trace.WriteLine(exception);
             }
 
             return returnState;
@@ -958,25 +959,10 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                WriteLogEntry(exception);
+                Trace.WriteLine(exception);
             }
 
             return returnState;
         }
-
-
-        //STATIC FUNCTION WRITE LOGS
-        public static void WriteLogEntry(Exception exception)
-        {
-            LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
-        }
     }
 }
-
-
-
-//MyClassLibrary
-//Copyright (C) 2013 Matthew Hertzfeld https://github.com/mhertzfeld
-//This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-//This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-//You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.

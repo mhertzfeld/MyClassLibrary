@@ -1,6 +1,6 @@
-﻿using MyClassLibrary.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -10,8 +10,7 @@ namespace MyClassLibrary.IO
 {
     public static class FileSystemUtilities
     {
-        public static Boolean CheckFileForLock<T_LogWriter>(FileInfo fileInfo, FileMode fileMode, FileAccess fileAccess, out Boolean fileLocked)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean CheckFileForLock(FileInfo fileInfo, FileMode fileMode, FileAccess fileAccess, out Boolean fileLocked)
         {
             try
             {
@@ -19,7 +18,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 fileLocked = false;
 
@@ -29,8 +28,7 @@ namespace MyClassLibrary.IO
             return true;
         }
 
-        public static Boolean CheckFileForLock<T_LogWriter>(String filePath, FileMode fileMode, FileAccess fileAccess, out Boolean fileLocked)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean CheckFileForLock(String filePath, FileMode fileMode, FileAccess fileAccess, out Boolean fileLocked)
         {
             try
             {
@@ -38,7 +36,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 fileLocked = false;
 
@@ -48,8 +46,7 @@ namespace MyClassLibrary.IO
             return true;
         }
 
-        public static Boolean CreateNewDirectory<T_LogWriter>(String path, out DirectoryInfo directoryInfo)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean CreateNewDirectory(String path, out DirectoryInfo directoryInfo)
         {
             try
             {
@@ -57,7 +54,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 directoryInfo = null;
 
@@ -67,8 +64,7 @@ namespace MyClassLibrary.IO
             return true;
         }
 
-        public static Boolean DeleteFile<T_LogWriter>(FileInfo fileInfo)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean DeleteFile(FileInfo fileInfo)
         {
             try
             {
@@ -76,7 +72,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 return false;
             }
@@ -84,8 +80,7 @@ namespace MyClassLibrary.IO
             return true;
         }
 
-        public static Boolean DeleteFile<T_LogWriter>(String path)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean DeleteFile(String path)
         {
             try
             {
@@ -93,7 +88,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 return false;
             }
@@ -101,8 +96,7 @@ namespace MyClassLibrary.IO
             return true;
         }
 
-        public static Boolean GetDirectoryInfo<T_LogWriter>(String path, out DirectoryInfo directoryInfo)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean GetDirectoryInfo(String path, out DirectoryInfo directoryInfo)
         {
             try
             {
@@ -110,7 +104,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 directoryInfo = null;
 
@@ -120,8 +114,7 @@ namespace MyClassLibrary.IO
             return true;
         }
 
-        public static Boolean GetDirectoryInfoArray<T_LogWriter>(DirectoryInfo directoryInfo, out DirectoryInfo[] directoryInfoArray)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean GetDirectoryInfoArray(DirectoryInfo directoryInfo, out DirectoryInfo[] directoryInfoArray)
         {
             try
             {
@@ -129,7 +122,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 directoryInfoArray = null;
 
@@ -139,8 +132,7 @@ namespace MyClassLibrary.IO
             return true;
         }
 
-        public static Boolean GetDirectoryPathArray<T_LogWriter>(String path, out String[] directoryPathArray)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean GetDirectoryPathArray(String path, out String[] directoryPathArray)
         {
             try
             {
@@ -148,7 +140,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 directoryPathArray = null;
 
@@ -158,8 +150,7 @@ namespace MyClassLibrary.IO
             return true;
         }
 
-        public static Boolean GetFileInfo<T_LogWriter>(String filePath, out FileInfo fileInfo)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean GetFileInfo(String filePath, out FileInfo fileInfo)
         {
             try
             {
@@ -167,7 +158,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 fileInfo = null;
 
@@ -177,8 +168,7 @@ namespace MyClassLibrary.IO
             return true;
         }
 
-        public static Boolean GetFileInfoArray<T_LogWriter>(DirectoryInfo directoryInfo, out FileInfo[] fileInfoArray)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean GetFileInfoArray(DirectoryInfo directoryInfo, out FileInfo[] fileInfoArray)
         {
             try
             {
@@ -186,7 +176,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 fileInfoArray = null;
 
@@ -196,8 +186,7 @@ namespace MyClassLibrary.IO
             return true;
         }
 
-        public static Boolean MoveFile<T_LogWriter>(FileInfo fileInfo, String destinationFilePath)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean MoveFile(FileInfo fileInfo, String destinationFilePath)
         {
             try
             {
@@ -205,7 +194,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 return false;
             }
@@ -213,8 +202,7 @@ namespace MyClassLibrary.IO
             return true;
         }
 
-        public static Boolean MoveFile<T_LogWriter>(String sourceFilePath, String destinationFilePath)
-            where T_LogWriter : Logging.ILogWriter, new ()
+        public static Boolean MoveFile(String sourceFilePath, String destinationFilePath)
         {
             try
             {
@@ -222,7 +210,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 return false;
             }
@@ -230,8 +218,7 @@ namespace MyClassLibrary.IO
             return true;
         }
 
-        public static Boolean ReadAllLinesOfTextFile<T_LogWriter>(FileInfo fileInfo, out String[] stringArray)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean ReadAllLinesOfTextFile(FileInfo fileInfo, out String[] stringArray)
         {
             List<String> stringList = new List<String>();
 
@@ -250,7 +237,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 stringArray = null;
 
@@ -262,8 +249,7 @@ namespace MyClassLibrary.IO
             return true;
         }
 
-        public static Boolean ReadAllLinesOfTextFile<T_LogWriter>(String filePath, out String[] stringArray)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean ReadAllLinesOfTextFile(String filePath, out String[] stringArray)
         {
             try
             {
@@ -271,7 +257,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 stringArray = null;
 
@@ -281,8 +267,7 @@ namespace MyClassLibrary.IO
             return true;
         }
 
-        public static Boolean WriteAllTextToFile<T_LogWriter>(FileInfo fileInfo, String text)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean WriteAllTextToFile(FileInfo fileInfo, String text)
         {
             try
             {
@@ -295,7 +280,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 return false;
             }
@@ -303,8 +288,7 @@ namespace MyClassLibrary.IO
             return true;
         }
 
-        public static Boolean WriteAllTextToFile<T_LogWriter>(String filePath, String text)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean WriteAllTextToFile(String filePath, String text)
         {
             try
             {
@@ -312,7 +296,7 @@ namespace MyClassLibrary.IO
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 return false;
             }

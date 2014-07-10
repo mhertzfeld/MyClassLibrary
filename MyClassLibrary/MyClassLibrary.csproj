@@ -28,10 +28,11 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -91,8 +92,6 @@
     <Compile Include="IO\DataObjectReaderProcessBase.cs" />
     <Compile Include="IO\ReaderProcessBase.cs" />
     <Compile Include="IO\FileSystemUtilities.cs" />
-    <Compile Include="Logging\ILogWriter.cs" />
-    <Compile Include="Logging\LoggingUtilities.cs" />
     <Compile Include="Mail\MailUtilities.cs" />
     <Compile Include="MyDataConverter.cs" />
     <Compile Include="MyUtilities.cs" />

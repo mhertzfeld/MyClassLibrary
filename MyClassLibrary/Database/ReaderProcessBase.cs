@@ -1,21 +1,20 @@
-﻿using MyClassLibrary.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 
 
 namespace MyClassLibrary.Database
 {
-    public abstract class ReaderProcessBase<T_DatabaseClient, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter> 
+    public abstract class ReaderProcessBase<T_DatabaseClient, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction> 
         : MyClassLibrary.Process.ProcessWorkerBase
-        where T_DatabaseClient : Database.DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction, T_LogWriter>, new()
+        where T_DatabaseClient : Database.DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>, new()
         where T_DataParameter : System.Data.IDataParameter
         where T_DataReader : System.Data.IDataReader
         where T_DbCommand : System.Data.IDbCommand, new()
         where T_DbConnection : System.Data.IDbConnection, new()
         where T_DbDataAdapter : System.Data.IDbDataAdapter, new()
         where T_DbTransaction : System.Data.IDbTransaction
-        where T_LogWriter : Logging.ILogWriter, new()
     {
         //FIELDS
         protected Int32 commandTimeout;
@@ -113,7 +112,7 @@ namespace MyClassLibrary.Database
 
             DatabaseCommandType = CommandType.Text;
 
-            dataParameterList = null;
+            dataParameterList = new List<T_DataParameter>();
 
             IsolationLevel = IsolationLevel.ReadCommitted;
 
@@ -205,7 +204,7 @@ namespace MyClassLibrary.Database
             {
                 returnState = false;
 
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
             }
             finally
             {

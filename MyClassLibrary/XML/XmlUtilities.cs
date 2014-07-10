@@ -1,5 +1,5 @@
-﻿using MyClassLibrary.Logging;
-using System;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -9,8 +9,7 @@ namespace MyClassLibrary.XML
 {
     public static class XmlUtilities
     {
-        public static Boolean SerializeObjectToXmlString<T, T_LogWriter>(T objectToSerialize, out String xmlString)
-            where T_LogWriter : Logging.ILogWriter, new()
+        public static Boolean SerializeObjectToXmlString<T>(T objectToSerialize, out String xmlString)
         {
             try
             {
@@ -37,7 +36,7 @@ namespace MyClassLibrary.XML
             }
             catch (Exception exception)
             {
-                LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                Trace.WriteLine(exception);
 
                 xmlString = null;
 

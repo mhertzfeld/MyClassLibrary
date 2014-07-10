@@ -1,17 +1,16 @@
 ﻿using MyClassLibrary;
 using MyClassLibrary.Database.SqlServer;
-using MyClassLibrary.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 
 namespace MyClassLibrary.Database.SqlServer
 {
-    public abstract class SqlServerDataObjectBulkCopyProcessBase<T_DataObject, T_LogWriter>
+    public abstract class SqlServerDataObjectBulkCopyProcessBase<T_DataObject>
         : MyClassLibrary.Process.ProcessWorkerBase
-        where T_LogWriter :  Logging.ILogWriter, new()
     {
         //FIELDS
         protected Int32 batchSize;
@@ -203,7 +202,7 @@ namespace MyClassLibrary.Database.SqlServer
         {
             Boolean returnState = false;
 
-            using (SqlServerDatabaseClient<T_LogWriter> sqlServerDatabaseClient = new SqlServerDatabaseClient<T_LogWriter>())
+            using (SqlServerDatabaseClient sqlServerDatabaseClient = new SqlServerDatabaseClient())
             {
                 sqlServerDatabaseClient.ConnectionString = ConnectionString;
 
@@ -219,7 +218,7 @@ namespace MyClassLibrary.Database.SqlServer
                         {
                             Int32 rowsAffected;
 
-                            returnState = SqlServerDatabaseClient<T_LogWriter>.ExecuteNonQueryDbCommand(sqlCommand, out rowsAffected);
+                            returnState = SqlServerDatabaseClient.ExecuteNonQueryDbCommand(sqlCommand, out rowsAffected);
                         }
                     }
 
@@ -261,7 +260,7 @@ namespace MyClassLibrary.Database.SqlServer
                 }
                 catch (Exception exception)
                 {
-                    LoggingUtilities.WriteLogEntry<T_LogWriter>(exception);
+                    Trace.WriteLine(exception);
 
                     return false;
                 }

@@ -4,9 +4,8 @@ using System.Data.SqlClient;
 
 namespace MyClassLibrary.Database.SqlServer
 {
-    public class SqlServerDatabaseClient<T_LogWriter>
-        : Database.DatabaseClient<SqlParameter, SqlCommand, SqlConnection, SqlDataAdapter, SqlTransaction, T_LogWriter>
-        where T_LogWriter : Logging.ILogWriter, new()
+    public class SqlServerDatabaseClient
+        : Database.DatabaseClient<SqlParameter, SqlCommand, SqlConnection, SqlDataAdapter, SqlTransaction>
     {
         //INITIALIZE
         public SqlServerDatabaseClient()

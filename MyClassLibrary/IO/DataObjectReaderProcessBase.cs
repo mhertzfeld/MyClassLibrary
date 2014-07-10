@@ -3,9 +3,8 @@
 
 namespace MyClassLibrary.IO
 {
-    public abstract class DataObjectReaderProcessBase<T_DataObject, T_LogWriter>
-        : ReaderProcessBase<T_LogWriter>
-        where T_LogWriter : Logging.ILogWriter, new()
+    public abstract class DataObjectReaderProcessBase<T_DataObject>
+        : ReaderProcessBase
     {
         //FIELDS
         protected T_DataObject dataObject;

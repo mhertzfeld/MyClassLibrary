@@ -3,10 +3,9 @@
 
 namespace MyClassLibrary.IO
 {
-    public abstract class DataObjectDictionaryReaderProcessBase<T_DataObject, T_DataObjectDictionary, T_LogWriter, T_Key>
-        : IO.ReaderProcessBase<T_LogWriter>
+    public abstract class DataObjectDictionaryReaderProcessBase<T_Key, T_DataObject, T_DataObjectDictionary>
+        : IO.ReaderProcessBase
         where T_DataObjectDictionary : System.Collections.Generic.IDictionary<T_Key, T_DataObject>, new()
-        where T_LogWriter : Logging.ILogWriter, new()
     {
         //FIELDS
         protected T_DataObjectDictionary dataObjectDictionary;
