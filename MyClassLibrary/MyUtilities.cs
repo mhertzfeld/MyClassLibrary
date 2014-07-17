@@ -23,18 +23,5 @@ namespace MyClassLibrary
 
             return result;
         }
-
-        public static void DisposeObject(IDisposable disposableObject)
-        {
-            if (disposableObject != null)
-            {
-                disposableObject.Dispose();
-            }
-        }
-
-        public static Decimal SafeDivision(Decimal numerator, Decimal denominator)
-        {
-            return (denominator == 0 ? 0 : numerator / denominator);
-        }
     }
 }

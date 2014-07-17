@@ -34,16 +34,11 @@ namespace MyClassLibrary.Database
 
 
         //METHODS
-        public override bool ProcessExecution()
+        public override bool ExecuteProcess()
         {
-            if (base.ProcessExecution())
-            { return true; }
-            else
-            {
-                DataObject = default(T_DataObject);
+            DataObject = default(T_DataObject);
 
-                return false;
-            }
+            return base.ExecuteProcess();
         }
 
 

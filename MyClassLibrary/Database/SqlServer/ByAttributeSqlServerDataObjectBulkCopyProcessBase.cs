@@ -10,7 +10,6 @@ using System.Diagnostics;
 namespace MyClassLibrary.Database.SqlServer
 {
     public abstract class ByAttributeSqlServerDataObjectBulkCopyProcessBase<T_DataObject>
-        : MyClassLibrary.Process.ProcessWorkerBase
     {
         //FIELDS
         protected Int32 bulkCopyTimeout;
@@ -117,7 +116,7 @@ namespace MyClassLibrary.Database.SqlServer
 
 
         //METHODS
-        public override bool ProcessExecution()
+        public virtual Boolean ExecuteProcess()
         {
             if (DataObjectEnumerable == default(IEnumerable<T_DataObject>))
             {
@@ -138,11 +137,11 @@ namespace MyClassLibrary.Database.SqlServer
             }
         }
 
-        public virtual Boolean ProcessExecution(IEnumerable<T_DataObject> DataObjectEnumerable)
+        public virtual Boolean ExecuteProcess(IEnumerable<T_DataObject> DataObjectEnumerable)
         {
             this.DataObjectEnumerable = DataObjectEnumerable;
 
-            return ProcessExecution();
+            return ExecuteProcess();
         }
 
 

@@ -7,8 +7,7 @@ using System.Diagnostics;
 
 namespace MyClassLibrary.Database
 {
-    public abstract class DataObjectWriterProcessBase<T_DataObject, T_DatabaseClient, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction> 
-        : MyClassLibrary.Process.ProcessWorkerBase
+    public abstract class DataObjectWriterProcessBase<T_DataObject, T_DatabaseClient, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>
         where T_DatabaseClient : Database.DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>, new()
         where T_DataParameter : System.Data.IDataParameter
         where T_DataReader : System.Data.IDataReader
@@ -50,7 +49,7 @@ namespace MyClassLibrary.Database
 
 
         //METHODS
-        public override bool ProcessExecution()
+        public virtual Boolean ExecuteProcess()
         {
             if (DataObjectEnumerable == default(IEnumerable<T_DataObject>))
             {
@@ -83,11 +82,11 @@ namespace MyClassLibrary.Database
             return returnState;
         }
 
-        public virtual Boolean ProcessExecution(IEnumerable<T_DataObject> DataObjectEnumerable)
+        public virtual Boolean ExecuteProcess(IEnumerable<T_DataObject> DataObjectEnumerable)
         {
             this.DataObjectEnumerable = DataObjectEnumerable;
 
-            return ProcessExecution();
+            return ExecuteProcess();
         }
 
 

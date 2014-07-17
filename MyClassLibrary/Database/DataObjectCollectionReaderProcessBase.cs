@@ -34,6 +34,15 @@ namespace MyClassLibrary.Database
         }
 
 
+        //METHODS
+        public override bool ExecuteProcess()
+        {
+            DataObjectCollection = default(T_DataObjectCollection);
+
+            return base.ExecuteProcess();
+        }
+
+
         //FUNCTIONS
         protected virtual void AddDataObjectToDataObjectCollection(T_DataObject dataObject)
         {
@@ -54,13 +63,6 @@ namespace MyClassLibrary.Database
             T_DataObject dataObject = CreateDataObject(dataReader);
 
             AddDataObjectToDataObjectCollection(dataObject);
-        }
-
-        protected override void ResetProcess()
-        {
-            base.ResetProcess();
-
-            DataObjectCollection = default(T_DataObjectCollection);
         }
     }
 }

@@ -26,19 +26,21 @@ namespace MyClassLibrary.IO
         }
 
 
+        //METHODS
+        public override bool ExecuteProcess()
+        {
+            DataObject = default(T_DataObject);
+
+            return base.ExecuteProcess();
+        }
+
+
         //FUNCTIONS
         protected abstract T_DataObject CreateDataObject(String[] stringArray);
 
         protected override void ProcessLine(string line)
         {
             DataObject = CreateDataObject(line.Split(Deliminter.ToCharArray()));
-        }
-
-        protected override void ResetProcess()
-        {
-            base.ResetProcess();
-
-            DataObject = default(T_DataObject);
         }
     }
 }

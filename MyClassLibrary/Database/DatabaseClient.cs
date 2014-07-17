@@ -109,12 +109,7 @@ namespace MyClassLibrary.Database
         }
 
 
-        //FINALIZE
-        ~DatabaseClient()
-        {
-            Dispose(false);
-        }
-
+        //DISPOSE
         public void Dispose()
         {
             Dispose(true);
@@ -122,30 +117,21 @@ namespace MyClassLibrary.Database
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(Boolean disposeManagedResources)
+        protected virtual void Dispose(Boolean disposing)
         {
-            if (!disposed)
+            if (disposed)
+            { return; }
+
+            if (disposing)
             {
-                if (dbConnection.State != ConnectionState.Closed)
-                {
-                    CloseConnection();
-                }
+                if (dbConnection != null)
+                { dbConnection.Dispose(); }
 
-                MyUtilities.DisposeObject(dbConnection);
-
-                MyUtilities.DisposeObject(dbTransaction);                
-
-                if (disposeManagedResources)
-                {
-                    connectionString = null;
-
-                    dbConnection = default(T_DbConnection);
-
-                    dbTransaction = default(T_DbTransaction);
-                }
-
-                disposed = true;
+                if (dbTransaction != null)
+                { dbTransaction.Dispose(); }
             }
+            
+            disposed = true;
         }
 
 
@@ -330,7 +316,8 @@ namespace MyClassLibrary.Database
                     returnState = false;
                 }
 
-                MyUtilities.DisposeObject(dataSet);
+                if (dataSet != null)
+                { dataSet.Dispose(); }
             }
 
             return returnState;
@@ -364,7 +351,8 @@ namespace MyClassLibrary.Database
         {
             Boolean returnState = RollbackTransaction(dbTransaction);
 
-            MyUtilities.DisposeObject(dbTransaction);
+            if (dbTransaction != null)
+            { dbTransaction.Dispose(); }
             dbTransaction = default(T_DbTransaction);
 
             return returnState;
@@ -892,7 +880,8 @@ namespace MyClassLibrary.Database
                         returnState = false;
                     }
 
-                    MyUtilities.DisposeObject(dataSet);
+                    if (dataSet != null)
+                    { dataSet.Dispose(); }
                 }
                 else
                 {
@@ -907,7 +896,8 @@ namespace MyClassLibrary.Database
                 }
             }
 
-            MyUtilities.DisposeObject(dbConnection);
+            if (dbConnection != null)
+            { dbConnection.Dispose(); }
 
             return returnState;
         }

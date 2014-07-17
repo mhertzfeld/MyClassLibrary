@@ -7,7 +7,6 @@ using System.IO;
 namespace MyClassLibrary.IO
 {
     public abstract class ReaderProcessBase
-        : MyClassLibrary.Process.ProcessWorkerBase
     {
         //FIELDS
         protected String deliminter;
@@ -64,14 +63,12 @@ namespace MyClassLibrary.IO
 
 
         //METHODS
-        public override bool ProcessExecution()
+        public virtual Boolean ExecuteProcess()
         {
             if (FilePath == default(String))
             {
                 throw new ValueOutOfRangeException("FilePath");
             }
-
-            ResetProcess();
 
             Boolean returnState = false;
 
@@ -85,18 +82,11 @@ namespace MyClassLibrary.IO
             return returnState;
         }
 
-        public virtual Boolean ProcessExecution(String FilePath)
+        public virtual Boolean ExecuteProcess(String FilePath)
         {
             this.FilePath = FilePath;
 
-            return ProcessExecution();
-        }
-
-        public void RunWorker(String FilePath)
-        {
-            this.FilePath = FilePath;
-
-            RunWorker();
+            return ExecuteProcess();
         }
 
 

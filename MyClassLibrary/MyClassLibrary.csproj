@@ -93,11 +93,6 @@
     <Compile Include="Mail\MailUtilities.cs" />
     <Compile Include="MyDataConverter.cs" />
     <Compile Include="MyUtilities.cs" />
-    <Compile Include="Process\IProcess.cs" />
-    <Compile Include="Process\IProcessWorker.cs" />
-    <Compile Include="Process\ProcessBase.cs" />
-    <Compile Include="Process\ProcessCompleteEventArgs.cs" />
-    <Compile Include="Process\ProcessWorkerBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertySetToDefaultException.cs" />
     <Compile Include="PropertySetToOutOfRangeValueException.cs" />
@@ -106,7 +101,7 @@
     <Compile Include="XML\XmlReaderProcessBase.cs" />
     <Compile Include="XML\XmlUtilities.cs" />
     <Compile Include="XML\XmlValidationProcess.cs" />
-    <Compile Include="XML\XmlWriterProcessBase.cs" />
+    <Compile Include="XML\XmlWriterProcess.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MyClassLibraryKeyFile.pfx" />

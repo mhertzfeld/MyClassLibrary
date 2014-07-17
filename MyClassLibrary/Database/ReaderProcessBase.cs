@@ -6,8 +6,7 @@ using System.Diagnostics;
 
 namespace MyClassLibrary.Database
 {
-    public abstract class ReaderProcessBase<T_DatabaseClient, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction> 
-        : MyClassLibrary.Process.ProcessWorkerBase
+    public abstract class ReaderProcessBase<T_DatabaseClient, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>
         where T_DatabaseClient : Database.DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>, new()
         where T_DataParameter : System.Data.IDataParameter
         where T_DataReader : System.Data.IDataReader
@@ -121,11 +120,9 @@ namespace MyClassLibrary.Database
 
 
         //METHODS
-        public override Boolean ProcessExecution()
+        public virtual Boolean ExecuteProcess()
         {
             Boolean returnState = false;
-
-            ResetProcess();
 
             using (T_DatabaseClient databaseClient = new T_DatabaseClient())
             {
@@ -153,10 +150,6 @@ namespace MyClassLibrary.Database
                     }
                 }
             }
-
-            error = !returnState;
-
-            completed = true;
 
             return returnState;
         }

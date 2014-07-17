@@ -6,9 +6,17 @@ using System.Xml.Serialization;
 
 namespace MyClassLibrary.XML
 {
-    public class XmlWriterProcessBase<T_XmlObject>
-        : MyClassLibrary.Process.ProcessWorkerBase
+    public class XmlWriterProcess<T_XmlObject>
     {
+        //STATIC METHODS
+        public static Boolean WriteXml(T_XmlObject xmlObject, String filePath)
+        {
+            XmlWriterProcess<T_XmlObject> xmlWriterProcess = new XmlWriterProcess<T_XmlObject>();
+
+            return xmlWriterProcess.ExecuteProcess(xmlObject, filePath);
+        }
+
+
         //FIELDS
         protected String filePath;
 
@@ -48,7 +56,7 @@ namespace MyClassLibrary.XML
 
 
         //INITIALIZE
-        public XmlWriterProcessBase()
+        public XmlWriterProcess()
         {
             xmlObject = default(T_XmlObject);
 
@@ -57,11 +65,15 @@ namespace MyClassLibrary.XML
 
 
         //METHODS
-        public override bool ProcessExecution()
+        public virtual Boolean ExecuteProcess()
         {
-            if (XmlObject.Equals(default(T_XmlObject))) { throw new NullReferenceException("XmlObject"); }
+            if (XmlObject.Equals(default(T_XmlObject))) 
+            { throw new InvalidOperationException("XmlObject can not be null"); }
 
-            if (FilePath == null) { throw new NullReferenceException("FilePath"); }
+            if (FilePath == null) 
+            { throw new NullReferenceException("FilePath can not be null"); }
+
+            xmlObject = default(T_XmlObject);
 
             try
             {
@@ -84,31 +96,13 @@ namespace MyClassLibrary.XML
             return true;
         }
 
-        public virtual Boolean ProcessExecution(T_XmlObject XmlObject, String FilePath)
+        public virtual Boolean ExecuteProcess(T_XmlObject XmlObject, String FilePath)
         {
             this.FilePath = FilePath;
 
             this.XmlObject = XmlObject;
 
-            return ProcessExecution();
-        }
-
-        public virtual void RunWorker(T_XmlObject XmlObject, String FilePath)
-        {
-            this.FilePath = FilePath;
-
-            this.XmlObject = XmlObject;
-
-            RunWorker();
-        }
-
-
-        //FUNCTIONS
-        protected override void ResetProcess()
-        {
-            base.ResetProcess();
-
-            xmlObject = default(T_XmlObject);
+            return ExecuteProcess();
         }
     }
 }

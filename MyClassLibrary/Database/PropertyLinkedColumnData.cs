@@ -44,7 +44,7 @@ namespace MyClassLibrary.Database
         public PropertyLinkedColumnData()
         {
             dataColumn = null;
-
+            
             propertyName = null;
         }
 

@@ -7,9 +7,28 @@ using System.Xml.Serialization;
 
 namespace MyClassLibrary.XML
 {
-    public class XmlReaderProcessBase<T_XmlObject>
-        : MyClassLibrary.Process.ProcessWorkerBase
+    public class XmlReaderProcess<T_XmlObject>
     {
+        //STATIC METHODS
+        public static Boolean GetXmlObject(FileInfo fileInfo, out T_XmlObject xmlObject)
+        {
+            XmlReaderProcess<T_XmlObject> xmlReaderProcess = new XmlReaderProcess<T_XmlObject>();
+
+            if (xmlReaderProcess.ExecuteProcess(fileInfo))
+            {
+                xmlObject = xmlReaderProcess.XmlObject;
+
+                return true;
+            }
+            else
+            {
+                xmlObject = default(T_XmlObject);
+
+                return false;
+            }
+        }
+
+
         //FIELDS
         protected FileInfo fileInfo;
 
@@ -41,7 +60,7 @@ namespace MyClassLibrary.XML
 
 
         //INITIALIZE
-        public XmlReaderProcessBase()
+        public XmlReaderProcess()
         {
             fileInfo = null;
 
@@ -50,10 +69,12 @@ namespace MyClassLibrary.XML
 
 
         //METHODS
-        public override bool ProcessExecution()
+        public virtual Boolean ExecuteProcess()
         {
-            if (FileInfo == default(FileInfo)) 
-            { throw new NullReferenceException("FileInfo"); }
+            if (FileInfo == null) 
+            { throw new InvalidOperationException("FileInfo can not be null"); }
+
+            xmlObject = default(T_XmlObject);
 
             try
             {
@@ -77,16 +98,11 @@ namespace MyClassLibrary.XML
             return true;
         }
 
-        public virtual Boolean ProcessExecution(FileInfo FileInfo)
+        public virtual Boolean ExecuteProcess(FileInfo FileInfo)
         {
             this.FileInfo = FileInfo;
 
-            return ProcessExecution();
-        }
-
-        public virtual void RunWorker(FileInfo FileInfo)
-        {
-            RunWorker();
+            return ExecuteProcess();
         }
 
 
@@ -97,13 +113,6 @@ namespace MyClassLibrary.XML
             xmlReaderSettings.CloseInput = true;
 
             return xmlReaderSettings;
-        }
-
-        protected override void ResetProcess()
-        {
-            base.ResetProcess();
-
-            xmlObject = default(T_XmlObject);
         }
     }
 }

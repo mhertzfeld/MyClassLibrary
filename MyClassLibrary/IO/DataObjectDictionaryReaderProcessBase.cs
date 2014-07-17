@@ -25,6 +25,15 @@ namespace MyClassLibrary.IO
         {
             dataObjectDictionary = default(T_DataObjectDictionary);
         }
+
+
+        //METHODS
+        public override bool ExecuteProcess()
+        {
+            DataObjectDictionary = default(T_DataObjectDictionary);
+
+            return base.ExecuteProcess();
+        }
         
 
         //FUNCTIONS
@@ -49,13 +58,6 @@ namespace MyClassLibrary.IO
             T_DataObject dataObject = CreateDataObject(line.Split(Deliminter.ToCharArray()));
 
             AddDataObjectToDataObjectDictionary(dataObject);
-        }
-
-        protected override void ResetProcess()
-        {
-            base.ResetProcess();
-
-            DataObjectDictionary = default(T_DataObjectDictionary);
         }
     }
 }

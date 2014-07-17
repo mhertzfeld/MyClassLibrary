@@ -34,6 +34,15 @@ namespace MyClassLibrary.Database
         }
 
 
+        //METHODS
+        public override bool ExecuteProcess()
+        {
+            DataObjectDictionary = default(T_DataObjectDictionary);
+
+            return base.ExecuteProcess();
+        }
+
+
         //FUNCTIONS
         protected abstract void AddDataObjectToDataObjectDictionary(T_DataObject dataObject);
 
@@ -49,13 +58,6 @@ namespace MyClassLibrary.Database
         protected override void ProcessRecord(T_DataReader dataReader)
         {
             AddDataObjectToDataObjectDictionary(CreateDataObject(dataReader));
-        }
-
-        protected override void ResetProcess()
-        {
-            base.ResetProcess();
-
-            DataObjectDictionary = default(T_DataObjectDictionary);
         }
     }
 }

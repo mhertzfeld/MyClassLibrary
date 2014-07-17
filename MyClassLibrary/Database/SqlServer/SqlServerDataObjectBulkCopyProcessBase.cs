@@ -10,7 +10,7 @@ using System.Diagnostics;
 namespace MyClassLibrary.Database.SqlServer
 {
     public abstract class SqlServerDataObjectBulkCopyProcessBase<T_DataObject>
-        : MyClassLibrary.Process.ProcessWorkerBase
+        : IDisposable
     {
         //FIELDS
         protected Int32 batchSize;
@@ -24,6 +24,8 @@ namespace MyClassLibrary.Database.SqlServer
         protected IEnumerable<T_DataObject> dataObjectEnumerable;
 
         protected String destinationTableName;
+
+        protected bool disposed;
 
         protected List<PropertyLinkedColumnData> propertyLinkedColumnDataList;
 
@@ -137,12 +139,21 @@ namespace MyClassLibrary.Database.SqlServer
 
             destinationTableName = null;
 
+            disposed = false;
+
             propertyLinkedColumnDataList = null;
         }
-
+        
 
         //METHODS
-        public override bool ProcessExecution()
+        public void Dispose()
+        {
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+        }
+
+        public virtual Boolean ExecuteProcess()
         {
             if (DataObjectEnumerable == default(IEnumerable<T_DataObject>))
             {
@@ -165,11 +176,11 @@ namespace MyClassLibrary.Database.SqlServer
             }
         }
 
-        public virtual Boolean ProcessExecution(IEnumerable<T_DataObject> DataObjectEnumerable)
+        public virtual Boolean ExecuteProcess(IEnumerable<T_DataObject> DataObjectEnumerable)
         {
             this.DataObjectEnumerable = DataObjectEnumerable;
 
-            return ProcessExecution();
+            return ExecuteProcess();
         }
 
 
@@ -248,6 +259,20 @@ namespace MyClassLibrary.Database.SqlServer
             sqlBulkCopy.DestinationTableName = DestinationTableName;
 
             return sqlBulkCopy;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+            { return; }
+
+            if (disposing)
+            {
+                if (bulkCopyDataTable != null)
+                { bulkCopyDataTable.Dispose(); }
+            }
+
+            disposed = true;
         }
 
         protected virtual Boolean WriteRecords()

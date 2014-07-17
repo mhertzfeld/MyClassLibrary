@@ -9,8 +9,16 @@ using System.Xml.Schema;
 namespace MyClassLibrary.XML
 {
     public class XmlValidationProcess
-        : MyClassLibrary.Process.ProcessWorkerBase
     {
+        //STATIC METHODS
+        public static Boolean ValidateXml(FileInfo xmlFileInfo, FileInfo schemaFileInfo)
+        {
+            XmlValidationProcess xmlValidationProcess = new XmlValidationProcess();
+
+            return xmlValidationProcess.ExecuteProcess(xmlFileInfo, schemaFileInfo);
+        }
+
+
         //FIELDS
         protected FileInfo schemaFileInfo;
 
@@ -90,7 +98,7 @@ namespace MyClassLibrary.XML
 
 
         //METHODS
-        public override bool ProcessExecution()
+        public virtual Boolean ExecuteProcess()
         {
             if (SchemaFileInfo == default(FileInfo)) 
             { throw new NullReferenceException("SchemaFileInfo"); }
@@ -101,6 +109,10 @@ namespace MyClassLibrary.XML
             if (!LoadXmlSchema()) 
             { return false; }
 
+            xmlSchema = null;
+
+            xmlSeverityType = null;
+
             XmlReader xmlReader;
 
             if (!BuildXmlReader(out xmlReader)) 
@@ -108,30 +120,22 @@ namespace MyClassLibrary.XML
 
             if (!ValidateXml(xmlReader)) 
             { return false; }
-
-            MyUtilities.DisposeObject(xmlReader);
+                        
+            if (xmlReader != null)
+            { xmlReader.Dispose(); }
 
             return (XmlSeverityType == null);
         }
 
-        public virtual Boolean ProcessExecution(FileInfo XmlFileInfo, FileInfo SchemaFileInfo)
+        public virtual Boolean ExecuteProcess(FileInfo XmlFileInfo, FileInfo SchemaFileInfo)
         {
             this.SchemaFileInfo = SchemaFileInfo;
 
             this.XmlFileInfo = XmlFileInfo;
 
-            return ProcessExecution();
+            return ExecuteProcess();
         }
-        
-        public virtual void RunWorker(FileInfo XmlFileInfo, FileInfo SchemaFileInfo)
-        {
-            this.SchemaFileInfo = SchemaFileInfo;
-
-            this.XmlFileInfo = XmlFileInfo;
-
-            RunWorker();
-        }
-        
+                
 
         //FUNCTIONS
         protected virtual Boolean BuildXmlReader(out XmlReader xmlReader)
@@ -179,16 +183,7 @@ namespace MyClassLibrary.XML
 
             return true;
         }
-
-        protected override void ResetProcess()
-        {
-            base.ResetProcess();
-
-            xmlSchema = null;
-
-            xmlSeverityType = null;
-        }
-
+        
         protected virtual Boolean ValidateXml(XmlReader xmlReader)
         {
             try
