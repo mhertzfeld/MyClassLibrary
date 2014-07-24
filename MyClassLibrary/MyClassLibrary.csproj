@@ -82,7 +82,6 @@
     <Compile Include="Data\IDataObjectDictionary.cs" />
     <Compile Include="Data\IDataObjectList.cs" />
     <Compile Include="DateTimeExtensions.cs" />
-    <Compile Include="EventHandlerExtensions.cs" />
     <Compile Include="Imaging\ImageConverter.cs" />
     <Compile Include="IO\ChecksumGenerator.cs" />
     <Compile Include="IO\DataObjectDictionaryReaderProcessBase.cs" />
