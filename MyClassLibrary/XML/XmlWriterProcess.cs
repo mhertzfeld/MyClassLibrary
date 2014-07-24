@@ -70,10 +70,8 @@ namespace MyClassLibrary.XML
             if (XmlObject.Equals(default(T_XmlObject))) 
             { throw new InvalidOperationException("XmlObject can not be null"); }
 
-            if (FilePath == null) 
-            { throw new NullReferenceException("FilePath can not be null"); }
-
-            xmlObject = default(T_XmlObject);
+            if (FilePath == null)
+            { throw new InvalidOperationException("FilePath can not be null"); }
 
             try
             {
