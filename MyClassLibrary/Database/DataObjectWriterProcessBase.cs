@@ -53,7 +53,7 @@ namespace MyClassLibrary.Database
         {
             if (DataObjectEnumerable == default(IEnumerable<T_DataObject>))
             {
-                throw new PropertySetToDefaultException("DataObjectEnumerable");
+                throw new InvalidOperationException("DataObjectEnumerable can not be set to Default.");
             }
 
             Boolean returnState = false;

@@ -9,7 +9,7 @@ namespace MyClassLibrary.Calendar
     public class MyCalendar
     {
         //METHODS
-        public virtual Boolean CheckIfHoliday(DateTime dateTime)
+        public Boolean CheckIfHoliday(DateTime dateTime)
         {
             if ((CheckIfChristmas(dateTime)) || (CheckIfChristmasEve(dateTime)) || (CheckIfEaster(dateTime)) || (CheckIfForthOfJuly(dateTime)) || (CheckIfLaborDay(dateTime)) || (CheckIfMemorialDay(dateTime)) || (CheckIfNewYears(dateTime)) || (CheckIfNewYearsEve(dateTime)) || (CheckIfThanksgiving(dateTime)))
             {

@@ -157,9 +157,9 @@ namespace MyClassLibrary.Database.SqlServer
         {
             if (DataObjectEnumerable == default(IEnumerable<T_DataObject>))
             {
-                throw new PropertySetToDefaultException("DataObjectEnumerable");
+                throw new InvalidOperationException("DataObjectEnumerable");
             }
-
+            
             PropertyLinkedColumnDataList = CreatePropertyLinkedColumnData();
             
             BulkCopyDataTable = CreateBulkCopyDataTable();
