@@ -106,12 +106,12 @@ namespace MyClassLibrary.XML
             if (XmlFileInfo == default(FileInfo)) 
             { throw new NullReferenceException("XmlFileInfo"); }
 
-            if (!LoadXmlSchema()) 
-            { return false; }
-
             xmlSchema = null;
 
             xmlSeverityType = null;
+
+            if (!LoadXmlSchema())
+            { return false; }
 
             XmlReader xmlReader;
 
