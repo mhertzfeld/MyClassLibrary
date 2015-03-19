@@ -173,6 +173,36 @@ namespace MyClassLibrary
             }
         }
 
+        public static Double ToDouble(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        {
+            if (CheckForNull(obj))
+            { return 0; }
+            else
+            {
+                String objectValue = obj.ToString();
+
+                if (objectValue.Trim().Length == 0)
+                { return 0; }
+                else
+                { return Double.Parse(objectValue, numberStyles); }
+            }
+        }
+
+        public static Double? ToDoubleNullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        {
+            if (CheckForNull(obj))
+            { return 0; }
+            else
+            {
+                String objectValue = obj.ToString();
+
+                if (objectValue.Trim().Length == 0)
+                { return 0; }
+                else
+                { return Double.Parse(objectValue, numberStyles); }
+            }
+        }
+
         public static Int16 ToInt16(Object obj, NumberStyles numberStyles = NumberStyles.Any)
         {
             if (CheckForNull(obj))
