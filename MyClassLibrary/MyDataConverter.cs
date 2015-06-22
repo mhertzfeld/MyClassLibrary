@@ -53,7 +53,7 @@ namespace MyClassLibrary
 
                     default:
 
-                        throw new ValueOutOfRangeException("The value for 'obj' is out of range.");
+                        return false;
                 }
             }
         }
