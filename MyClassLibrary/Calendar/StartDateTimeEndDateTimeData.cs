@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 
 
 namespace MyClassLibrary.Calendar
 {
     public class StartDateTimeEndDateTimeData
     {
-        //STATIC METHODS
-        public static IEnumerable<DateTime> InterateByDate(StartDateTimeEndDateTimeData startDateTimeEndDateTimeData)
-        {
-            for (DateTime dateTime = startDateTimeEndDateTimeData.StartDateTime; dateTime <= startDateTimeEndDateTimeData.EndDateTime; dateTime = dateTime.AddDays(1))
-            { yield return dateTime; }
-        }
-
-
         //FIELDS
         protected DateTime endDateTime;
 
@@ -70,18 +61,6 @@ namespace MyClassLibrary.Calendar
             this.EndDateTime = EndDateTime;
 
             this.StartDateTime = StartDateTime;
-        }
-
-
-        //METHODS
-        public IEnumerable<DateTime> InterateByDate()
-        {
-            return InterateByDate(this);
-        }
-
-        public Boolean Validate()
-        {
-            return !(StartDateTime > EndDateTime);
         }
     }
 }

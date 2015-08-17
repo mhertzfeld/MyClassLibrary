@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Calendar\MyCalendar.cs" />
     <Compile Include="Calendar\StartDateTimeEndDateTimeData.cs" />
+    <Compile Include="Calendar\StartDateTimeEndDateTimeDataExtensions.cs" />
     <Compile Include="Calendar\WeekYearData.cs" />
     <Compile Include="Database\DatabaseClient.cs" />
     <Compile Include="Database\DatabaseUtilities.cs" />
@@ -74,13 +75,6 @@
     <Compile Include="Database\SqlServer\SqlServerDataObjectCollectionReaderProcessBase.cs" />
     <Compile Include="Database\SqlServer\SqlServerDataObjectReaderProcessBase.cs" />
     <Compile Include="Database\SqlServer\SqlServerDataObjectWriterProcessBase.cs" />
-    <Compile Include="Data\DataObjectBase.cs" />
-    <Compile Include="Data\DataObjectDictionary.cs" />
-    <Compile Include="Data\DataObjectList.cs" />
-    <Compile Include="Data\IDataObject.cs" />
-    <Compile Include="Data\IDataObjectCollection.cs" />
-    <Compile Include="Data\IDataObjectDictionary.cs" />
-    <Compile Include="Data\IDataObjectList.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Imaging\ImageConverter.cs" />
     <Compile Include="IO\ChecksumGenerator.cs" />
@@ -92,7 +86,6 @@
     <Compile Include="Mail\MailUtilities.cs" />
     <Compile Include="MyDataConverter.cs" />
     <Compile Include="MyTrace.cs" />
-    <Compile Include="MyUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertySetToDefaultException.cs" />
     <Compile Include="PropertySetToOutOfRangeValueException.cs" />
