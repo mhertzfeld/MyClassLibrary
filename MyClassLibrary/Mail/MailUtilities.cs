@@ -9,26 +9,21 @@ namespace MyClassLibrary.Mail
     {
         public static Boolean SendMailMessage(MailMessage mailMessage, String smtpHost)
         {
-            Boolean returnState = true;
-
-            SmtpClient smtpClient = new SmtpClient();
-            smtpClient.Host = smtpHost;
-            smtpClient.UseDefaultCredentials = true;
-
             try
             {
+                SmtpClient smtpClient = new SmtpClient();
+                smtpClient.Host = smtpHost;
+                smtpClient.UseDefaultCredentials = true;
                 smtpClient.Send(mailMessage);
+
+                return true;
             }
             catch (Exception exception)
-            {
-                returnState = false;
+            { Trace.WriteLine(exception); }
 
-                Trace.WriteLine(exception);
-            }
+            MyTrace.WriteMethodError(System.Reflection.MethodBase.GetCurrentMethod());
 
-            smtpClient = null;
-
-            return returnState;
+            return false;
         }
     }
 }

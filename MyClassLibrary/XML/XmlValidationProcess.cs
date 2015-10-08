@@ -13,9 +13,19 @@ namespace MyClassLibrary.XML
         //STATIC METHODS
         public static Boolean ValidateXml(FileInfo xmlFileInfo, FileInfo schemaFileInfo)
         {
-            XmlValidationProcess xmlValidationProcess = new XmlValidationProcess();
+            try
+            {
+                XmlValidationProcess xmlValidationProcess = new XmlValidationProcess();
 
-            return xmlValidationProcess.ExecuteProcess(xmlFileInfo, schemaFileInfo);
+                if (xmlValidationProcess.ExecuteProcess(xmlFileInfo, schemaFileInfo))
+                { return true; }
+            }
+            catch (Exception exception)
+            { Trace.WriteLine(exception); }
+
+            MyTrace.WriteMethodError(System.Reflection.MethodBase.GetCurrentMethod());
+            
+            return false;
         }
 
 

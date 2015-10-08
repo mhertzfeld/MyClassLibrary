@@ -11,9 +11,19 @@ namespace MyClassLibrary.XML
         //STATIC METHODS
         public static Boolean WriteXml(T_XmlObject xmlObject, String filePath)
         {
-            XmlWriterProcess<T_XmlObject> xmlWriterProcess = new XmlWriterProcess<T_XmlObject>();
+            try
+            {
+                XmlWriterProcess<T_XmlObject> xmlWriterProcess = new XmlWriterProcess<T_XmlObject>();
 
-            return xmlWriterProcess.ExecuteProcess(xmlObject, filePath);
+                if (xmlWriterProcess.ExecuteProcess(xmlObject, filePath))
+                { return true; }
+            }
+            catch (Exception exception)
+            { Trace.WriteLine(exception); }
+
+            MyTrace.WriteMethodError(System.Reflection.MethodBase.GetCurrentMethod());
+
+            return false;
         }
 
 

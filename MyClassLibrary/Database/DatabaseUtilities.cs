@@ -12,7 +12,7 @@ namespace MyClassLibrary.Database
     public static class DatabaseUtilities
     {
         public static void AddToDbDataParameterList<T_ParameterType, T_DbParameter>(String parameter, ICollection<T_ParameterType> parameterList, ICollection<T_DbParameter> dbParameterList, Boolean incrementingParameter)
-    where T_DbParameter : IDbDataParameter, new()
+            where T_DbParameter : IDbDataParameter, new()
         {
             if (parameter == null)
             {

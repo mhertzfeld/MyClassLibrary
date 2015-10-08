@@ -32,18 +32,18 @@ namespace MyClassLibrary.XML
                             xmlString = xmlDocument.OuterXml;
                         }
                     }
+
+                    return true;
                 }
             }
             catch (Exception exception)
-            {
-                Trace.WriteLine(exception);
+            { Trace.WriteLine(exception); }
 
-                xmlString = null;
+            MyTrace.WriteMethodError(System.Reflection.MethodBase.GetCurrentMethod());
 
-                return false;
-            }
+            xmlString = null;
 
-            return true;
+            return false;
         }
     }
 }

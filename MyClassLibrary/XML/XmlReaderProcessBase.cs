@@ -12,20 +12,25 @@ namespace MyClassLibrary.XML
         //STATIC METHODS
         public static Boolean GetXmlObject(FileInfo fileInfo, out T_XmlObject xmlObject)
         {
-            XmlReaderProcess<T_XmlObject> xmlReaderProcess = new XmlReaderProcess<T_XmlObject>();
-
-            if (xmlReaderProcess.ExecuteProcess(fileInfo))
+            try
             {
-                xmlObject = xmlReaderProcess.XmlObject;
+                XmlReaderProcess<T_XmlObject> xmlReaderProcess = new XmlReaderProcess<T_XmlObject>();
+                xmlReaderProcess.FileInfo = fileInfo;
+                if (xmlReaderProcess.ExecuteProcess())
+                {
+                    xmlObject = xmlReaderProcess.XmlObject;
 
-                return true;
+                    return true;
+                }
             }
-            else
-            {
-                xmlObject = default(T_XmlObject);
+            catch (Exception exception)
+            { Trace.WriteLine(exception); }
 
-                return false;
-            }
+            MyTrace.WriteMethodError(System.Reflection.MethodBase.GetCurrentMethod());
+
+            xmlObject = default(T_XmlObject);
+
+            return false;
         }
 
 

@@ -11,47 +11,37 @@ namespace MyClassLibrary.IO
         public static Boolean GenerateChecksum(String filePath, out String checksum)
         {
             if (filePath == null)
-            {
-                throw new ArgumentNullException("filePath");
-            }
-
-            Byte[] byteArray = null;
-
-            checksum = null;
-
-            FileStream fileStream = null;
-
-            SHA256Managed sha256Managed = new SHA256Managed();
+            { throw new ArgumentNullException("filePath"); }
 
             try
             {
-                fileStream = File.OpenRead(filePath);
+                Byte[] byteArray = null;
 
-                byteArray = sha256Managed.ComputeHash(fileStream);
+                using (FileStream fileStream = File.OpenRead(filePath))
+                {
+                    using (SHA256Managed sha256Managed = new SHA256Managed())
+                    {
+                        byteArray = sha256Managed.ComputeHash(fileStream);
 
-                fileStream.Close();
+                        fileStream.Close();
+                    }
+                }
+
+                if (byteArray != null)
+                { 
+                    checksum = BitConverter.ToString(byteArray).Replace("-", String.Empty);
+
+                    return true;
+                }
             }
             catch (Exception exception)
-            {
-                Trace.WriteLine(exception);
+            { Trace.WriteLine(exception); }
 
-                return false;
-            }
-            finally
-            {
-                fileStream.Dispose();
-            }
+            MyTrace.WriteMethodError(System.Reflection.MethodBase.GetCurrentMethod());
 
-            if (byteArray == null)
-            {
-                return false;
-            }
-            else
-            {
-                checksum = BitConverter.ToString(byteArray).Replace("-", String.Empty);
+            checksum = null;
 
-                return true;
-            }
+            return false;
         }
     }
 }
