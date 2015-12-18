@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Calendar\MyCalendar.cs" />
     <Compile Include="Calendar\StartDateTimeEndDateTimeData.cs" />
+    <Compile Include="Calendar\StartDateTimeEndDateTimeDataExtensions.cs" />
     <Compile Include="Calendar\WeekYearData.cs" />
     <Compile Include="Database\DatabaseClient.cs" />
     <Compile Include="Database\DatabaseUtilities.cs" />
@@ -85,7 +86,6 @@
     <Compile Include="Mail\MailUtilities.cs" />
     <Compile Include="MyDataConverter.cs" />
     <Compile Include="MyTrace.cs" />
-    <Compile Include="MyUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertySetToDefaultException.cs" />
     <Compile Include="PropertySetToOutOfRangeValueException.cs" />
