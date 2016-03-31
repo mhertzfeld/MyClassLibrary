@@ -38,7 +38,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>MyClassLibraryKeyFile.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>MyClassLibraryKeyFile.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -57,15 +57,15 @@
     <Compile Include="Database\DataColumnAttribute.cs" />
     <Compile Include="Database\DataObjectCollectionReaderProcess.cs" />
     <Compile Include="Database\DataObjectCollectionReaderProcessBase.cs" />
-    <Compile Include="Database\DataObjectDictionaryReaderProcessBase.cs" />
     <Compile Include="Database\DataObjectInterface.cs" />
+    <Compile Include="Database\DataObjectReaderProcess.cs" />
     <Compile Include="Database\DataObjectReaderProcessBase.cs" />
     <Compile Include="Database\Odbc\OdbcDataObjectCollectionReaderProcess.cs" />
+    <Compile Include="Database\Odbc\OdbcDataObjectReaderProcess.cs" />
     <Compile Include="Database\Odbc\OdbcReaderProcessBase.cs" />
     <Compile Include="Database\ReaderProcessBase.cs" />
     <Compile Include="Database\DataObjectWriterProcessBase.cs" />
     <Compile Include="Database\Odbc\OdbcDatabaseClient.cs" />
-    <Compile Include="Database\Odbc\OdbcDataObjectDictionaryReaderProcessBase.cs" />
     <Compile Include="Database\Odbc\OdbcDataObjectCollectionReaderProcessBase.cs" />
     <Compile Include="Database\Odbc\OdbcDataObjectReaderProcessBase.cs" />
     <Compile Include="Database\Odbc\OdbcDataObjectWriterProcessBase.cs" />
@@ -75,8 +75,8 @@
     <Compile Include="Database\SqlServer\SqlReaderProcessBase.cs" />
     <Compile Include="Database\SqlServer\SqlServerDatabaseClient.cs" />
     <Compile Include="Database\SqlServer\SqlServerDataObjectBulkCopyProcessBase.cs" />
-    <Compile Include="Database\SqlServer\SqlServerDataObjectDictionaryReaderProcessBase.cs" />
     <Compile Include="Database\SqlServer\SqlServerDataObjectCollectionReaderProcessBase.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDataObjectReaderProcess.cs" />
     <Compile Include="Database\SqlServer\SqlServerDataObjectReaderProcessBase.cs" />
     <Compile Include="Database\SqlServer\SqlServerDataObjectWriterProcessBase.cs" />
     <Compile Include="DateTimeExtensions.cs" />
@@ -102,10 +102,10 @@
     <Compile Include="XML\XmlWriterProcess.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="MyClassLibraryKeyFile.pfx" />
+    <Content Include="Documents\MyClassLibrary License.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Documents\MyClassLibrary License.txt" />
+    <None Include="MyClassLibraryKeyFile.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

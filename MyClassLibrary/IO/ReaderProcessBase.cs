@@ -10,7 +10,7 @@ namespace MyClassLibrary.IO
         //FIELDS
         protected String deliminter;
 
-        protected String filePath;
+        protected FileInfo fileInfo;
 
         protected String[] fileDataStringArray;
 
@@ -34,18 +34,18 @@ namespace MyClassLibrary.IO
             get { return fileDataStringArray; }
         }
 
-        public virtual String FilePath
+        public virtual FileInfo FileInfo
         {
-            get { return filePath; }
+            get { return fileInfo; }
 
             set
             {
-                if (value == default(String))
+                if (value == default(FileInfo))
                 {
-                    throw new PropertySetToDefaultException("FilePath");
+                    throw new PropertySetToDefaultException("FileInfo");
                 }
 
-                filePath = value;
+                fileInfo = value;
             }
         }
 
@@ -57,17 +57,15 @@ namespace MyClassLibrary.IO
 
             fileDataStringArray = null;
 
-            filePath = null;
+            fileInfo = null;
         }
 
 
         //METHODS
         public virtual Boolean ExecuteProcess()
         {
-            if (FilePath == default(String))
-            {
-                throw new ValueOutOfRangeException("FilePath");
-            }
+            if (fileInfo == default(FileInfo))
+            { throw new InvalidOperationException("FileInfo"); }
 
             Boolean returnState = false;
 
@@ -79,13 +77,6 @@ namespace MyClassLibrary.IO
             }
 
             return returnState;
-        }
-
-        public virtual Boolean ExecuteProcess(String FilePath)
-        {
-            this.FilePath = FilePath;
-
-            return ExecuteProcess();
         }
 
 
@@ -104,7 +95,7 @@ namespace MyClassLibrary.IO
 
             try
             {
-                fileData = File.ReadAllLines(FilePath);
+                fileData = File.ReadAllLines(FileInfo.FullName);
             }
             catch (Exception exception)
             {
