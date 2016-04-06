@@ -1,24 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 
 
 namespace MyClassLibrary.Calendar
 {
     public class StartDateTimeEndDateTimeData
     {
-        //FIELDS
-        protected DateTime endDateTime;
+        //STATIC METHODS
+        public static IEnumerable<DateTime> InterateByDate(StartDateTimeEndDateTimeData startDateTimeEndDateTimeData)
+        {
+            for (DateTime dateTime = startDateTimeEndDateTimeData.StartDateTime.Value; dateTime <= startDateTimeEndDateTimeData.EndDateTime.Value; dateTime = dateTime.AddDays(1))
+            { yield return dateTime; }
+        }
 
-        protected DateTime startDateTime;
+
+        //FIELDS
+        protected DateTime? endDateTime;
+
+        protected DateTime? startDateTime;
 
 
         //PROPERTIES
-        public virtual DateTime EndDateTime
+        public virtual DateTime? EndDateTime
         {
             get { return endDateTime; }
 
             set
             {
-                if (value == default(DateTime))
+                if (value == default(DateTime?))
                 {
                     throw new PropertySetToDefaultException("EndDate");
                 }
@@ -27,13 +36,13 @@ namespace MyClassLibrary.Calendar
             }
         }
 
-        public virtual DateTime StartDateTime
+        public virtual DateTime? StartDateTime
         {
             get { return startDateTime; }
 
             set
             {
-                if (value == default(DateTime))
+                if (value == default(DateTime?))
                 {
                     throw new PropertySetToDefaultException("StartDate");
                 }
@@ -44,16 +53,25 @@ namespace MyClassLibrary.Calendar
 
         public virtual TimeSpan TimeSpan
         {
-            get { return (EndDateTime - StartDateTime); }
+            get
+            {
+                if (EndDateTime == null)
+                { throw new Exception("EndDateTime cannot be null."); }
+
+                if (StartDateTime == null)
+                { throw new Exception("StartDateTime cannot be null."); }
+
+                return (EndDateTime.GetValueOrDefault() - StartDateTime.GetValueOrDefault());
+            }
         }
 
 
         //INITIALIZE
         public StartDateTimeEndDateTimeData()
         {
-            endDateTime = default(DateTime);
+            endDateTime = null;
 
-            startDateTime = default(DateTime);
+            startDateTime = null;
         }
 
         public StartDateTimeEndDateTimeData(DateTime StartDateTime, DateTime EndDateTime)

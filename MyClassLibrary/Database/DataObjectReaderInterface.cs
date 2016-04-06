@@ -4,7 +4,7 @@ using System.Data;
 
 namespace MyClassLibrary.Database
 {
-    public interface DataObjectInterface
+    public interface DataObjectReaderInterface
     {
         void SetFields(IDataReader _IDataReader);
     }

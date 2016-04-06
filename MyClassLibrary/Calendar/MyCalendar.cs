@@ -42,7 +42,7 @@ namespace MyClassLibrary.Calendar
         {
             Int32 result = 0;
 
-            DateTime dateTime = startDateTimeEndDateTimeData.StartDateTime;
+            DateTime dateTime = startDateTimeEndDateTimeData.StartDateTime.Value;
 
             while (dateTime <= startDateTimeEndDateTimeData.EndDateTime)
             {
@@ -123,7 +123,7 @@ namespace MyClassLibrary.Calendar
         {
             Int32 result = 0;
 
-            DateTime dateTime = startDateTimeEndDateTimeData.StartDateTime;
+            DateTime dateTime = startDateTimeEndDateTimeData.StartDateTime.Value;
 
             while (dateTime <= startDateTimeEndDateTimeData.EndDateTime)
             {
@@ -532,7 +532,7 @@ namespace MyClassLibrary.Calendar
                         startDateTimeEndDateTimeData.StartDateTime = firstDayOfYearDateTime.AddDays(((Int32)firstDayOfYearDateTime.DayOfWeek) * -1);
                     }
 
-                    for (DateTime dateTime = startDateTimeEndDateTimeData.StartDateTime.AddDays(1); dateTime <= new DateTime(year, 12, 31); dateTime = dateTime.AddDays(1))
+                    for (DateTime dateTime = startDateTimeEndDateTimeData.StartDateTime.Value.AddDays(1); dateTime <= new DateTime(year, 12, 31); dateTime = dateTime.AddDays(1))
                     {
                         if (Thread.CurrentThread.CurrentCulture.Calendar.GetWeekOfYear(dateTime, CalendarWeekRule.FirstFourDayWeek, firstDayOfWeek) == week)
                         {

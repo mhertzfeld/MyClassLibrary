@@ -3,9 +3,8 @@
 
 namespace MyClassLibrary.Database
 {
-    public abstract class DataObjectCollectionReaderProcessBase<T_DataObject, T_DatabaseClient, T_DataObjectCollection, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>
-        : ReaderProcessBase<T_DatabaseClient, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>
-        where T_DatabaseClient : Database.DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>, new()
+    public abstract class DataObjectCollectionReaderProcessBase<T_DataObject, T_DataObjectCollection, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>
+        : ReaderProcessBase<T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>
         where T_DataObjectCollection : System.Collections.Generic.ICollection<T_DataObject>, new()
         where T_DataParameter : System.Data.IDataParameter
         where T_DataReader : System.Data.IDataReader
@@ -37,7 +36,7 @@ namespace MyClassLibrary.Database
         //METHODS
         public override bool ExecuteProcess()
         {
-            DataObjectCollection = default(T_DataObjectCollection);
+            DataObjectCollection = new T_DataObjectCollection();
 
             return base.ExecuteProcess();
         }
@@ -50,14 +49,7 @@ namespace MyClassLibrary.Database
         }
 
         protected abstract T_DataObject CreateDataObject(T_DataReader dataReader);
-
-        protected override bool ExecuteDataReaderCommand(T_DbCommand dbCommand)
-        {
-            DataObjectCollection = new T_DataObjectCollection();
-
-            return base.ExecuteDataReaderCommand(dbCommand);
-        }
-
+        
         protected override void ProcessRecord(T_DataReader dataReader)
         {
             T_DataObject dataObject = CreateDataObject(dataReader);

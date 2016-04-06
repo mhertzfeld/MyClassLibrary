@@ -6,8 +6,7 @@ using System.Diagnostics;
 
 namespace MyClassLibrary.Database
 {
-    public abstract class ReaderProcessBase<T_DatabaseClient, T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>
-        where T_DatabaseClient : Database.DatabaseClient<T_DataParameter, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>, new()
+    public abstract class ReaderProcessBase<T_DataParameter, T_DataReader, T_DbCommand, T_DbConnection, T_DbDataAdapter, T_DbTransaction>
         where T_DataParameter : System.Data.IDataParameter
         where T_DataReader : System.Data.IDataReader
         where T_DbCommand : System.Data.IDbCommand, new()
@@ -20,12 +19,10 @@ namespace MyClassLibrary.Database
 
         protected String connectionString;
 
-        protected CommandType databaseCommandType;
+        protected CommandType? databaseCommandType;
 
         protected List<T_DataParameter> dataParameterList;
-
-        protected IsolationLevel isolationLevel;
-
+        
         protected String sqlCommandText;
 
 
@@ -60,7 +57,7 @@ namespace MyClassLibrary.Database
             }
         }
 
-        public virtual CommandType DatabaseCommandType
+        public virtual CommandType? DatabaseCommandType
         {
             get { return databaseCommandType; }
 
@@ -78,14 +75,7 @@ namespace MyClassLibrary.Database
                 dataParameterList = value;
             }
         }
-
-        public virtual IsolationLevel IsolationLevel
-        {
-            get { return isolationLevel; }
-
-            set { isolationLevel = value; }
-        }
-
+        
         public virtual String SqlCommandText
         {
             get { return sqlCommandText; }
@@ -109,12 +99,10 @@ namespace MyClassLibrary.Database
 
             connectionString = null;
 
-            DatabaseCommandType = CommandType.Text;
+            databaseCommandType = null;
 
             dataParameterList = new List<T_DataParameter>();
-
-            IsolationLevel = IsolationLevel.ReadCommitted;
-
+            
             sqlCommandText = null;
         }
 
@@ -122,103 +110,72 @@ namespace MyClassLibrary.Database
         //METHODS
         public virtual Boolean ExecuteProcess()
         {
-            Boolean returnState = false;
-
-            using (T_DatabaseClient databaseClient = new T_DatabaseClient())
+            try
             {
-                databaseClient.ConnectionString = ConnectionString;
-                databaseClient.IsolationLevel = IsolationLevel;
+                if (ConnectionString == null)
+                { throw new InvalidOperationException("ConnectionString cannot be null."); }
 
-                if (databaseClient.OpenConnection())
+                if (DatabaseCommandType == null)
+                { throw new InvalidOperationException("DatabaseCommandType cannot be null."); }
+
+                if (SqlCommandText == null)
+                { throw new InvalidOperationException("SqlCommandText cannot be null."); }
+
+                using (T_DbConnection _DbConnection = new T_DbConnection())
                 {
-                    if (ExecutePreDataReaderCommand(databaseClient))
+                    _DbConnection.ConnectionString = ConnectionString;
+                    _DbConnection.Open();
+
+                    using (T_DbCommand _DbCommand = CreateDbCommand(_DbConnection))
                     {
-                        using (T_DbCommand dbCommand = CreateDbCommand(databaseClient))
+                        ExecutePreDataReaderCommand(_DbConnection, _DbCommand);
+
+                        using (T_DataReader _DataReader = (T_DataReader)_DbCommand.ExecuteReader())
                         {
-                            returnState = ExecuteDataReaderCommand(dbCommand);
+                            while (_DataReader.Read())
+                            { ProcessRecord(_DataReader); }
                         }
 
-                        if (!ExecutePostDataReaderCommand(databaseClient))
-                        {
-                            returnState = false;
-                        }
+                        ExecutePostDataReaderCommand(_DbCommand);
                     }
 
-                    if (!databaseClient.CloseConnection())
-                    {
-                        returnState = false;
-                    }
+                    _DbConnection.Close();
                 }
-            }
 
-            return returnState;
+                return true;
+            }
+            catch (Exception exception)
+            { Trace.WriteLine(exception); }
+
+            MyTrace.WriteMethodError(System.Reflection.MethodBase.GetCurrentMethod());
+
+            return false;
         }
 
 
         //FUNCTIONS
-        protected virtual T_DbCommand CreateDbCommand(T_DatabaseClient databaseClient)
+        protected virtual T_DbCommand CreateDbCommand(T_DbConnection _DbConnection)
         {
             T_DbCommand dbCommand = new T_DbCommand();
             dbCommand.CommandText = SqlCommandText;
             dbCommand.CommandTimeout = CommandTimeout;
-            dbCommand.CommandType = DatabaseCommandType;
-            dbCommand.Connection = databaseClient.DatabaseConnetion;            
-            
-            if (databaseClient.DbTransaction != null) 
-            { dbCommand.Transaction = databaseClient.DbTransaction; }
-
+            dbCommand.CommandType = DatabaseCommandType.Value;
+            dbCommand.Connection = _DbConnection;
+            dbCommand.Transaction = _DbConnection.BeginTransaction(IsolationLevel.ReadUncommitted);
             if ((DataParameterList != null) && (DataParameterList.Count > 0))
             { DataParameterList.ForEach(element => dbCommand.Parameters.Add(element)); }
 
             return dbCommand;
         }
 
-        protected virtual void DataReaderReadLoop(T_DataReader dataReader)
+        protected virtual void ExecutePostDataReaderCommand(T_DbCommand _DbCommand)
         {
-            while (dataReader.Read())
-            {
-                ProcessRecord(dataReader);
-            }
+            _DbCommand.Transaction.Commit();
         }
 
-        protected virtual Boolean ExecuteDataReaderCommand(T_DbCommand dbCommand)
+        protected virtual void ExecutePreDataReaderCommand(T_DbConnection _DbConnection, T_DbCommand _DbCommand)
         {
-            Boolean returnState = true;
-
-            T_DataReader dataReader = default(T_DataReader);
-
-            try
-            {
-                dataReader = (T_DataReader)dbCommand.ExecuteReader();
-
-                DataReaderReadLoop(dataReader);
-            }
-            catch (Exception exception)
-            {
-                returnState = false;
-
-                Trace.WriteLine(exception);
-            }
-            finally
-            {
-                if (dataReader != null)
-                {
-                    dataReader.Close();
-                    dataReader.Dispose();
-                }
-            }
-
-            return returnState;
-        }
-
-        protected virtual Boolean ExecutePostDataReaderCommand(T_DatabaseClient databaseClient)
-        {
-            return databaseClient.CommitTransaction();
-        }
-
-        protected virtual Boolean ExecutePreDataReaderCommand(T_DatabaseClient databaseClient)
-        {
-            return databaseClient.BeginTransaction();
+            _DbCommand.Transaction = _DbConnection.BeginTransaction(IsolationLevel.ReadUncommitted);
         }
 
         protected abstract void ProcessRecord(T_DataReader dataReader);

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MyClassLibrary</RootNamespace>
     <AssemblyName>MyClassLibrary</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -50,34 +50,31 @@
   <ItemGroup>
     <Compile Include="Calendar\MyCalendar.cs" />
     <Compile Include="Calendar\StartDateTimeEndDateTimeData.cs" />
-    <Compile Include="Calendar\StartDateTimeEndDateTimeDataExtensions.cs" />
-    <Compile Include="Calendar\WeekYearData.cs" />
-    <Compile Include="Database\DatabaseClient.cs" />
     <Compile Include="Database\DatabaseUtilities.cs" />
-    <Compile Include="Database\DataColumnAttribute.cs" />
     <Compile Include="Database\DataObjectCollectionReaderProcess.cs" />
     <Compile Include="Database\DataObjectCollectionReaderProcessBase.cs" />
-    <Compile Include="Database\DataObjectInterface.cs" />
+    <Compile Include="Database\DataObjectReaderInterface.cs" />
     <Compile Include="Database\DataObjectReaderProcess.cs" />
     <Compile Include="Database\DataObjectReaderProcessBase.cs" />
+    <Compile Include="Database\DataObjectWriterInterface.cs" />
+    <Compile Include="Database\DataObjectWriterProcess.cs" />
     <Compile Include="Database\Odbc\OdbcDataObjectCollectionReaderProcess.cs" />
     <Compile Include="Database\Odbc\OdbcDataObjectReaderProcess.cs" />
+    <Compile Include="Database\Odbc\OdbcDataObjectWriterProcess.cs" />
     <Compile Include="Database\Odbc\OdbcReaderProcessBase.cs" />
     <Compile Include="Database\ReaderProcessBase.cs" />
     <Compile Include="Database\DataObjectWriterProcessBase.cs" />
-    <Compile Include="Database\Odbc\OdbcDatabaseClient.cs" />
     <Compile Include="Database\Odbc\OdbcDataObjectCollectionReaderProcessBase.cs" />
     <Compile Include="Database\Odbc\OdbcDataObjectReaderProcessBase.cs" />
     <Compile Include="Database\Odbc\OdbcDataObjectWriterProcessBase.cs" />
-    <Compile Include="Database\SqlServer\ByAttributeSqlServerDataObjectBulkCopyProcessBase.cs" />
-    <Compile Include="Database\PropertyLinkedColumnData.cs" />
+    <Compile Include="Database\PropertyColumnData.cs" />
     <Compile Include="Database\SqlServer\SqlServerDataObjectCollectionReaderProcess.cs" />
     <Compile Include="Database\SqlServer\SqlReaderProcessBase.cs" />
-    <Compile Include="Database\SqlServer\SqlServerDatabaseClient.cs" />
-    <Compile Include="Database\SqlServer\SqlServerDataObjectBulkCopyProcessBase.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDataObjectBulkCopyProcess.cs" />
     <Compile Include="Database\SqlServer\SqlServerDataObjectCollectionReaderProcessBase.cs" />
     <Compile Include="Database\SqlServer\SqlServerDataObjectReaderProcess.cs" />
     <Compile Include="Database\SqlServer\SqlServerDataObjectReaderProcessBase.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDataObjectWriterProcess.cs" />
     <Compile Include="Database\SqlServer\SqlServerDataObjectWriterProcessBase.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Imaging\ImageConverter.cs" />
@@ -87,7 +84,6 @@
     <Compile Include="IO\DataObjectReaderProcessBase.cs" />
     <Compile Include="IO\ReaderProcessBase.cs" />
     <Compile Include="IO\FileSystemUtilities.cs" />
-    <Compile Include="Mail\MailUtilities.cs" />
     <Compile Include="MyDataConverter.cs" />
     <Compile Include="MyTrace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
