@@ -77,10 +77,10 @@
     <Compile Include="Database\SqlServer\SqlServerDataObjectWriterProcess.cs" />
     <Compile Include="Database\SqlServer\SqlServerDataObjectWriterProcessBase.cs" />
     <Compile Include="DateTimeExtensions.cs" />
-    <Compile Include="Imaging\ImageConverter.cs" />
-    <Compile Include="IO\ChecksumGenerator.cs" />
-    <Compile Include="IO\DataObjectDictionaryReaderProcessBase.cs" />
+    <Compile Include="IO\DataObjectCollectionReaderProcess.cs" />
     <Compile Include="IO\DataObjectCollectionReaderProcessBase.cs" />
+    <Compile Include="IO\DataObjectReaderInterface.cs" />
+    <Compile Include="IO\DataObjectReaderProcess.cs" />
     <Compile Include="IO\DataObjectReaderProcessBase.cs" />
     <Compile Include="IO\ReaderProcessBase.cs" />
     <Compile Include="IO\FileSystemUtilities.cs" />

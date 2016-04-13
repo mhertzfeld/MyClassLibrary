@@ -6,11 +6,6 @@ namespace MyClassLibrary
 {
     public static class StringExtensions
     {
-        public static Boolean Contains(this String str, String value, StringComparison stringComparison)
-        {
-            return (str.IndexOf(value, stringComparison) >= 0);
-        }
-
         public static String Remove(this String str, String value)
         {
             return str.Replace(value, null);
