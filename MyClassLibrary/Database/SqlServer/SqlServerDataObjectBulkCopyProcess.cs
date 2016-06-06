@@ -126,7 +126,7 @@ namespace MyClassLibrary.Database.SqlServer
 
             disposed = false;
 
-            propertyColumnDataList = null;
+            propertyColumnDataList = new List<PropertyColumnData>();
 
             _SqlBulkCopy = null;
         }
