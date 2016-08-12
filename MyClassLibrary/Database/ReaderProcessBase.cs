@@ -22,7 +22,9 @@ namespace MyClassLibrary.Database
         protected CommandType? databaseCommandType;
 
         protected List<T_DataParameter> dataParameterList;
-        
+
+        protected IsolationLevel isolationLevel;
+
         protected String sqlCommandText;
 
 
@@ -76,6 +78,13 @@ namespace MyClassLibrary.Database
             }
         }
         
+        public virtual IsolationLevel IsolationLevel
+        {
+            get { return isolationLevel; }
+
+            set { isolationLevel = value; }
+        }
+
         public virtual String SqlCommandText
         {
             get { return sqlCommandText; }
@@ -102,6 +111,8 @@ namespace MyClassLibrary.Database
             databaseCommandType = null;
 
             dataParameterList = new List<T_DataParameter>();
+
+            isolationLevel = IsolationLevel.ReadCommitted;
             
             sqlCommandText = null;
         }
@@ -126,17 +137,18 @@ namespace MyClassLibrary.Database
                     _DbConnection.ConnectionString = ConnectionString;
                     _DbConnection.Open();
 
-                    using (T_DbCommand _DbCommand = CreateDbCommand(_DbConnection))
+                    using (T_DbTransaction _DbTransaction = (T_DbTransaction)_DbConnection.BeginTransaction(this.IsolationLevel))
                     {
-                        ExecutePreDataReaderCommand(_DbConnection, _DbCommand);
+                        using (T_DbCommand _DbCommand = CreateDbCommand(_DbConnection, _DbTransaction))
+                        {                            
+                            using (T_DataReader _DataReader = (T_DataReader)_DbCommand.ExecuteReader())
+                            {
+                                while (_DataReader.Read())
+                                { ProcessRecord(_DataReader); }
+                            }
 
-                        using (T_DataReader _DataReader = (T_DataReader)_DbCommand.ExecuteReader())
-                        {
-                            while (_DataReader.Read())
-                            { ProcessRecord(_DataReader); }
+                            _DbTransaction.Commit();
                         }
-
-                        ExecutePostDataReaderCommand(_DbCommand);
                     }
 
                     _DbConnection.Close();
@@ -154,28 +166,18 @@ namespace MyClassLibrary.Database
 
 
         //FUNCTIONS
-        protected virtual T_DbCommand CreateDbCommand(T_DbConnection _DbConnection)
+        protected virtual T_DbCommand CreateDbCommand(T_DbConnection _DbConnection, T_DbTransaction _DbTransaction)
         {
             T_DbCommand dbCommand = new T_DbCommand();
             dbCommand.CommandText = SqlCommandText;
             dbCommand.CommandTimeout = CommandTimeout;
             dbCommand.CommandType = DatabaseCommandType.Value;
             dbCommand.Connection = _DbConnection;
-            dbCommand.Transaction = _DbConnection.BeginTransaction(IsolationLevel.ReadUncommitted);
+            dbCommand.Transaction = _DbTransaction;
             if ((DataParameterList != null) && (DataParameterList.Count > 0))
             { DataParameterList.ForEach(element => dbCommand.Parameters.Add(element)); }
 
             return dbCommand;
-        }
-
-        protected virtual void ExecutePostDataReaderCommand(T_DbCommand _DbCommand)
-        {
-            _DbCommand.Transaction.Commit();
-        }
-
-        protected virtual void ExecutePreDataReaderCommand(T_DbConnection _DbConnection, T_DbCommand _DbCommand)
-        {
-            _DbCommand.Transaction = _DbConnection.BeginTransaction(IsolationLevel.ReadUncommitted);
         }
 
         protected abstract void ProcessRecord(T_DataReader dataReader);
