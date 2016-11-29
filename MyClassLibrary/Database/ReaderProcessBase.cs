@@ -136,7 +136,7 @@ namespace MyClassLibrary.Database
                 {
                     _DbConnection.ConnectionString = ConnectionString;
                     _DbConnection.Open();
-
+                    
                     using (T_DbTransaction _DbTransaction = (T_DbTransaction)_DbConnection.BeginTransaction(this.IsolationLevel))
                     {
                         using (T_DbCommand _DbCommand = CreateDbCommand(_DbConnection, _DbTransaction))
