@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3D2097B3-6006-4CEA-9806-D4097694E82E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyClassLibrary</RootNamespace>
+    <AssemblyName>MyClassLibrary_Framework</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MyClassLibrary_Standard">
+      <HintPath>..\Binaries\MyClassLibrary_Standard\MyClassLibrary_Standard.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Database\ODBC\OdbcDataObjectCollectionReaderProcess.cs" />
+    <Compile Include="Database\ODBC\OdbcDataObjectCollectionReaderProcessBase.cs" />
+    <Compile Include="Database\ODBC\OdbcDataObjectReaderProcess.cs" />
+    <Compile Include="Database\ODBC\OdbcDataObjectReaderProcessBase.cs" />
+    <Compile Include="Database\ODBC\OdbcDataObjectWriterProcess.cs" />
+    <Compile Include="Database\ODBC\OdbcDataObjectWriterProcessBase.cs" />
+    <Compile Include="Database\ODBC\OdbcReaderProcessBase.cs" />
+    <Compile Include="Database\SqlServer\SqlReaderProcessBase.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDataObjectBulkCopyProcess.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDataObjectCollectionReaderProcess.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDataObjectCollectionReaderProcessBase.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDataObjectReaderProcess.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDataObjectReaderProcessBase.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDataObjectWriterProcess.cs" />
+    <Compile Include="Database\SqlServer\SqlServerDataObjectWriterProcessBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
