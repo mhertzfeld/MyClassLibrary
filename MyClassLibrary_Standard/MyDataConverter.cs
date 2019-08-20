@@ -3,447 +3,459 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-
 namespace MyClassLibrary
 {
     public static class MyDataConverter
     {
-        public static Boolean CheckForNull(Object obj)
+        private static String ToAscii128(String _ToConvertString)
         {
-            if (obj == null)
-            { return true; }
-            else
-            { return (obj == DBNull.Value); }
-        }
-
-        private static string ToAscii128(String toConevertString)
-        {
-            if (toConevertString == null)
+            if (String.IsNullOrWhiteSpace(_ToConvertString))
             { return null; }
             else
-            { return toConevertString.Normalize(NormalizationForm.FormKD).Where(x => x < 128).ToArray().ToString(); }
+            { return _ToConvertString.Normalize(NormalizationForm.FormKD).Where(x => x < 128).ToArray().ToString(); }
         }
 
-        public static Boolean ToBoolean(Object obj)
+        public static Boolean ToBoolean(Object _Object)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return false; }
             else
             {
-                String toConvertString = obj.ToString().Trim().ToUpper();
+                String _ObjectAsString = _Object.ToString();
 
-                switch (toConvertString)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
+                { return false; }
+                else
                 {
-                    case "1":
-
-                        return true;
-
-                    case "TRUE":
-
-                        return true;
-
-                    case "Y":
-
-                        return true;
-
-                    case "YES":
-
-                        return true;
-
-                    default:
-
-                        return false;
+                    Boolean _Result;
+                    if (Boolean.TryParse(_ObjectAsString, out _Result))
+                    { return _Result; }
+                    else
+                    {
+                        if (_ObjectAsString.Equals("0", StringComparison.InvariantCultureIgnoreCase))
+                        { return false; }
+                        else if (_ObjectAsString.Equals("1", StringComparison.InvariantCultureIgnoreCase))
+                        { return true; }
+                        else if (_ObjectAsString.Equals("N", StringComparison.InvariantCultureIgnoreCase))
+                        { return false; }
+                        else if (_ObjectAsString.Equals("Y", StringComparison.InvariantCultureIgnoreCase))
+                        { return true; }
+                        else if (_ObjectAsString.Equals("NO", StringComparison.InvariantCultureIgnoreCase))
+                        { return false; }
+                        else if (_ObjectAsString.Equals("YES", StringComparison.InvariantCultureIgnoreCase))
+                        { return true; }
+                        else if (_ObjectAsString.Equals("OFF", StringComparison.InvariantCultureIgnoreCase))
+                        { return false; }
+                        else if (_ObjectAsString.Equals("ON", StringComparison.InvariantCultureIgnoreCase))
+                        { return true; }
+                        else
+                        { throw new ValueOutOfRangeException("_Object"); }
+                    }
                 }
             }
         }
 
-        public static Boolean? ToBooleanNullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static Boolean? ToBooleanNullable(Object _Object)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return null; }
             else
             {
-                String toConvertString = obj.ToString().Trim().ToUpper();
-
-                switch (toConvertString)
+                String _ObjectAsString = _Object.ToString();
+                
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
+                { return null; }
+                else
                 {
-                    case "1":
-
-                        return true;
-
-                    case "TRUE":
-
-                        return true;
-
-                    case "Y":
-
-                        return true;
-
-                    case "YES":
-
-                        return true;
-
-                    default:
-
-                        return false;
+                    Boolean _Result;
+                    if (Boolean.TryParse(_ObjectAsString, out _Result))
+                    { return _Result; }
+                    else
+                    {
+                        if (_ObjectAsString.Equals("0", StringComparison.InvariantCultureIgnoreCase))
+                        { return false; }
+                        else if (_ObjectAsString.Equals("1", StringComparison.InvariantCultureIgnoreCase))
+                        { return true; }
+                        else if (_ObjectAsString.Equals("N", StringComparison.InvariantCultureIgnoreCase))
+                        { return false; }
+                        else if (_ObjectAsString.Equals("Y", StringComparison.InvariantCultureIgnoreCase))
+                        { return true; }
+                        else if (_ObjectAsString.Equals("NO", StringComparison.InvariantCultureIgnoreCase))
+                        { return false; }
+                        else if (_ObjectAsString.Equals("YES", StringComparison.InvariantCultureIgnoreCase))
+                        { return true; }
+                        else if (_ObjectAsString.Equals("OFF", StringComparison.InvariantCultureIgnoreCase))
+                        { return false; }
+                        else if (_ObjectAsString.Equals("ON", StringComparison.InvariantCultureIgnoreCase))
+                        { return true; }
+                        else
+                        { throw new ValueOutOfRangeException("_Object"); }
+                    }
                 }
             }
         }
 
-        public static Byte ToByte(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static Byte ToByte(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return 0; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return 0; }
                 else
-                { return Byte.Parse(objectValue, numberStyles); }
+                { return Byte.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
 
-        public static Byte? ToByteNullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static Byte? ToByteNullable(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return null; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return null; }
                 else
-                { return Byte.Parse(objectValue, numberStyles); }
+                { return Byte.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
 
-        public static DateTime ToDateTime(Object obj, String format = null)
+        public static DateTime ToDateTime(Object _Object, String _Format = null, IFormatProvider _FormatProvider = null)
         {
-            if (MyDataConverter.CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return default(DateTime); }
             else
             {
-                String objectValue = obj.ToString().Trim();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return default(DateTime); }
                 else
                 {
-                    if (format == null)
-                    { return DateTime.Parse(objectValue.ToString()); }
+                    if (_Format == null)
+                    { return DateTime.Parse(_ObjectAsString.ToString()); }
                     else
-                    { return DateTime.ParseExact(objectValue.ToString(), format, CultureInfo.InvariantCulture); }
+                    {
+                        if (_FormatProvider == null)
+                        { return DateTime.ParseExact(_ObjectAsString.ToString(), _Format, CultureInfo.InvariantCulture); }
+                        else
+                        { return DateTime.ParseExact(_ObjectAsString.ToString(), _Format, _FormatProvider); }
+                    }
                 }
             }
         }
 
-        public static DateTime? ToDateTimeNullable(Object obj, String format = null)
+        public static DateTime? ToDateTimeNullable(Object _Object, String _Format = null, IFormatProvider _FormatProvider = null)
         {
-            if (MyDataConverter.CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return null; }
             else
             {
-                String objectValue = obj.ToString().Trim();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return null; }
                 else
                 {
-                    if (format == null)
-                    { return DateTime.Parse(objectValue.ToString()); }
+                    if (_Format == null)
+                    { return DateTime.Parse(_ObjectAsString.ToString()); }
                     else
-                    { return DateTime.ParseExact(objectValue.ToString(), format, CultureInfo.InvariantCulture); }
+                    {
+                        if (_FormatProvider == null)
+                        { return DateTime.ParseExact(_ObjectAsString.ToString(), _Format, CultureInfo.InvariantCulture); }
+                        else
+                        { return DateTime.ParseExact(_ObjectAsString.ToString(), _Format, _FormatProvider); }
+                    }
                 }
             }
         }
 
-        public static Decimal ToDecimal(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static Decimal ToDecimal(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return 0; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return 0; }
                 else
-                { return Decimal.Parse(objectValue, numberStyles); }
+                { return Decimal.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
 
-        public static Decimal? ToDecimalNullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static Decimal? ToDecimalNullable(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return null; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return null; }
                 else
-                { return Decimal.Parse(objectValue, numberStyles); }
+                { return Decimal.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
 
-        public static Double ToDouble(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static Double ToDouble(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return 0; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return 0; }
                 else
-                { return Double.Parse(objectValue, numberStyles); }
+                { return Double.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
 
-        public static Double? ToDoubleNullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static Double? ToDoubleNullable(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
-            { return 0; }
-            else
-            {
-                String objectValue = obj.ToString();
-
-                if (objectValue.Trim().Length == 0)
-                { return 0; }
-                else
-                { return Double.Parse(objectValue, numberStyles); }
-            }
-        }
-
-        public static Int16 ToInt16(Object obj, NumberStyles numberStyles = NumberStyles.Any)
-        {
-            if (CheckForNull(obj))
-            { return 0; }
-            else
-            {
-                String objectValue = obj.ToString();
-
-                if (objectValue.Trim().Length == 0)
-                { return 0; }
-                else
-                { return Int16.Parse(objectValue, numberStyles); }
-            }
-        }
-
-        public static Int16? ToInt16Nullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
-        {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return null; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return null; }
                 else
-                { return Int16.Parse(objectValue, numberStyles); }
+                { return Double.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
 
-        public static Int32 ToInt32(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static Int16 ToInt16(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return 0; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return 0; }
                 else
-                { return Int32.Parse(objectValue, numberStyles); }
+                { return Int16.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
 
-        public static Int32? ToInt32Nullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static Int16? ToInt16Nullable(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return null; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return null; }
                 else
-                { return Int32.Parse(objectValue, numberStyles); }
+                { return Int16.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
 
-        public static Int64 ToInt64(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static Int32 ToInt32(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return 0; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return 0; }
                 else
-                { return Int64.Parse(objectValue, numberStyles); }
+                { return Int32.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
 
-        public static Int64? ToInt64Nullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static Int32? ToInt32Nullable(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return null; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return null; }
                 else
-                { return Int64.Parse(objectValue, numberStyles); }
+                { return Int32.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
 
-        public static String ToString(Object obj, Boolean trim = true)
+        public static Int64 ToInt64(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            String output;
-
-            if (CheckForNull(obj))
-            { output = null; }
+            if (DBNull.Value.Equals(_Object))
+            { return 0; }
             else
             {
-                output = (trim ? obj.ToString().Trim() : obj.ToString());
+                String _ObjectAsString = _Object.ToString();
 
-                if (output.Length == 0)
-                { output = null; }                
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
+                { return 0; }
+                else
+                { return Int64.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
-
-            return output;
         }
 
-        public static TimeSpan ToTimeSpan(Object obj, String format = null)
+        public static Int64? ToInt64Nullable(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
+            { return null; }
+            else
+            {
+                String _ObjectAsString = _Object.ToString();
+
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
+                { return null; }
+                else
+                { return Int64.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
+            }
+        }
+
+        public static String ToString(Object _Object, Boolean _Trim = true)
+        {
+            if (DBNull.Value.Equals(_Object))
+            { return null; }
+            else
+            {
+                String _ObjectAsString = _Object.ToString();
+
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
+                { return null; }
+                { return (_Trim ? _ObjectAsString.Trim(): _ObjectAsString); }
+            }
+        }
+
+        public static TimeSpan ToTimeSpan(Object _Object, IFormatProvider _FormatProvider = null)
+        {
+            if (DBNull.Value.Equals(_Object))
             { return default(TimeSpan); }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return default(TimeSpan); }
                 else
-                { return TimeSpan.Parse(objectValue); }
+                { return TimeSpan.Parse(_ObjectAsString, _FormatProvider); }
             }
         }
 
-        public static TimeSpan? ToTimeSpanNullable(Object obj)
+        public static TimeSpan? ToTimeSpanNullable(Object _Object, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return null; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return null; }
                 else
-                { return TimeSpan.Parse(objectValue); }
+                { return TimeSpan.Parse(_ObjectAsString, _FormatProvider); }
             }
         }
 
-        public static UInt16 ToUInt16(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static UInt16 ToUInt16(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return 0; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return 0; }
                 else
-                { return UInt16.Parse(objectValue, numberStyles); }
+                { return UInt16.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
 
-        public static UInt16? ToUInt16Nullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static UInt16? ToUInt16Nullable(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return null; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return null; }
                 else
-                { return UInt16.Parse(objectValue, numberStyles); }
+                { return UInt16.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
 
-        public static UInt32 ToUInt32(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static UInt32 ToUInt32(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return 0; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return 0; }
                 else
-                { return UInt32.Parse(objectValue, numberStyles); }
+                { return UInt32.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
 
-        public static UInt32? ToUInt32Nullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static UInt32? ToUInt32Nullable(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return null; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return null; }
                 else
-                { return UInt32.Parse(objectValue, numberStyles); }
+                { return UInt32.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
 
-        public static UInt64 ToUInt64(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static UInt64 ToUInt64(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return 0; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return 0; }
                 else
-                { return UInt64.Parse(objectValue, numberStyles); }
+                { return UInt64.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
 
-        public static UInt64? ToUInt64Nullable(Object obj, NumberStyles numberStyles = NumberStyles.Any)
+        public static UInt64? ToUInt64Nullable(Object _Object, NumberStyles _NumberStyles = NumberStyles.Any, IFormatProvider _FormatProvider = null)
         {
-            if (CheckForNull(obj))
+            if (DBNull.Value.Equals(_Object))
             { return null; }
             else
             {
-                String objectValue = obj.ToString();
+                String _ObjectAsString = _Object.ToString();
 
-                if (objectValue.Trim().Length == 0)
+                if (String.IsNullOrWhiteSpace(_ObjectAsString))
                 { return null; }
                 else
-                { return UInt64.Parse(objectValue, numberStyles); }
+                { return UInt64.Parse(_ObjectAsString, _NumberStyles, _FormatProvider); }
             }
         }
     }
