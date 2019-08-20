@@ -5,7 +5,7 @@
     <Authors>Matthew Hertzfeld</Authors>
     <Company />
     <Product>MyClassLibrary</Product>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
     <Version>2.1.0</Version>
     <RootNamespace>MyClassLibrary</RootNamespace>
   </PropertyGroup>
