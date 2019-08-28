@@ -6,7 +6,7 @@
     <Company />
     <Product>MyClassLibrary</Product>
     <AssemblyVersion>2.2.0.0</AssemblyVersion>
-    <Version>2.2.0</Version>
+    <Version>2.3.0</Version>
     <RootNamespace>MyClassLibrary</RootNamespace>
   </PropertyGroup>
 
