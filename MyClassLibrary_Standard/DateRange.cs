@@ -7,6 +7,11 @@ namespace MyClassLibrary
     public class DateRange
     {
         #region STATIC METHODS
+        public static IEnumerable<DateTime> InterateByDate(DateRange _DateRange)
+        {
+            return InterateByDate(_DateRange.Start_DateTime.Value, _DateRange.End_DateTime.Value);
+        }
+
         public static IEnumerable<DateTime> InterateByDate(DateTime _Start_DateTime, DateTime _End_DateTime)
         {
             for (DateTime _DateTime = _Start_DateTime; _DateTime <= _End_DateTime; _DateTime = _DateTime.AddDays(1))
@@ -20,7 +25,7 @@ namespace MyClassLibrary
         protected DateTime? _Start_DateTime;
         #endregion
 
-        //PROPERTIES
+        #region PROPERTIES
         public virtual DateTime? End_DateTime
         {
             get { return _End_DateTime; }
@@ -64,6 +69,7 @@ namespace MyClassLibrary
                 return (End_DateTime.GetValueOrDefault() - Start_DateTime.GetValueOrDefault());
             }
         }
+        #endregion
 
         #region CONSTRUCTOR
         public DateRange()
