@@ -9,41 +9,28 @@ namespace MyClassLibrary.XML
 {
     public static class XmlUtilities
     {
-        public static Boolean SerializeObjectToXmlString<T>(T objectToSerialize, out String xmlString)
+        public static void SerializeObjectToXmlString<T>(T _ObjectToSerialize, out String _XmlString)
         {
-            try
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+
+            using (MemoryStream memoryStream = new MemoryStream())
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-
-                using (MemoryStream memoryStream = new MemoryStream())
+                using (StreamWriter streamWriter = new StreamWriter(memoryStream))
                 {
-                    using (StreamWriter streamWriter = new StreamWriter(memoryStream))
+                    xmlSerializer.Serialize(streamWriter, _ObjectToSerialize);
+
+                    memoryStream.Position = 0;
+
+                    using (StreamReader streamReader = new StreamReader(memoryStream))
                     {
-                        xmlSerializer.Serialize(streamWriter, objectToSerialize);
+                        XmlDocument xmlDocument = new XmlDocument();
 
-                        memoryStream.Position = 0;
+                        xmlDocument.Load(streamReader);
 
-                        using (StreamReader streamReader = new StreamReader(memoryStream))
-                        {
-                            XmlDocument xmlDocument = new XmlDocument();
-
-                            xmlDocument.Load(streamReader);
-
-                            xmlString = xmlDocument.OuterXml;
-                        }
+                        _XmlString = xmlDocument.OuterXml;
                     }
-
-                    return true;
                 }
             }
-            catch (Exception exception)
-            { Trace.WriteLine(exception); }
-
-            MyTrace.WriteMethodError(System.Reflection.MethodBase.GetCurrentMethod());
-
-            xmlString = null;
-
-            return false;
         }
     }
 }

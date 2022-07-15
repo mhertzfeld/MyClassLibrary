@@ -1,6 +1,4 @@
-﻿using MyClassLibrary;
-using System;
-using System.Diagnostics;
+﻿using System;
 using System.IO;
 using System.Xml;
 using System.Xml.Schema;
@@ -13,19 +11,9 @@ namespace MyClassLibrary.XML
         //STATIC METHODS
         public static Boolean ValidateXml(FileInfo xmlFileInfo, FileInfo schemaFileInfo)
         {
-            try
-            {
-                XmlValidationProcess xmlValidationProcess = new XmlValidationProcess();
+            XmlValidationProcess xmlValidationProcess = new XmlValidationProcess();
 
-                if (xmlValidationProcess.ExecuteProcess(xmlFileInfo, schemaFileInfo))
-                { return true; }
-            }
-            catch (Exception exception)
-            { Trace.WriteLine(exception); }
-
-            MyTrace.WriteMethodError(System.Reflection.MethodBase.GetCurrentMethod());
-            
-            return false;
+            return xmlValidationProcess.ExecuteProcess(xmlFileInfo, schemaFileInfo);
         }
 
 
@@ -101,8 +89,6 @@ namespace MyClassLibrary.XML
         //EVENTS HANDLERS
         protected void ValidationEventHandler(object sender, ValidationEventArgs e)
         {
-            Trace.WriteLine(e);
-
             xmlSeverityType = e.Severity;
         }
 
@@ -120,17 +106,14 @@ namespace MyClassLibrary.XML
 
             xmlSeverityType = null;
 
-            if (!LoadXmlSchema())
-            { return false; }
+            LoadXmlSchema();
 
             XmlReader xmlReader;
 
-            if (!BuildXmlReader(out xmlReader)) 
-            { return false; }
+            BuildXmlReader(out xmlReader);
 
-            if (!ValidateXml(xmlReader)) 
-            { return false; }
-                        
+            ValidateXml(xmlReader);
+
             if (xmlReader != null)
             { xmlReader.Dispose(); }
 
@@ -148,22 +131,9 @@ namespace MyClassLibrary.XML
                 
 
         //FUNCTIONS
-        protected virtual Boolean BuildXmlReader(out XmlReader xmlReader)
+        protected virtual void BuildXmlReader(out XmlReader xmlReader)
         {
-            try
-            {
-                xmlReader = XmlReader.Create(XmlFileInfo.OpenRead(), CreateXmlReaderSettings());
-            }
-            catch (Exception exception)
-            {
-                Trace.WriteLine(exception);
-
-                xmlReader = null;
-
-                return false;
-            }
-
-            return true;
+            xmlReader = XmlReader.Create(XmlFileInfo.OpenRead(), CreateXmlReaderSettings());
         }
 
         protected virtual XmlReaderSettings CreateXmlReaderSettings()
@@ -176,41 +146,17 @@ namespace MyClassLibrary.XML
             return xmlReaderSettings;
         }
 
-        protected virtual Boolean LoadXmlSchema()
+        protected virtual void LoadXmlSchema()
         {
-            try
-            {
-                xmlSchema = XmlSchema.Read(SchemaFileInfo.OpenRead(), new ValidationEventHandler(ValidationEventHandler));
-            }
-            catch (Exception exception)
-            {
-                Trace.WriteLine(exception);
-
-                xmlSchema = null;
-
-                return false;
-            }
-
-            return true;
+            xmlSchema = XmlSchema.Read(SchemaFileInfo.OpenRead(), new ValidationEventHandler(ValidationEventHandler));
         }
         
-        protected virtual Boolean ValidateXml(XmlReader xmlReader)
+        protected virtual void ValidateXml(XmlReader xmlReader)
         {
-            try
-            {
-                XmlDocument xmlDocument = new XmlDocument();
-                xmlDocument.Load(xmlReader);
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(xmlReader);
 
-                xmlDocument.Validate(new ValidationEventHandler(ValidationEventHandler));    
-            }
-            catch (Exception exception)
-            {
-                Trace.WriteLine(exception);
-
-                return false;
-            }
-
-            return true;
+            xmlDocument.Validate(new ValidationEventHandler(ValidationEventHandler));
         }
     }
 }
